@@ -18,36 +18,16 @@ const useStyles = makeStyles((theme) => {
   return {
     background: {
       backgroundColor: theme.palette.primary.main,
+      display: 'flex',
+      alignItems: 'flex-end'
+
     },
     drawer: {
-      display: 'flex',
       maxHeight: graphMaxHeight,
     },
     grid: {
       maxHeight: graphMaxHeight,
     },
-    card: {
-      backgroundColor: theme.palette.primary.main,
-      maxHeight: '100%',
-      minWidth: '100%',
-      overflow: 'auto',
-    },
-    header: {
-      minWidth: '100%',
-      paddingTop: 20,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    icons: {
-      color: theme.palette.secondary.main,
-      opacity: .6,
-
-      '&:hover': {
-        color: theme.palette.info.main,
-        opacity:1
-      }
-    }
   }
 })
 
@@ -64,34 +44,11 @@ export default function Create() {
   return (
     <div className={ classes.background }>
       
-      <Typography variant="h6" color="textSecondary" component="h2" gutterBottom>
-      </Typography>
-
-      {/* HEADER FOR LIST*/}
-      <Grid className={ classes.drawer } item xs={12} md={3} lg={2}>  
-        <Box className={ classes.header }>
-          <KeyboardArrowLeftIcon className={ classes.icons } fontSize={'large'}/>
-          <Typography variant="h4" color="textSecondary" component="h2" gutterBottom>
-            Menu Items
-          </Typography>
-          <KeyboardArrowRightIcon className={ classes.icons } fontSize={'large'}/>
-        </Box>
-      </Grid>
-
       {/* LIST DRAWER */}
       <Grid container>
-        <Grid className={ classes.drawer } item xs={12} md={3} lg={2}>
-          <Card elevation={ 8 } className={ classes.card }>
-            <List className={classes.list}>
-                  { itemNames.map(entry =>
-                    <ListItem button={true} divider={ true }>
-                      <Typography variant='h5'>{ entry }</Typography>
-                    </ListItem>
-                  ) }
-            </List>
-          </Card>
-        </Grid>
-
+      <Grid className={classes.drawer}item xs={12} md={3} lg={2}>
+          <MyDrawer />
+       </Grid>
         {/* CHART */}
         <Grid className={ classes.grid }item xs={12} md={9} lg={10}>
           <GraphCard/>

@@ -6,35 +6,101 @@ import {
     ListItemIcon,
     Typography,
     makeStyles,
-    Card
+    Card,
+    Grid,
+    Box,
+    useMediaQuery
 } from '@material-ui/core/';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import { minWidth } from '@mui/system';
+
+
+const graphMaxHeight = window.innerHeight / 2 + 20
+const headerHeight = 100
 
 const useStyles = makeStyles((theme) => {
-    return {
-        card: {
-            backgroundColor: theme.palette.primary.main,
-        }
+  return {
+    background: {
+          backgroundColor: theme.palette.primary.main,
+    },
+    card: {
+      backgroundColor: theme.palette.primary.main,
+      maxHeight: '100%',
+      minWidth: '100%',
       
+    },
+    header: {
+        minWidth: '100%',
+        paddingTop: headerHeight,
+        paddingBottom: headerHeight/2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxHeight: 0
+    },
+    icons: {
+      color: theme.palette.secondary.main,
+      opacity: .6,
+
+      '&:hover': {
+        color: theme.palette.info.main,
+        opacity:1
+      }
+    },
+    bigGrid: {
+        minWidth: '100%',
+        maxHeight: graphMaxHeight,
+        minHeight: '100%',
+
+        
+      },
+    pog: {
+        minWidth: '100%',
+        maxHeight: graphMaxHeight-headerHeight * 1.5,
+        overflow: 'auto',
     }
+  }
 })
-  
+
+
 const itemNames = [
-    'Big Mac', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
-    '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
-    'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken'
+  'Big Mac', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
+  '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
+  'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
+  '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
+  'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken'
 ]
 
 
 export default function MyDrawer() {
     const classes = useStyles()
-
     return (
-        <Card elevation = { 8 } className={classes.card}>
-            <List style={{maxHeight: '100%', overflow: 'auto'}}>
-                { itemNames.map(entry =>
-                    <ListItem>{ entry }</ListItem>
-                ) }
+        <div className={classes.bigGrid}>
+            
+                {/* HEADER FOR LIST*/}
+        <Grid className={ classes.header }>  
+            <KeyboardArrowLeftIcon className={ classes.icons } fontSize={'large'}/>
+            <Typography variant="h4" color="textSecondary" component="h2" gutterBottom>
+                Menu Items
+            </Typography>
+            <KeyboardArrowRightIcon className={ classes.icons } fontSize={'large'}/>
+        </Grid>
+
+      {/* LIST DRAWER */}
+      <div className={classes.pog}>
+        <Grid className={ classes.drawer }>
+                <Card elevation={ 8 } className={ classes.card }>
+            <List className={classes.list}>
+                  { itemNames.map(entry =>
+                    <ListItem button={true} divider={ true }>
+                      <Typography variant='h5'>{ entry }</Typography>
+                    </ListItem>
+                  ) }
             </List>
-        </Card>
+          </Card>
+                </Grid>
+                </div>
+        </div>
      );
 }

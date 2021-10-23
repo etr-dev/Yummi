@@ -1,5 +1,7 @@
 import React from 'react';
-import { makeStyles, Typography} from '@material-ui/core' //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import { makeStyles, Typography, Grid} from '@material-ui/core' //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import { height } from '@mui/system';
+import Page from '../components/page'
 
 /*
 
@@ -18,7 +20,6 @@ import { makeStyles, Typography} from '@material-ui/core' //put anything you wan
 const useStyles = makeStyles((theme) => {
     return {
       background: {
-        backgroundColor: theme.palette.primary.main,
         }
       
     }
@@ -32,8 +33,8 @@ export default function SplashPage() {
     //The return statement returns JSX code (it is just HTML in javascript basically)
     //This is what will be returned when we call the function in App.js
     return (
-      <div className={classes.background}>
-        <Typography variant="h6" color="textSecondary" component="h2" gutterBottom>SplashPage</Typography>
+      <div>
+        <Page />
       </div>
     )
   }

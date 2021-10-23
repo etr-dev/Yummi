@@ -9,7 +9,6 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 import { makeStyles } from '@material-ui/core'
-import MyDrawer from './drawer'
 
 const data = [
   { year: '1950', population: 2.525 },
