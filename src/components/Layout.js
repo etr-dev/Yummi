@@ -1,5 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core'
+import { Button, makeStyles } from '@material-ui/core'
 import { Typography, AppBar, Toolbar } from '@material-ui/core'
 
 
@@ -59,10 +59,11 @@ const useStyles = makeStyles((theme) => {
           color="primary"
         >
           <Toolbar className={classes.toolbarHeight}>
-            <img src='Yummi.svg' alt="logo" className={classes.logo}/>
-            <Typography className={classes.title} variant='h4' color='textPrimary'>
-                         Yummi
-                     </Typography>
+            <img src='Yummi.svg' alt="logo" href='/splashpage' className={classes.logo}/>
+            
+            <Typography button={ true } className={ classes.title } variant='h4' color='textPrimary'>
+              Yummi
+            </Typography>
                      <div>
                          <Typography variant='h4' color='textPrimary' className={classes.userName}>
                              Hello Elijah!

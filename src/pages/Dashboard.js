@@ -8,6 +8,9 @@ import {
 } from '@material-ui/core'
 import GraphCard from '../components/graph.js'
 import MyDrawer from '../components/drawer'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeftRounded';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRightRounded';
+import { formHelperTextClasses } from '@mui/material';
 
 const graphMaxHeight=window.innerHeight/2 + 20
 
@@ -19,7 +22,6 @@ const useStyles = makeStyles((theme) => {
     drawer: {
       display: 'flex',
       maxHeight: graphMaxHeight,
-      scrollbarWidth: 100
     },
     grid: {
       maxHeight: graphMaxHeight,
@@ -31,8 +33,20 @@ const useStyles = makeStyles((theme) => {
       overflow: 'auto',
     },
     header: {
-      paddingTop: 50,
-      textAlign: 'center'
+      minWidth: '100%',
+      paddingTop: 20,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    icons: {
+      color: theme.palette.secondary.main,
+      opacity: .6,
+
+      '&:hover': {
+        color: theme.palette.info.main,
+        opacity:1
+      }
     }
   }
 })
@@ -49,16 +63,25 @@ export default function Create() {
   const classes = useStyles()
   return (
     <div className={ classes.background }>
+      
       <Typography variant="h6" color="textSecondary" component="h2" gutterBottom>
       </Typography>
+
+      {/* HEADER FOR LIST*/}
+      <Grid className={ classes.drawer } item xs={12} md={3} lg={2}>  
+        <Box className={ classes.header }>
+          <KeyboardArrowLeftIcon className={ classes.icons } fontSize={'large'}/>
+          <Typography variant="h4" color="textSecondary" component="h2" gutterBottom>
+            Menu Items
+          </Typography>
+          <KeyboardArrowRightIcon className={ classes.icons } fontSize={'large'}/>
+        </Box>
+      </Grid>
+
+      {/* LIST DRAWER */}
       <Grid container>
         <Grid className={ classes.drawer } item xs={12} md={3} lg={2}>
           <Card elevation={ 8 } className={ classes.card }>
-            <Box className={classes.header}>
-              <Typography variant="h4" color="textSecondary" component="h2" gutterBottom>
-                Hello
-              </Typography>
-            </Box>
             <List className={classes.list}>
                   { itemNames.map(entry =>
                     <ListItem button={true} divider={ true }>
@@ -68,6 +91,8 @@ export default function Create() {
             </List>
           </Card>
         </Grid>
+
+        {/* CHART */}
         <Grid className={ classes.grid }item xs={12} md={9} lg={10}>
           <GraphCard/>
         </Grid>
