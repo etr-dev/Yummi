@@ -44,8 +44,9 @@ export default function GraphCard(){
       >
         <CardContent>
         <Chart
-            data={ chartData }
-            className={ classes.chart }
+          data={ chartData }
+          className={ classes.chart }
+          height={ window.innerHeight/2 }
         >
             <ArgumentAxis showGrid={ false } showTicks={ false } />
             <ValueAxis max={ 7 }  showGrid={ false } />

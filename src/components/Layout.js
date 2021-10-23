@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => {
         page: {
             background: '#f9f9f9',
             width: '100%',
-            padding: theme.spacing(3),
         },
         root: {
             display: 'flex',
@@ -18,7 +17,6 @@ const useStyles = makeStyles((theme) => {
             background: '#f4f4f4'
         },
         title: {
-            padding: theme.spacing(2),
         },
         appBar: {
         },

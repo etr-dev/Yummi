@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
-import Notes from './pages/Notes'
-import Create from './pages/Create'
 import Layout from './components/Layout'
+import Dashboard from './pages/Dashboard'
+import SplashPage from './pages/SplashPage'
+import './App.css'
+import Manage from './pages/Manage';
 
 const theme = createTheme({
     palette: {
@@ -21,7 +23,12 @@ const theme = createTheme({
         text: {
             primary: '#EEFBFB',
             secondary: '#4DA8DA'
+        },
+        action: {
+            hover: '#007CC7'
         }
+
+        
     },
 
     typography: {
@@ -49,7 +56,9 @@ const theme = createTheme({
         subtitle1:{
             fontWeight: 400
         },
-    }
+    },
+
+
   });
 
 function App(){
@@ -59,12 +68,14 @@ function App(){
             <Layout>
                 <Switch>
                 <Route exact path='/'>
-                    <Create />
+                    <SplashPage />
                 </Route>
-                <Route path='/create'>
-                    <Create />
+                <Route path='/dashboard'>
+                    <Dashboard />
                 </Route>
-                
+                <Route path='/manage'>
+                    <Manage />
+                </Route>
                 </Switch>
             </Layout>
             </MuiThemeProvider>

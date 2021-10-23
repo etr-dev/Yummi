@@ -9,7 +9,6 @@ import {
     Card
 } from '@material-ui/core/';
 
-
 const useStyles = makeStyles((theme) => {
     return {
         card: {
@@ -17,26 +16,24 @@ const useStyles = makeStyles((theme) => {
         }
       
     }
-  })
+})
+  
+const itemNames = [
+    'Big Mac', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
+    '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
+    'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken'
+]
+
 
 export default function MyDrawer() {
     const classes = useStyles()
 
     return (
-        <Card elevation = { 16 } className={classes.card}>
-            <List>
-                <ListItem>1</ListItem>
-                <ListItem>2</ListItem>
-                <ListItem>3</ListItem>
-                <ListItem>1</ListItem>
-                <ListItem>2</ListItem>
-                <ListItem>3</ListItem>
-                <ListItem>1</ListItem>
-                <ListItem>2</ListItem>
-                <ListItem>3</ListItem>
-                <ListItem>1</ListItem>
-                <ListItem>2</ListItem>
-                <ListItem>3</ListItem>
+        <Card elevation = { 8 } className={classes.card}>
+            <List style={{maxHeight: '100%', overflow: 'auto'}}>
+                { itemNames.map(entry =>
+                    <ListItem>{ entry }</ListItem>
+                ) }
             </List>
         </Card>
      );
