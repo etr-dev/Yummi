@@ -1,54 +1,48 @@
-import * as React from 'react';
-import { Card , CardContent } from '@material-ui/core/';
+import * as React from "react";
+import { Card, CardContent } from "@material-ui/core/";
 import {
   Chart,
   BarSeries,
   Title,
   ArgumentAxis,
   ValueAxis,
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
-import { makeStyles } from '@material-ui/core'
-
+} from "@devexpress/dx-react-chart-material-ui";
+import { Animation } from "@devexpress/dx-react-chart";
+import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      display: 'flex'
+      display: "flex",
     },
     card: {
-      backgroundColor: 'transparent'
+      backgroundColor: "transparent",
     },
     chart: {
       color: theme.palette.primary.main,
-    }
-  }
-})
+    },
+  };
+});
 
-export default function GraphCard(props){
-  const chartData = props.data
-  const classes = useStyles()
+export default function GraphCard(props) {
+  const chartData = props.data;
+  const classes = useStyles();
   return (
-      <Card elevation = { 0 }
-        className = { classes.card }
-      >
-        <CardContent>
+    <Card elevation={0} className={classes.card}>
+      <CardContent>
         <Chart
-          data={ chartData }
-          className={ classes.chart }
-          height={ window.innerHeight/2 }
+          data={chartData}
+          className={classes.chart}
+          height={window.innerHeight / 2}
         >
-            <ArgumentAxis showGrid={ false } showTicks={ false } />
-            <ValueAxis max={ 7 }  showGrid={ false } />
+          <ArgumentAxis showGrid={false} showTicks={false} />
+          <ValueAxis max={7} showGrid={false} />
 
-          <BarSeries
-            valueField="population"
-            argumentField="year"
-          />
+          <BarSeries valueField="population" argumentField="year" />
           <Title text="World population" />
           <Animation />
         </Chart>
-        </CardContent>
-      </Card>
-    );
-  }
+      </CardContent>
+    </Card>
+  );
+}

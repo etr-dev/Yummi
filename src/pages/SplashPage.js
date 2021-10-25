@@ -1,8 +1,16 @@
-import React from 'react';
-import { makeStyles, Typography, Grid} from '@material-ui/core' //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
-import { height } from '@mui/system';
-import Page from '../components/page'
+import * as React from "react";
+import { Card, CardContent } from "@material-ui/core/";
+import { makeStyles, Typography, Button, Grid, Box } from "@material-ui/core";
+import { display, flexbox } from "@mui/system";
+import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
+import svgBlobs from "../images/backgrounds/blob.svg";
+import svgGraph from "../images/undraw/graph.svg";
+import GraphCard from "../components/graph.js";
+import { TablePagination } from "@mui/material";
+import Popup from "../components/popup";
+import LoginCard from "../components/loginCard";
 
+const pageHeight = "calc(100vh - 70px)";
 /*
 
     Our Palette colors are stored in the material-ui theme object
@@ -18,23 +26,89 @@ import Page from '../components/page'
 
 //This function is where you create your CSS styles for the page
 const useStyles = makeStyles((theme) => {
-    return {
-      background: {
-        }
-      
-    }
-})
-  
+  return {
+    root: {
+      height: "100vh",
+      backgroundColor: theme.palette.primary.main, //This is how you access the primary color for our theme (background color)
+      backgroundImage: `url(${svgBlobs})`, //This is what makes the blob background on the homepage
+      aspectRatio: "960/540",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      overflow: "hidden",
+    },
+    sides: {
+      height: pageHeight,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-evenly",
+    },
+    logo: {
+      maxHeight: "200px",
+    },
+    specialText: {
+      color: theme.palette.text.secondary,
+      background: "none",
+    },
+    button: {
+      backgroundColor: theme.palette.primary.main,
+
+      "&:hover": {
+        backgroundColor: theme.palette.info.main,
+      },
+    },
+    card: {
+      width: "80%",
+    },
+  };
+});
+
 //this function is what creates the page that will be loaded by App.js
 export default function SplashPage() {
-    //variables needed in the return statement are created here
-    const classes = useStyles()
-
-    //The return statement returns JSX code (it is just HTML in javascript basically)
-    //This is what will be returned when we call the function in App.js
-    return (
-      <div>
-        <Page />
-      </div>
-    )
-  }
+  const classes = useStyles();
+  return (
+    <Grid container className={classes.root}>
+      {/* This grid splits the page into a left and right half. When the screen is small the right half is hidden to make the screen look okay on mobile. */}
+      {/* LEFT */}
+      <Grid item xs={12} s={12} md={6} lg={6} className={classes.sides}>
+        <div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src="Yummi.svg"
+              alt="logo"
+              href="/splashpage"
+              className={classes.logo}
+            />
+            <Typography variant="h1" color="textPrimary">
+              Yummi
+            </Typography>
+          </div>
+          <Typography variant="h3" color="textPrimary">
+            Data can be confusing...
+          </Typography>
+          <Typography variant="h3" color="textPrimary">
+            We're here to help, start using
+            <mark className={classes.specialText}>Yummi</mark>
+            <br />
+            today for free!
+          </Typography>
+        </div>
+        <Popup
+          button={{
+            variant: "contained",
+            color: "primary",
+            text: <Typography variant="h2">Sign-Up</Typography>,
+          }}
+          popupCard={<LoginCard />}
+        />
+      </Grid>
+      {/* END LEFT */}
+      {/* RIGHT */}
+      <Grid item xs={12} s={12} md={6} lg={6} className={classes.sides}>
+        <img src={svgGraph} alt="graph" />
+      </Grid>
+      {/* END RIGHT */}
+    </Grid>
+  );
+}

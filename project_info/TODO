@@ -1,0 +1,35 @@
+TODO:
+Get sample spreadsheet
+create .csv data parser
+setup Redux
+-this should help us set an active spreadsheet per user
+-this will also be required to send selected item from itemlist to graph component
+-determine if user is logged in
+create backend/database
+create manage page
+create account page
+check that file extension is .csv or .xlx display error if not
+
+TODO: (On Hold)
+format graph component to take data as props and change dynamically (shouldn't be too hard) [Redux] [Parser]
+change navbar if user is not logged in [Redux]
+route user to login page if they try to navigate to /dashboard, /manage, /account, etc.. [Redux] [Database]
+when file is uploaded save it in database under userID [Database]
+setup OAuth login [Database] - setup OAuth login on Redux
+
+
+
+
+<---------------- USEFUL LINKS---------------->
+
+McDonalds food info:
+https://github.com/AaronMPeters/HackGT/blob/master/McDonalds.csv
+
+Material-ui API links:
+Default Theme: https://mui.com/customization/default-theme/#main-content
+List API: https://mui.com/api/list-item/#main-content
+
+Design Links:
+https://app.haikei.app/
+https://undraw.co/search
+https://www.shapedivider.app/

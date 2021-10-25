@@ -1,70 +1,214 @@
-# Getting Started with Create React App
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Available Scripts
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-In the project directory, you can run:
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/erobin27/Yummi">
+    <img src="public/Yummi.svg" alt="Logo" width="80" height="80">
+  </a>
 
-### `npm start`
+  <h3 align="center">Yummi</h3>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  <p align="center">
+    A free webservice for analyzing your restaurant's data!
+    <br />
+    <a href="https://github.com/erobin27/Yummi"><strong>Explore the docs »</strong></a>
+    <br />
+  </p>
+</div>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
 
-### `npm test`
+<!-- ABOUT THE PROJECT -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## About The Project
 
-### `npm run build`
+[![Product Name Screen Shot][product-screenshot]]()
+[![Product Name Screen Shot][product-screenshot2]]()
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Yummi is a data analytics web service designed to parse data from a POS System (Point of Sales) to help restuarant owners and managers better understand their restaurant. Currently we are looking to support data from Toast and Square, the two most popular POS Systems you can find in restaurants currently. This project is made as a group project involving team members: Elijah Robinson, Rebekah Yermakovich, Alexander Jones, Sakshi Kaondal, Varun Pullakandam, and Sean Dehart. This project is the CapStone project for our group at UNCC.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+What is special about this project?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- This gives owners a way to draw conclusions from their data which they otherwise could not
+- This data is presented dynamically and could eventually work with any POS system
+- Yummi is a fullstack application allowing for users to store their progress and info
+- Yummi uses OAuth2 so your account and data is as safe as your Google account is
 
-### `npm run eject`
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Built With
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Reactjs](https://reactjs.org/)
+- [Material-ui](https://mui.com/)
+- [Redux](https://redux.js.org/)
+- [DevExpress](https://devexpress.github.io/)
+- [FireBase](https://firebase.google.com/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<!-- GETTING STARTED -->
 
-## Learn More
+## Getting Started
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To get started clone the repo to your local machine and begin installing it's dependencies.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Prerequisites
 
-### Code Splitting
+To run this project you will need to have node downloaded. Open your console where you want to install and follow the installation steps.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Installation
 
-### Analyzing the Bundle Size
+1. Clone the repo
+   ```sh
+   git clone https://github.com/erobin27/Yummi.git
+   ```
+2. Navigate to the folder with package-lock.json
+   ```sh
+   cd Yummi
+   ```
+3. Install node dependecies with npm
+   ```sh
+   npm install
+   ```
+4. run the program a new browser window on local host will appear
+`sh npm start `
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<!-- USAGE EXAMPLES -->
 
-### Making a Progressive Web App
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This webservice will be used for restaurant owners or managers to look into their data and gain insights on trends in their restaurants. This can be used for saving money, stocking inventory, or even changes to staffing.
 
-### Advanced Configuration
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<!-- ROADMAP -->
 
-### Deployment
+## Roadmap
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [x] Build out front-end
+- [] OAuth2 Login
+- [] Allow users to upload and store data
+- [] Dynamically graph data
+- [] Editable raw data on manage page
+- [] Sales prediction
 
-### `npm run build` fails to minify
+See the [open issues](https://github.com/erobin27/Yummi/issues) for a full list of proposed features (and known issues).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## Contributing
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- LICENSE -->
+
+## License
+
+You are not allowed to use this source code.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Contact
+
+Project Link: [https://github.com/erobin27/Yummi](https://github.com/erobin27/Yummi)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+Credits
+
+- [ReadMe Template](https://github.com/othneildrew/Best-README-Template/blob/master/README.md)
+<!--
+- [Choose an Open Source License](https://choosealicense.com)
+- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
+- [Malven's Grid Cheatsheet](https://grid.malven.co/)
+- [Img Shields](https://shields.io)
+- [GitHub Pages](https://pages.github.com)
+- [Font Awesome](https://fontawesome.com)
+- [React Icons](https://react-icons.github.io/react-icons/search)
+-->
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/erobin27/Yummi.svg?style=for-the-badge
+[contributors-url]: https://github.com/erobin27/Yummi/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/erobin27/Yummi.svg?style=for-the-badge
+[forks-url]: https://github.com/erobin27/Yummi/network/members
+[stars-shield]: https://img.shields.io/github/stars/erobin27/Yummi.svg?style=for-the-badge
+[stars-url]: https://github.com/erobin27/Yummi/stargazers
+[issues-shield]: https://img.shields.io/github/issues/erobin27/Yummi.svg?style=for-the-badge
+[issues-url]: https://github.com/erobin27/Yummi/issues
+[license-shield]: https://img.shields.io/github/license/erobin27/Yummi.svg?style=for-the-badge
+[license-url]: https://github.com/erobin27/Yummi/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/elijah-robinson98/
+[product-screenshot]: images/Screenshot.png
+[product-screenshot2]: images/Screenshot2.png
