@@ -1,19 +1,88 @@
 import * as React from 'react';
 import { Card , CardContent } from '@material-ui/core/';
-import { makeStyles, Typography } from '@material-ui/core'
+import { makeStyles, Typography, Button } from '@material-ui/core'
+import { display, flexbox } from '@mui/system';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import svgBlobs from '../images/backgrounds/blob.svg'
+import svgGraph  from '../images/undraw/graph.svg'
+import GraphCard from '../components/graph.js'
+import { TablePagination } from '@mui/material';
+
+const pageHeight = 'calc(100vh - 70px)'
 
 const useStyles = makeStyles((theme) => {
     return {
-        root: {}
-
+        root: {
+            height: '100vh',
+            backgroundColor: theme.palette.primary.main,
+            display: 'flex',
+            backgroundImage: `url(${svgBlobs})`,
+            aspectRatio: '960/540',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
+            
+            
+        },
+        left: {
+            height: pageHeight,
+            minWidth: '50vw',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+        },
+        right: {
+            height: pageHeight,
+            minWidth: '50vw',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            //backgroundColor: 'blue',
+        },
+        logo: {
+            maxHeight: '200px'
+        },
+        specialText: {
+            color: theme.palette.text.secondary,
+            background: 'none'
+        },
+        button: {
+            backgroundColor: theme.palette.primary.main,
+      
+            '&:hover': {
+                backgroundColor: theme.palette.info.main,
+            }
+        },
+        card: {
+            width: '80%'
+        }
     }
   })
   
   export default function Page(){
     const classes = useStyles()
     return (
-        <>
-        </>
+        <div className={ classes.root }>
+            <div className={ classes.left }>
+                <div>
+                    <div style={ { display: 'flex', alignItems: 'center'}}>
+                        <img src='Yummi.svg' alt="logo" href='/splashpage' className={classes.logo}/>
+                        <Typography variant='h1' color='textPrimary'>Yummi</Typography>
+                    </div>
+                    <Typography variant='h3' color='textPrimary'>Data can be confusing...</Typography>
+                    <Typography variant='h3' color='textPrimary'>We're here to help, start using <mark className={classes.specialText}>Yummi</mark><br/>today for free!</Typography>
+                </div>
+                <Button className = { classes.button } size={ 'large' } color='secondary' variant='contained' endIcon={ <LoginRoundedIcon /> }  >
+                    <Typography variant='h3'> Sign-Up </Typography>
+                </Button>
+            </div>
+            <div className={ classes.right }>
+                { /* Put something here to fill the right */ }
+                    <img src={svgGraph} alt="graph" />
+            </div>
+        </div>
       );
 }
     

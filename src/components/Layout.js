@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => {
         },
         toolbarHeight: {
         },
-      toolbar: theme.mixins.toolbar
     }
   })
 
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => {
           position="fixed" 
           className={classes.appBar}
           elevation={0}
-          color="primary"
+          color="transparent"
         >
           <Toolbar className={classes.toolbarHeight}>
             <img src='Yummi.svg' alt="logo" href='/splashpage' className={classes.logo}/>
