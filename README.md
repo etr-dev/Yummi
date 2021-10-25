@@ -27,7 +27,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/erobin27/Yummi">
-    <img src="public/Yummi.svg" alt="Logo" width="80" height="80">
+    <img src="public/YummiBlue.svg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Yummi</h3>
@@ -210,5 +210,5 @@ Credits
 [license-url]: https://github.com/erobin27/Yummi/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/elijah-robinson98/
-[product-screenshot]: images/Screenshot.png
-[product-screenshot2]: images/Screenshot2.png
+[product-screenshot]: project_info/Demo/screenshot.png
+[product-screenshot2]: project_info/Demo/demo.gif
