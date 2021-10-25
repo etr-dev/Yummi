@@ -5,10 +5,13 @@ setup Redux
 -this should help us set an active spreadsheet per user
 -this will also be required to send selected item from itemlist to graph component
 -determine if user is logged in
+
 create backend/database
 create manage page
 create account page
+Finish top of dashboard page
 check that file extension is .csv or .xlx display error if not
+design different types of graph components (barchart, line, pie, etc...)
 
 TODO: (On Hold)
 format graph component to take data as props and change dynamically (shouldn't be too hard) [Redux] [Parser]
@@ -17,8 +20,9 @@ route user to login page if they try to navigate to /dashboard, /manage, /accoun
 when file is uploaded save it in database under userID [Database]
 setup OAuth login [Database] - setup OAuth login on Redux
 
-
-
+TODO: (In the future)
+Add ability to compare two items (Double BarChart, Double LineChart, etc..) [This should be sort of easy once we have the graph working]
+Add predicition/machine learning [I have faith that we can make it to this]
 
 <---------------- USEFUL LINKS---------------->
 
