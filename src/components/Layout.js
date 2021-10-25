@@ -1,9 +1,11 @@
 import React from 'react'
-import { Button, makeStyles } from '@material-ui/core'
-import { Typography, AppBar, Toolbar } from '@material-ui/core'
-
-
-
+import { Link, Button, IconButton, makeStyles, Typography, AppBar, Toolbar } from '@material-ui/core'
+import TimelineIcon from '@mui/icons-material/Timeline';
+import UploadRoundedIcon from '@mui/icons-material/UploadRounded';
+import SettingsIcon from '@mui/icons-material/Settings';
+import YummiLogo from '../images/Yummi.svg'
+import Popup from '../components/popup'
+import UploadCard from '../components/uploadCard'
 const useStyles = makeStyles((theme) => {
     return {
         page: {
@@ -12,6 +14,12 @@ const useStyles = makeStyles((theme) => {
         },
         root: {
             display: 'flex',
+      },
+      logoContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        alignItems: 'center',
+        cursor: 'pointer'
         },
         active: {
             background: '#f4f4f4'
@@ -21,7 +29,6 @@ const useStyles = makeStyles((theme) => {
         appBar: {
         },
         title:{
-            flexGrow: 1,
             fontWeight: 700
         },
         logo:{
@@ -29,10 +36,9 @@ const useStyles = makeStyles((theme) => {
             padding: 10,
             paddingLeft: 80,
         },
-        navText:{
-            paddingRight: 60,
-            paddingLeft: 60,
-            fontWeight: 400
+      navText: {
+            marginRight: 60,
+            marginLeft: 60,
         },
         userName:{
             paddingRight: 60,
@@ -40,7 +46,14 @@ const useStyles = makeStyles((theme) => {
             fontWeight: 550
         },
         toolbarHeight: {
-        },
+      },
+      icon: {
+        transform: 'scale(2)',
+        color: theme.palette.text.primary
+      },
+      clickable: {
+        cursor: 'pointer'
+      }
     }
   })
 
@@ -57,29 +70,35 @@ const useStyles = makeStyles((theme) => {
           elevation={0}
           color="transparent"
         >
-          <Toolbar className={classes.toolbarHeight}>
-            <img src='Yummi.svg' alt="logo" href='/splashpage' className={classes.logo}/>
-            
-            <Typography button={ true } className={ classes.title } variant='h4' color='textPrimary'>
-              Yummi
-            </Typography>
-                     <div>
-                         <Typography variant='h4' color='textPrimary' className={classes.userName}>
-                             Hello Elijah!
-                         </Typography>
-                         <Typography variant='subtitle1' color='textPrimary' className={classes.navText} align='center'>
-                            McDonalds
-                         </Typography>
-                     </div>
-                     <Typography variant='h4' color='textPrimary' className={classes.navText}>
-                         Upload
-                     </Typography>
-                     <Typography variant='h4' color='textPrimary' className={classes.navText}>
-                         Manage
-                     </Typography>
-                     <Typography variant='h4' color='textPrimary' className={classes.navText}>
-                         Dashboard
-                     </Typography>
+          <Toolbar className={ classes.toolbarHeight }>
+            <div className={classes.logoContainer}>
+              <img src='Yummi.svg' alt="logo" onClick={event =>  window.location.href='/'} className={classes.logo}/>
+              <Typography onClick={event =>  window.location.href='/'} className={ classes.title } variant='h4' color='textPrimary'>
+                Yummi
+              </Typography>
+            </div>
+            <div onClick={event =>  window.location.href='/yeet'} className={classes.clickable}>
+                <Typography variant='h4' color='textPrimary' className={classes.userName}>
+                    Hello Elijah!
+                </Typography>
+                <Typography variant='subtitle1' color='textPrimary' className={classes.navText} align='center'>
+                  McDonalds
+                </Typography>
+            </div>
+            <IconButton onClick={event =>  window.location.href='/dashboard'} className={classes.navText}>
+              <TimelineIcon className={ classes.icon } />
+            </IconButton>
+            <Popup
+                    button={ {
+                      color: 'primary',
+                      icon: <UploadRoundedIcon className={ classes.icon } />
+                        
+                    } }
+                    popupCard={ (< UploadCard />) }
+                />
+            <IconButton onClick={event =>  window.location.href='/dashboard'} className={classes.navText}>
+              <SettingsIcon className={ classes.icon } />
+            </IconButton>
           </Toolbar>
         </AppBar>
           

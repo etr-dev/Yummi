@@ -36,11 +36,6 @@ export default function Manage() {
       <div className={classes.background}>
         <Typography variant="h6" color="textSecondary" component="h2" gutterBottom>Manage</Typography>
         <div>hi</div>
-        <Popup button={ {
-          variant: 'contained',
-          color: 'secondary',
-          text: 'heller'
-        } } />
         <LoginCard/>
       </div>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { makeStyles, Card } from '@material-ui/core';
+import { makeStyles, Card, IconButton } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -19,6 +19,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
+
 export default function AnimatedModal(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -31,14 +33,22 @@ export default function AnimatedModal(props) {
         setOpen(false);
     };
 
-            {/* <Button variant="contained" color="secondary" onClick={handleOpen}>
-                Open Animated Modal
-            </Button> */}
+    let customButton = null
+    if (props.button.icon == undefined) {
+        customButton = (<Button variant={ props.button.variant } color={ props.button.color } onClick={handleOpen} className={classes.button}>
+                { props.button.text }
+        </Button>)
+    } else {
+        customButton = (
+            <IconButton onClick={handleOpen}>
+              {props.button.icon}
+            </IconButton>
+        )
+    }
+
     return (
         <>
-            <Button variant={ props.button.variant } color={ props.button.color } onClick={handleOpen} className={classes.button}>
-                { props.button.text }
-            </Button>
+            { customButton }
 
             <Modal
                 aria-labelledby="transition-modal-title"
