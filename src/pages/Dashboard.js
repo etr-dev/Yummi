@@ -39,6 +39,16 @@ const itemNames = [
   'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken'
 ]
 
+const data = [
+  { year: '1950', population: 2.525 },
+  { year: '1960', population: 3.018 },
+  { year: '1970', population: 3.682 },
+  { year: '1980', population: 4.440 },
+  { year: '1990', population: 5.310 },
+  { year: '2000', population: 6.127 },
+  { year: '2010', population: 6.930 },
+];
+
 export default function Create() {
   const classes = useStyles()
   return (
@@ -47,11 +57,11 @@ export default function Create() {
       {/* LIST DRAWER */}
       <Grid container>
       <Grid className={classes.drawer}item xs={12} md={3} lg={2}>
-          <MyDrawer />
+          <MyDrawer itemNames={ itemNames }/>
        </Grid>
         {/* CHART */}
         <Grid className={ classes.grid }item xs={12} md={9} lg={10}>
-          <GraphCard/>
+          <GraphCard data={ data }/>
         </Grid>
       </Grid>
     </div>

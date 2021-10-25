@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles, Typography} from '@material-ui/core' //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
-
+import { makeStyles, Typography, Button} from '@material-ui/core' //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import Popup from '../components/popup'
+import LoginCard from '../components/loginCard'
 /*
 
     Our Palette colors are stored in the material-ui theme object
@@ -34,6 +35,13 @@ export default function Manage() {
     return (
       <div className={classes.background}>
         <Typography variant="h6" color="textSecondary" component="h2" gutterBottom>Manage</Typography>
+        <div>hi</div>
+        <Popup button={ {
+          variant: 'contained',
+          color: 'secondary',
+          text: 'heller'
+        } } />
+        <LoginCard/>
       </div>
     )
   }

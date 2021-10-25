@@ -7,7 +7,8 @@ import svgBlobs from '../images/backgrounds/blob.svg'
 import svgGraph  from '../images/undraw/graph.svg'
 import GraphCard from '../components/graph.js'
 import { TablePagination } from '@mui/material';
-
+import Popup from '../components/popup'
+import LoginCard from '../components/loginCard'
 const pageHeight = 'calc(100vh - 70px)'
 
 const useStyles = makeStyles((theme) => {
@@ -68,9 +69,14 @@ const useStyles = makeStyles((theme) => {
                     <Typography variant='h3' color='textPrimary'>Data can be confusing...</Typography>
                     <Typography variant='h3' color='textPrimary'>We're here to help, start using <mark className={classes.specialText}>Yummi</mark><br/>today for free!</Typography>
                 </div>
-                <Button className = { classes.button } size={ 'large' } color='secondary' variant='contained' endIcon={ <LoginRoundedIcon /> }  >
-                    <Typography variant='h3'> Sign-Up </Typography>
-                </Button>
+                <Popup
+                    button={ {
+                        variant: 'contained',
+                        color: 'primary',
+                        text: <Typography variant='h2'>Sign-Up</Typography>,
+                    } }
+                    popupCard={ (< LoginCard />) }
+                />
             </Grid> {/* END LEFT */ }
 
             {/* RIGHT */ }

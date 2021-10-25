@@ -64,17 +64,10 @@ const useStyles = makeStyles((theme) => {
 })
 
 
-const itemNames = [
-  'Big Mac', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
-  '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
-  'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken', 'Quarter Pounder with Cheese', 'Double Quarter Pounder with Cheese', 'Filet-O-Fish',
-  '2 Cheeseburgers', 'Southern Style Chicken', 'Bacon Clubhouse Burger', 'Chicken McNuggets - 20pc',
-  'Small French Fry', 'Medium French Fry', 'McDouble', 'Buffalo Ranch McChicken'
-]
-
-
-export default function MyDrawer() {
-    const classes = useStyles()
+export default function MyDrawer(props) {
+  const classes = useStyles()
+  const itemNames = props.itemNames
+  const dataCategories = props.dataCategories //this is currently not passed
     return (
         <div className={classes.bigGrid}>
             
