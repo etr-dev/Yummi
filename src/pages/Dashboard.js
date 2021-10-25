@@ -7,13 +7,13 @@ import {
   List,
   ListItem,
   Box,
+  Button,
 } from "@material-ui/core";
 import GraphCard from "../components/graph.js";
 import MyDrawer from "../components/drawer";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
-
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
 const useStyles = makeStyles((theme) => {
@@ -30,8 +30,35 @@ const useStyles = makeStyles((theme) => {
       maxHeight: "100vh",
     },
     topPage: {
-      backgroundColor: "red",
+      backgroundColor: theme.palette.primary.main,
       height: "100vh",
+    },
+    left: {
+      paddingLeft: "15vh",
+      paddingRight: "5vh",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "start",
+      justifyContent: "space-evenly",
+    },
+    right: {
+      width: "100%",
+      height: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "space-evenly",
+    },
+    button: {
+      backgroundColor: theme.palette.secondary.main,
+      padding: "20px",
+      paddingRight: "40px",
+      paddingLeft: "40px",
+    },
+    red: {
+      backgroundColor: "red",
+      width: "100%",
     },
   };
 });
@@ -91,7 +118,32 @@ export default function Create() {
   const classes = useStyles();
   return (
     <>
-      <div className={classes.topPage}>top</div>
+      {/*TOP PAGE */}
+      <div className={classes.topPage}>
+        <Grid container>
+          <Grid item xs={12} s={6} md={6} lg={6} className={classes.left}>
+            <Typography variant="h2" color="textPrimary">
+              Your overall sales at McDonalds are up 20% since last month!
+            </Typography>
+
+            <div>
+              <Typography variant="h5" color="textPrimary">
+                Top selling product
+              </Typography>
+              <Button size="large" className={classes.button}>
+                <Typography variant="h4" color="textPrimary">
+                  Product Name Here
+                </Typography>
+              </Button>
+            </div>
+          </Grid>
+          <Grid item xs={12} s={6} md={6} lg={6} className={classes.right}>
+            <Typography variant="h5">a graph will go here</Typography>
+          </Grid>
+        </Grid>
+      </div>
+
+      {/*BOTTOM PAGE */}
       <div className={classes.background}>
         {/* LIST DRAWER */}
         <Grid container>
