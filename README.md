@@ -73,7 +73,7 @@
 [![Product Name Screen Shot][product-screenshot]]()
 [![Product Name Screen Shot][product-screenshot2]]()
 
-Yummi is a data analytics web service designed to parse data from a POS System (Point of Sales) to help restuarant owners and managers better understand their restaurant. Currently we are looking to support data from Toast and Square, the two most popular POS Systems you can find in restaurants currently. This project is made as a group project involving team members: Elijah Robinson, Rebekah Yermakovich, Alexander Jones, Sakshi Kaondal, Varun Pullakandam, and Sean Dehart. This project is the CapStone project for our group at UNCC.
+Yummi is a data analytics web service designed to parse data from a POS System (Point of Sales) to help restuarant owners and managers better understand their restaurant. Currently we are looking to support data from Toast and Square, the two most popular POS Systems you can find in restaurants currently. This project is the CapStone project for our group at UNCC, our group consists of 6 team members: ```sh Elijah Robinson, Rebekah Yermakovich, Alexander Jones, Sakshi Kaondal, Varun Pullakandam, and Sean Dehart```
 
 What is special about this project?
 
