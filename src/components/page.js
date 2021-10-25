@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Card , CardContent } from '@material-ui/core/';
-import { makeStyles, Typography, Button } from '@material-ui/core'
+import { makeStyles, Typography, Button, Grid, Box } from '@material-ui/core'
 import { display, flexbox } from '@mui/system';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import svgBlobs from '../images/backgrounds/blob.svg'
@@ -15,31 +15,21 @@ const useStyles = makeStyles((theme) => {
         root: {
             height: '100vh',
             backgroundColor: theme.palette.primary.main,
-            display: 'flex',
             backgroundImage: `url(${svgBlobs})`,
             aspectRatio: '960/540',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundSize: 'cover'
+            backgroundSize: 'cover',
+            overflow: 'hidden'
             
             
         },
-        left: {
+        sides: {
             height: pageHeight,
-            minWidth: '50vw',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'space-evenly',
-        },
-        right: {
-            height: pageHeight,
-            minWidth: '50vw',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            //backgroundColor: 'blue',
         },
         logo: {
             maxHeight: '200px'
@@ -64,8 +54,12 @@ const useStyles = makeStyles((theme) => {
   export default function Page(){
     const classes = useStyles()
     return (
-        <div className={ classes.root }>
-            <div className={ classes.left }>
+        <Grid container className={ classes.root }>
+            {/* LEFT */ }
+            <Grid
+                item xs={ 12 } s={ 12 } md={ 6 } lg={ 6 }
+                className={ classes.sides }
+            >
                 <div>
                     <div style={ { display: 'flex', alignItems: 'center'}}>
                         <img src='Yummi.svg' alt="logo" href='/splashpage' className={classes.logo}/>
@@ -77,12 +71,16 @@ const useStyles = makeStyles((theme) => {
                 <Button className = { classes.button } size={ 'large' } color='secondary' variant='contained' endIcon={ <LoginRoundedIcon /> }  >
                     <Typography variant='h3'> Sign-Up </Typography>
                 </Button>
-            </div>
-            <div className={ classes.right }>
-                { /* Put something here to fill the right */ }
-                    <img src={svgGraph} alt="graph" />
-            </div>
-        </div>
+            </Grid> {/* END LEFT */ }
+
+            {/* RIGHT */ }
+            <Grid
+                item xs={ 12 } s={ 12 } md={ 6 } lg={ 6 }
+                className={ classes.sides }
+            >
+                <img src={svgGraph} alt="graph" />
+            </Grid> {/* END RIGHT */}
+        </Grid>
       );
 }
     
