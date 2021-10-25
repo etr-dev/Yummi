@@ -33,7 +33,7 @@ export default function GraphCard(props) {
         <Chart
           data={chartData}
           className={classes.chart}
-          height={window.innerHeight / 2}
+          height={window.innerHeight * 0.9}
         >
           <ArgumentAxis showGrid={false} showTicks={false} />
           <ValueAxis max={7} showGrid={false} />

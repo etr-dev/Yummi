@@ -24,10 +24,14 @@ const useStyles = makeStyles((theme) => {
       alignItems: "flex-end",
     },
     drawer: {
-      maxHeight: graphMaxHeight,
+      maxHeight: "100vh",
     },
     grid: {
-      maxHeight: graphMaxHeight,
+      maxHeight: "100vh",
+    },
+    topPage: {
+      backgroundColor: "red",
+      height: "100vh",
     },
   };
 });
@@ -56,6 +60,21 @@ const itemNames = [
   "Medium French Fry",
   "McDouble",
   "Buffalo Ranch McChicken",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "Buffalo Ranch McChicken",
+  "Quarter Pounder with Cheese",
+  "Double Quarter Pounder with Cheese",
+  "Filet-O-Fish",
+  "2 Cheeseburgers",
+  "Southern Style Chicken",
+  "Bacon Clubhouse Burger",
+  "Chicken McNuggets - 20pc",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "END",
 ];
 
 const data = [
@@ -71,17 +90,20 @@ const data = [
 export default function Create() {
   const classes = useStyles();
   return (
-    <div className={classes.background}>
-      {/* LIST DRAWER */}
-      <Grid container>
-        <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-          <MyDrawer itemNames={itemNames} />
+    <>
+      <div className={classes.topPage}>top</div>
+      <div className={classes.background}>
+        {/* LIST DRAWER */}
+        <Grid container>
+          <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
+            <MyDrawer itemNames={itemNames} />
+          </Grid>
+          {/* CHART */}
+          <Grid className={classes.grid} item xs={12} md={9} lg={10}>
+            <GraphCard data={data} />
+          </Grid>
         </Grid>
-        {/* CHART */}
-        <Grid className={classes.grid} item xs={12} md={9} lg={10}>
-          <GraphCard data={data} />
-        </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 }

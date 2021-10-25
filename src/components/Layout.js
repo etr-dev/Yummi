@@ -69,7 +69,7 @@ export default function Layout({ children }) {
     <div className={classes.root}>
       {/* app bar */}
       <AppBar
-        position="fixed"
+        position="absolute"
         className={classes.appBar}
         elevation={0}
         color="transparent"

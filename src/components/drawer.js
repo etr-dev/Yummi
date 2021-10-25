@@ -25,17 +25,17 @@ const useStyles = makeStyles((theme) => {
     },
     card: {
       backgroundColor: theme.palette.primary.main,
-      maxHeight: "100%",
-      minWidth: "100%",
+      height: "90vh",
+      overflow: "auto",
     },
     header: {
       minWidth: "100%",
-      paddingTop: headerHeight,
-      paddingBottom: headerHeight / 2,
+      paddingTop: "4vh",
+      paddingBottom: "4vh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      maxHeight: 0,
+      height: "2vh",
     },
     icons: {
       color: theme.palette.secondary.main,
@@ -48,13 +48,13 @@ const useStyles = makeStyles((theme) => {
     },
     bigGrid: {
       minWidth: "100%",
-      maxHeight: graphMaxHeight,
+      maxHeight: "100vh",
       minHeight: "100%",
+      overflow: "hidden",
     },
     pog: {
       minWidth: "100%",
-      maxHeight: graphMaxHeight - headerHeight * 1.5,
-      overflow: "auto",
+      height: "100vh",
     },
   };
 });
@@ -83,7 +83,7 @@ export default function MyDrawer(props) {
       <div className={classes.pog}>
         <Grid className={classes.drawer}>
           <Card elevation={8} className={classes.card}>
-            <List className={classes.list}>
+            <List>
               {itemNames.map((entry) => (
                 <ListItem button={true} divider={true}>
                   <Typography variant="h5">{entry}</Typography>
