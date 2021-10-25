@@ -211,4 +211,4 @@ Credits
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/elijah-robinson98/
 [product-screenshot]: project_info/Demo/screenshot.png
-[product-screenshot2]: project_info/Demo/demo.gif
+[product-screenshot2]: project_info/Demo/Demo.gif
