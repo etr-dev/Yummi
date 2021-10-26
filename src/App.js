@@ -5,12 +5,12 @@ import Dashboard from './pages/Dashboard'
 import SplashPage from './pages/SplashPage'
 import './App.css'
 import Manage from './pages/Manage';
-
+import Account from './pages/Account'
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#132232' //white-ish
+            main: '#132232' 
         },
         secondary: {
             main: '#203647' //light blue
@@ -79,6 +79,9 @@ function App(){
                 </Route>
                 <Route path='/manage'>
                     <Manage />
+                </Route>
+                <Route path='/account'>
+                    <Account />
                 </Route>
                 </Switch>
             </Layout>
