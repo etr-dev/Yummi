@@ -1,6 +1,5 @@
 TODO:
-Get sample spreadsheet
-create .csv data parser
+create .csv data parser (look into importing d3.js it is similar to pandas https://stackoverflow.com/questions/30610675/python-pandas-equivalent-in-javascript )
 setup Redux
 -this should help us set an active spreadsheet per user
 -this will also be required to send selected item from itemlist to graph component
@@ -23,6 +22,14 @@ setup OAuth login [Database] - setup OAuth login on Redux
 TODO: (In the future)
 Add ability to compare two items (Double BarChart, Double LineChart, etc..) [This should be sort of easy once we have the graph working]
 Add predicition/machine learning [I have faith that we can make it to this]
+
+
+
+
+
+COMPLETED:
+Get sample spreadsheet
+
 
 <---------------- USEFUL LINKS---------------->
 
