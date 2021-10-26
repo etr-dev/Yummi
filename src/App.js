@@ -6,6 +6,7 @@ import SplashPage from './pages/SplashPage'
 import './App.css'
 import Manage from './pages/Manage';
 
+
 const theme = createTheme({
     palette: {
         primary: {
