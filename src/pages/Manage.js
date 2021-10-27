@@ -41,7 +41,7 @@ export default function Manage() {
       >
         Manage
       </Typography>
-      <div>hi</div>
+      <div>sean</div>
       <LoginCard />
     </div>
   );
