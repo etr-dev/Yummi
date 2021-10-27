@@ -88,7 +88,7 @@ export default function SplashPage() {
             Data can be confusing...
           </Typography>
           <Typography variant="h3" color="textPrimary">
-            We're here to help, start using
+            We're here to help, start using{" "}
             <mark className={classes.specialText}>Yummi</mark>
             <br />
             today for free!
