@@ -1,11 +1,14 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import Layout from "./components/Layout";
+import Loading from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import SplashPage from "./pages/SplashPage";
 import "./App.css";
 import Manage from "./pages/Manage";
 import Account from "./pages/Account";
+import { useAuth0 } from "@auth0/auth0-react";
+import ProtectedRoute from './auth/ProtectedRoute'
 const theme = createTheme({
   palette: {
     primary: {
@@ -61,15 +64,16 @@ const theme = createTheme({
 });
 
 function App() {
+  
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
         <Layout>
           <Switch>
-            <Route exact path="/" component={SplashPage} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/manage" component={Manage} />
-            <Route path="/account" component={Account} />
+              <Route exact path="/" component={SplashPage} />
+              <ProtectedRoute path="/dashboard" component={Dashboard} />
+              <ProtectedRoute path="/manage" component={Manage} />
+              <ProtectedRoute path="/account" component={Account} />
           </Switch>
         </Layout>
       </MuiThemeProvider>
