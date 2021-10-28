@@ -12,5 +12,8 @@ const useStyles = makeStyles((theme) => {
 
 export default function Template() {
   const classes = useStyles();
-  return <></>;
+  return (
+    <>
+    </>
+  );
 }
