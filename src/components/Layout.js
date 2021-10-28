@@ -82,9 +82,53 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Layout({ children }) {
-  const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
   const classes = useStyles();
   console.log(user);
+
+  { /*While the auth loads dont display nav items except logo*/ }
+  if (isLoading) {
+    return (
+
+<div className={classes.root}>
+      {/* app bar */}
+      <AppBar
+        position="absolute"
+        className={classes.appBar}
+        elevation={0}
+        color="transparent"
+      >
+        <Toolbar className={classes.toolbarHeight}>
+          {/*CONTAINS LOGO & TEXT*/}
+          <div className={classes.logoContainer}>
+            <img
+              src="Yummi.svg"
+              alt="logo"
+              onClick={(event) => (window.location.href = "/")}
+              className={classes.logo}
+            />
+            <Typography
+              onClick={(event) => (window.location.href = "/")}
+              className={classes.title}
+              variant="h4"
+              color="textPrimary"
+            >
+              Yummi
+            </Typography>
+          </div>
+        </Toolbar>
+      </AppBar>
+
+      {/* main content */}
+      <div className={classes.page}>
+        <div className={classes.toolbar}></div>
+        {children}
+      </div>
+    </div>
+
+    );
+  }
+
 
   return (
     <div className={classes.root}>
