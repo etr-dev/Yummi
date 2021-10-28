@@ -14,6 +14,8 @@ import AppleIcon from "@mui/icons-material/Apple";
 import { useDropzone } from "react-dropzone";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import svgUpload from "../images/backgrounds/upload_675x900.svg";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -66,8 +68,15 @@ export default function LoginCard(props) {
   const classes = useStyles();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  const { user } = useAuth0();
 
-  const files = acceptedFiles.map((file) => console.log(file));
+  //this is what is executed when a file is uploaded
+  //check here that it is .csv and send to database
+  const files = acceptedFiles.map((file) => {
+    //currently it is logging the file object and name of user
+    console.log(file);
+    console.log(user.name);
+  });
 
   return (
     <Box borderRadius="5%" className={classes.card}>
@@ -84,6 +93,7 @@ export default function LoginCard(props) {
         accepted file types: <br /> .csv .xlx
       </Typography>
 
+      {/* UPLOAD AREA */}
       <div
         {...getRootProps({ className: "dropzone" })}
         className={classes.uploadDiv}
