@@ -11,6 +11,7 @@ import {
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import AppleIcon from "@mui/icons-material/Apple";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -68,6 +69,7 @@ const useStyles = makeStyles((theme) => {
 
 export default function LoginCard(props) {
   const classes = useStyles();
+  const { loginWithRedirect } = useAuth0();
   return (
     <Box borderRadius="5%" className={classes.card}>
       <div className={classes.yummi}>
@@ -92,11 +94,12 @@ export default function LoginCard(props) {
 
       <div className={classes.buttonDiv}>
         <Button
-          className={classes.button}
-          size={"large"}
+          className={ classes.button }
+          size={ "large" }
           color="secondary"
           variant="contained"
-          startIcon={<GoogleIcon />}
+          startIcon={ <GoogleIcon /> }
+          onClick={ () => loginWithRedirect() }
         >
           Google
         </Button>
