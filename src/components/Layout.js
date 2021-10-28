@@ -8,6 +8,8 @@ import {
   AppBar,
   Toolbar,
   Avatar,
+  Slide,
+  Fade
 } from "@material-ui/core";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
@@ -82,53 +84,53 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Layout({ children }) {
-  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } =
+    useAuth0();
   const classes = useStyles();
   console.log(user);
 
-  { /*While the auth loads dont display nav items except logo*/ }
+  {
+    /*While the auth loads dont display nav items except logo*/
+  }
   if (isLoading) {
     return (
+      <div className={classes.root}>
+        {/* app bar */}
+        <AppBar
+          position="absolute"
+          className={classes.appBar}
+          elevation={0}
+          color="transparent"
+        >
+          <Toolbar className={classes.toolbarHeight}>
+            {/*CONTAINS LOGO & TEXT*/}
+            <div className={classes.logoContainer}>
+              <img
+                src="Yummi.svg"
+                alt="logo"
+                onClick={(event) => (window.location.href = "/")}
+                className={classes.logo}
+              />
+              <Typography
+                onClick={(event) => (window.location.href = "/")}
+                className={classes.title}
+                variant="h4"
+                color="textPrimary"
+              >
+                Yummi
+              </Typography>
+            </div>
+          </Toolbar>
+        </AppBar>
 
-<div className={classes.root}>
-      {/* app bar */}
-      <AppBar
-        position="absolute"
-        className={classes.appBar}
-        elevation={0}
-        color="transparent"
-      >
-        <Toolbar className={classes.toolbarHeight}>
-          {/*CONTAINS LOGO & TEXT*/}
-          <div className={classes.logoContainer}>
-            <img
-              src="Yummi.svg"
-              alt="logo"
-              onClick={(event) => (window.location.href = "/")}
-              className={classes.logo}
-            />
-            <Typography
-              onClick={(event) => (window.location.href = "/")}
-              className={classes.title}
-              variant="h4"
-              color="textPrimary"
-            >
-              Yummi
-            </Typography>
-          </div>
-        </Toolbar>
-      </AppBar>
-
-      {/* main content */}
-      <div className={classes.page}>
-        <div className={classes.toolbar}></div>
-        {children}
+        {/* main content */}
+        <div className={classes.page}>
+          <div className={classes.toolbar}></div>
+          {children}
+        </div>
       </div>
-    </div>
-
     );
   }
-
 
   return (
     <div className={classes.root}>
@@ -157,64 +159,78 @@ export default function Layout({ children }) {
               Yummi
             </Typography>
           </div>
-
           {/*if logged in show account else show login option*/}
           {isAuthenticated ? (
             <>
-              {/* ACCOUNT INFO CONTAINER */}
-              <div
-                onClick={() => logout()}
-                //onClick={(event) => (window.location.href = "/account")}
-                className={classes.account}
+          
+              {/* ACCOUNT INFO CONTAINER */ }
+              <Slide
+                direction="down"
+                in={!isLoading}
+                mountOnEnter
+                unmountOnExit
               >
-                <Avatar
-                  alt={user.name}
-                  src={user.picture}
-                  variant="rounded"
-                  className={classes.profilePicture}
-                />
-                <div className={classes.accountText}>
-                  <Typography
-                    variant="h4"
-                    color="textPrimary"
-                    className={classes.userName}
-                  >
-                    Hello {user.given_name}!
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    color="textPrimary"
-                    align="left"
-                  >
-                    McDonalds
-                  </Typography>
+                <div
+                  onClick={() => logout()}
+                  //onClick={(event) => (window.location.href = "/account")}
+                  className={classes.account}
+                >
+                  <Avatar
+                    alt={user.name}
+                    src={user.picture}
+                    variant="rounded"
+                    className={classes.profilePicture}
+                  />
+                  <div className={classes.accountText}>
+                    <Typography
+                      variant="h4"
+                      color="textPrimary"
+                      className={classes.userName}
+                    >
+                      Hello {user.given_name}!
+                    </Typography>
+                    <Typography
+                      variant="subtitle1"
+                      color="textPrimary"
+                      align="left"
+                    >
+                      McDonalds
+                    </Typography>
+                  </div>
                 </div>
-              </div>
-
-              {/* DASHBOARD BUTTON */}
-              <IconButton
-                onClick={(event) => (window.location.href = "/dashboard")}
-                className={classes.navText}
+              </Slide>
+              
+              <Fade 
+                in={ !isLoading }
+                timeout={{ enter: 1000 }}
               >
-                <TimelineIcon className={classes.icon} />
-              </IconButton>
-
-              {/* UPLOAD BUTTON */}
-              <Popup
-                button={{
-                  color: "primary",
-                  icon: <UploadRoundedIcon className={classes.icon} />,
-                }}
-                popupCard={<UploadCard />}
+                <div>
+              {/* DASHBOARD BUTTON */ }
+              
+                <IconButton
+                  onClick={(event) => (window.location.href = "/dashboard")}
+                  className={classes.navText}
+                >
+                  <TimelineIcon className={classes.icon} />
+                </IconButton>
+                
+              {/* UPLOAD BUTTON */ }
+                <Popup
+                  button={{
+                    color: "primary",
+                    icon: <UploadRoundedIcon className={classes.icon} />,
+                  }}
+                  popupCard={<UploadCard />}
               />
-
-              {/* MANAGE BUTTON */}
-              <IconButton
-                onClick={(event) => (window.location.href = "/manage")}
-                className={classes.navText}
-              >
-                <SettingsIcon className={classes.icon} />
-              </IconButton>
+                {/* MANAGE BUTTON */}
+                <IconButton
+                  onClick={(event) => (window.location.href = "/manage")}
+                  className={classes.navText}
+                >
+                  <SettingsIcon className={classes.icon} />
+                </IconButton>
+                </div>
+              </Fade >
             </>
           ) : (
             <Typography
