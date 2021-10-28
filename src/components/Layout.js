@@ -96,6 +96,7 @@ export default function Layout({ children }) {
         color="transparent"
       >
         <Toolbar className={classes.toolbarHeight}>
+          {/*CONTAINS LOGO & TEXT*/}
           <div className={classes.logoContainer}>
             <img
               src="Yummi.svg"
@@ -112,8 +113,11 @@ export default function Layout({ children }) {
               Yummi
             </Typography>
           </div>
+
+          {/*if logged in show account else show login option*/}
           {isAuthenticated ? (
             <>
+              {/* ACCOUNT INFO CONTAINER */}
               <div
                 onClick={() => logout()}
                 //onClick={(event) => (window.location.href = "/account")}
@@ -143,6 +147,7 @@ export default function Layout({ children }) {
                 </div>
               </div>
 
+              {/* DASHBOARD BUTTON */}
               <IconButton
                 onClick={(event) => (window.location.href = "/dashboard")}
                 className={classes.navText}
@@ -150,6 +155,7 @@ export default function Layout({ children }) {
                 <TimelineIcon className={classes.icon} />
               </IconButton>
 
+              {/* UPLOAD BUTTON */}
               <Popup
                 button={{
                   color: "primary",
@@ -158,6 +164,7 @@ export default function Layout({ children }) {
                 popupCard={<UploadCard />}
               />
 
+              {/* MANAGE BUTTON */}
               <IconButton
                 onClick={(event) => (window.location.href = "/manage")}
                 className={classes.navText}
@@ -175,6 +182,7 @@ export default function Layout({ children }) {
               Login
             </Typography>
           )}
+          {/* END OF if-else */}
         </Toolbar>
       </AppBar>
 
