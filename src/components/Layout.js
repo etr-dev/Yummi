@@ -7,6 +7,7 @@ import {
   Typography,
   AppBar,
   Toolbar,
+  Avatar,
 } from "@material-ui/core";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
@@ -15,6 +16,8 @@ import YummiLogo from "../images/Yummi.svg";
 import Popup from "../components/popup";
 import UploadCard from "../components/uploadCard";
 import { useAuth0 } from "@auth0/auth0-react";
+
+const spacing = "30px";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -45,12 +48,10 @@ const useStyles = makeStyles((theme) => {
       cursor: "pointer",
     },
     navText: {
-      marginRight: 60,
-      marginLeft: 60,
+      marginRight: spacing,
+      marginLeft: spacing,
     },
     userName: {
-      paddingRight: 60,
-      paddingLeft: 60,
       fontWeight: 550,
     },
     toolbarHeight: {},
@@ -61,12 +62,29 @@ const useStyles = makeStyles((theme) => {
     clickable: {
       cursor: "pointer",
     },
+    login: {
+      cursor: "pointer",
+      marginRight: 60,
+    },
+    account: {
+      display: "flex",
+      alignItems: "center",
+      marginRight: spacing,
+      marginLeft: spacing,
+    },
+    profilePicture: {
+      minWidth: "60px",
+      minHeight: "60px",
+      marginRight: "10px",
+      borderRadius: "20%",
+    },
   };
 });
 
 export default function Layout({ children }) {
-  const { user, isAuthenticated, logout } = useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect } = useAuth0();
   const classes = useStyles();
+  console.log(user);
 
   return (
     <div className={classes.root}>
@@ -99,23 +117,30 @@ export default function Layout({ children }) {
               <div
                 onClick={() => logout()}
                 //onClick={(event) => (window.location.href = "/account")}
-                className={classes.clickable}
+                className={classes.account}
               >
-                <Typography
-                  variant="h4"
-                  color="textPrimary"
-                  className={classes.userName}
-                >
-                  Hello Elijah!
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  color="textPrimary"
-                  className={classes.navText}
-                  align="center"
-                >
-                  McDonalds
-                </Typography>
+                <Avatar
+                  alt={user.name}
+                  src={user.picture}
+                  variant="rounded"
+                  className={classes.profilePicture}
+                />
+                <div className={classes.accountText}>
+                  <Typography
+                    variant="h4"
+                    color="textPrimary"
+                    className={classes.userName}
+                  >
+                    Hello {user.given_name}!
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textPrimary"
+                    align="left"
+                  >
+                    McDonalds
+                  </Typography>
+                </div>
               </div>
 
               <IconButton
@@ -141,7 +166,14 @@ export default function Layout({ children }) {
               </IconButton>
             </>
           ) : (
-            <>Login</>
+            <Typography
+              variant="h4"
+              color="textPrimary"
+              className={classes.login}
+              onClick={() => loginWithRedirect()}
+            >
+              Login
+            </Typography>
           )}
         </Toolbar>
       </AppBar>
