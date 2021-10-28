@@ -14,6 +14,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import YummiLogo from "../images/Yummi.svg";
 import Popup from "../components/popup";
 import UploadCard from "../components/uploadCard";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const useStyles = makeStyles((theme) => {
   return {
     page: {
@@ -63,6 +65,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Layout({ children }) {
+  const { user, isAuthenticated, logout } = useAuth0();
   const classes = useStyles();
 
   return (
@@ -91,45 +94,55 @@ export default function Layout({ children }) {
               Yummi
             </Typography>
           </div>
-          <div
-            onClick={(event) => (window.location.href = "/account")}
-            className={classes.clickable}
-          >
-            <Typography
-              variant="h4"
-              color="textPrimary"
-              className={classes.userName}
-            >
-              Hello Elijah!
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              color="textPrimary"
-              className={classes.navText}
-              align="center"
-            >
-              McDonalds
-            </Typography>
-          </div>
-          <IconButton
-            onClick={(event) => (window.location.href = "/dashboard")}
-            className={classes.navText}
-          >
-            <TimelineIcon className={classes.icon} />
-          </IconButton>
-          <Popup
-            button={{
-              color: "primary",
-              icon: <UploadRoundedIcon className={classes.icon} />,
-            }}
-            popupCard={<UploadCard />}
-          />
-          <IconButton
-            onClick={(event) => (window.location.href = "/manage")}
-            className={classes.navText}
-          >
-            <SettingsIcon className={classes.icon} />
-          </IconButton>
+          {isAuthenticated ? (
+            <>
+              <div
+                onClick={() => logout()}
+                //onClick={(event) => (window.location.href = "/account")}
+                className={classes.clickable}
+              >
+                <Typography
+                  variant="h4"
+                  color="textPrimary"
+                  className={classes.userName}
+                >
+                  Hello Elijah!
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  color="textPrimary"
+                  className={classes.navText}
+                  align="center"
+                >
+                  McDonalds
+                </Typography>
+              </div>
+
+              <IconButton
+                onClick={(event) => (window.location.href = "/dashboard")}
+                className={classes.navText}
+              >
+                <TimelineIcon className={classes.icon} />
+              </IconButton>
+
+              <Popup
+                button={{
+                  color: "primary",
+                  icon: <UploadRoundedIcon className={classes.icon} />,
+                }}
+                popupCard={<UploadCard />}
+              />
+
+              <IconButton
+                onClick={(event) => (window.location.href = "/manage")}
+                className={classes.navText}
+              >
+                <SettingsIcon className={classes.icon} />
+              </IconButton>
+            </>
+          ) : (
+            <>Login</>
+          )}
         </Toolbar>
       </AppBar>
 

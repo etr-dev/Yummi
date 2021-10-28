@@ -94,12 +94,12 @@ export default function LoginCard(props) {
 
       <div className={classes.buttonDiv}>
         <Button
-          className={ classes.button }
-          size={ "large" }
+          className={classes.button}
+          size={"large"}
           color="secondary"
           variant="contained"
-          startIcon={ <GoogleIcon /> }
-          onClick={ () => loginWithRedirect() }
+          startIcon={<GoogleIcon />}
+          onClick={() => loginWithRedirect()}
         >
           Google
         </Button>
