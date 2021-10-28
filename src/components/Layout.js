@@ -29,20 +29,20 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexGrow: 1,
       alignItems: "center",
-      cursor: "pointer",
     },
     active: {
       background: "#f4f4f4",
     },
-    title: {},
     appBar: {},
     title: {
       fontWeight: 700,
+      cursor: "pointer",
     },
     logo: {
       maxWidth: 50,
       padding: 10,
       paddingLeft: 80,
+      cursor: "pointer",
     },
     navText: {
       marginRight: 60,
