@@ -1,6 +1,13 @@
 import * as React from "react";
 import { Card, CardContent } from "@material-ui/core/";
-import { makeStyles, Typography, Button, Grid, Box } from "@material-ui/core";
+import {
+  makeStyles,
+  Typography,
+  Button,
+  Grid,
+  Box,
+  Slide,
+} from "@material-ui/core";
 import { display, flexbox } from "@mui/system";
 import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import svgBlobs from "../images/backgrounds/blob.svg";
@@ -68,7 +75,7 @@ const useStyles = makeStyles((theme) => {
 //this function is what creates the page that will be loaded by App.js
 export default function SplashPage() {
   const classes = useStyles();
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   return (
     <Grid container className={classes.root}>
       {/* This grid splits the page into a left and right half. When the screen is small the right half is hidden to make the screen look okay on mobile. */}
@@ -97,30 +104,28 @@ export default function SplashPage() {
           </Typography>
         </div>
 
-
-
-        { /*This looks like a mess*/ }
-        {/*It is if else statements to make
-        sure the right button renders if someone
-        is  logged in*/}
-        { isLoading ? (
-          <div></div>
-        ) : isAuthenticated ? (
-          <Button variant="contained" color="primary">
-            <Typography variant="h2">View Dashboard</Typography>
-          </Button>
-        ) : !isAuthenticated && !isLoading ? (
-          <Popup
-            button={ {
-              variant: "contained",
-              color: "primary",
-              text: <Typography variant="h2">Sign-Up</Typography>,
-            } }
-            popupCard={ <LoginCard /> }
-          />
-        ) : <></>
-          }
-        
+        {/*BUTTONS: display different button if logged in/out */}
+        <div>
+          <Slide direction="up" in={isAuthenticated} unmountOnExit mountOnEnter>
+            <Button variant="contained" color="primary">
+              <Typography variant="h2">View Dashboard</Typography>
+            </Button>
+          </Slide>
+          <Slide
+            direction="up"
+            in={!isLoading && !isAuthenticated}
+            unmountOnExit
+            mountOnEnter
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => loginWithRedirect()}
+            >
+              <Typography variant="h2">Sign-Up</Typography>
+            </Button>
+          </Slide>
+        </div>
       </Grid>
       {/* END LEFT */}
       {/* RIGHT */}
