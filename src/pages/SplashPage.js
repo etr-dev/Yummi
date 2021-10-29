@@ -9,6 +9,7 @@ import GraphCard from "../components/graph.js";
 import { TablePagination } from "@mui/material";
 import Popup from "../components/popup";
 import LoginCard from "../components/loginCard";
+import { useAuth0, isAuthenticated, isLoading } from "@auth0/auth0-react";
 
 const pageHeight = "calc(100vh - 70px)";
 /*
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => {
 //this function is what creates the page that will be loaded by App.js
 export default function SplashPage() {
   const classes = useStyles();
+  const { isAuthenticated, isLoading } = useAuth0();
   return (
     <Grid container className={classes.root}>
       {/* This grid splits the page into a left and right half. When the screen is small the right half is hidden to make the screen look okay on mobile. */}
@@ -94,14 +96,31 @@ export default function SplashPage() {
             today for free!
           </Typography>
         </div>
-        <Popup
-          button={{
-            variant: "contained",
-            color: "primary",
-            text: <Typography variant="h2">Sign-Up</Typography>,
-          }}
-          popupCard={<LoginCard />}
-        />
+
+
+
+        { /*This looks like a mess*/ }
+        {/*It is if else statements to make
+        sure the right button renders if someone
+        is  logged in*/}
+        { isLoading ? (
+          <div></div>
+        ) : isAuthenticated ? (
+          <Button variant="contained" color="primary">
+            <Typography variant="h2">View Dashboard</Typography>
+          </Button>
+        ) : !isAuthenticated && !isLoading ? (
+          <Popup
+            button={ {
+              variant: "contained",
+              color: "primary",
+              text: <Typography variant="h2">Sign-Up</Typography>,
+            } }
+            popupCard={ <LoginCard /> }
+          />
+        ) : <></>
+          }
+        
       </Grid>
       {/* END LEFT */}
       {/* RIGHT */}

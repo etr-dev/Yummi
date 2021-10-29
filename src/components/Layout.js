@@ -84,8 +84,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function Layout({ children }) {
-  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } =
-    useAuth0();
+  const { user, isAuthenticated, logout, loginWithRedirect, isLoading } = useAuth0();
   const classes = useStyles();
   console.log(user);
 
