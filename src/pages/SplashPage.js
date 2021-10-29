@@ -105,10 +105,10 @@ export default function SplashPage() {
         </div>
 
         {/*BUTTONS: display different button if logged in/out */}
-        <div>
+        <div className={{ minHeight: "100%" }}>
           <Slide direction="up" in={isAuthenticated} unmountOnExit mountOnEnter>
-            <Button variant="contained" color="primary">
-              <Typography variant="h2">View Dashboard</Typography>
+            <Button variant="contained" color="primary" className={classes.button}>
+              <Typography variant="h2">My Dashboard</Typography>
             </Button>
           </Slide>
           <Slide
@@ -120,7 +120,8 @@ export default function SplashPage() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => loginWithRedirect()}
+              onClick={ () => loginWithRedirect() }
+              className={classes.button}
             >
               <Typography variant="h2">Sign-Up</Typography>
             </Button>
