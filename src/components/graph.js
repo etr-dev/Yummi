@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: "transparent",
     },
     chart: {
-      color: theme.palette.primary.main,
+      color: theme.palette.text.primary,
     },
   };
 });
@@ -39,7 +39,7 @@ export default function GraphCard(props) {
           <ValueAxis max={7} showGrid={false} />
 
           <BarSeries valueField="population" argumentField="year" />
-          <Title text="World population" />
+          <Title text="Yummi Demo Graph" />
           <Animation />
         </Chart>
       </CardContent>

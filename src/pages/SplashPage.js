@@ -108,7 +108,7 @@ export default function SplashPage() {
         <div className={{ minHeight: "100%" }}>
           <Slide direction="up" in={isAuthenticated} unmountOnExit mountOnEnter>
             <Button variant="contained" color="primary" className={classes.button}>
-              <Typography variant="h2">My Dashboard</Typography>
+              <Typography variant="h2" onClick={(event) => (window.location.href = "/dashboard")}>My Dashboard</Typography>
             </Button>
           </Slide>
           <Slide
@@ -128,12 +128,12 @@ export default function SplashPage() {
           </Slide>
         </div>
       </Grid>
-      {/* END LEFT */}
+
       {/* RIGHT */}
       <Grid item xs={12} s={12} md={6} lg={6} className={classes.sides}>
         <img src={svgGraph} alt="graph" />
       </Grid>
-      {/* END RIGHT */}
+      
     </Grid>
   );
 }

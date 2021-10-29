@@ -14,6 +14,7 @@ import MyDrawer from "../components/drawer";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
+import svgGraph2 from "../images/undraw/graph2.svg";
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
 const useStyles = makeStyles((theme) => {
@@ -138,7 +139,7 @@ export default function Create() {
             </div>
           </Grid>
           <Grid item xs={12} s={6} md={6} lg={6} className={classes.right}>
-            <Typography variant="h5">a graph will go here</Typography>
+            <img src={svgGraph2} alt="graph" />
           </Grid>
         </Grid>
       </div>
