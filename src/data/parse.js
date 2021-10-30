@@ -3,7 +3,8 @@ import Papa from 'papaparse'
 
 //https://levelup.gitconnected.com/use-papa-parse-to-parse-a-csv-file-in-a-react-application-da570e0c346a
 
-//Format should be something like 
+//Format should be something like:
+//parsedData['DoubleCheeseburger']['10-23-2021'].count      ------>     28
             /*
             Double Cheeseburger:
                 Price: '2.59'       <---Price of the item
@@ -27,8 +28,6 @@ import Papa from 'papaparse'
                     Day: Saturday                                   
                     Time: ['12:34', '12:50', '1:20',...]            
                     Count: 28                                       
-            
-            
             */
 
 //in here we can begin parsing the data
