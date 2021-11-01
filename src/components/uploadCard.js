@@ -15,6 +15,7 @@ import { useDropzone } from "react-dropzone";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
 import svgUpload from "../images/backgrounds/upload_675x900.svg";
 import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -75,7 +76,7 @@ export default function LoginCard(props) {
   const files = acceptedFiles.map((file) => {
     //currently it is logging the file object and name of user
     console.log(file);
-    console.log(user.name);
+    //console.log(process.env.REACT_APP_API_URL +'/users/addFile'+user.email)
   });
 
   return (
