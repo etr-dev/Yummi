@@ -1,7 +1,9 @@
 import React from "react";
-import { makeStyles, Typography, Button } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import { makeStyles, Typography, Button, Grid } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
 import Popup from "../components/popup";
 import LoginCard from "../components/loginCard";
+import MyDrawer from "../components/drawer";
+
 /*
 
     Our Palette colors are stored in the material-ui theme object
@@ -21,8 +23,59 @@ const useStyles = makeStyles((theme) => {
     background: {
       backgroundColor: theme.palette.primary.main,
     },
+    title:{
+      height:"10vh", 
+      display: "flex",
+      flexDirection: "column",
+      alignContent: "center",
+      justifyContent: "center",
+      flexWrap: "nowrap",
+      paddingTop: "10vh",
+      alignItems: "center",
+    }
   };
 });
+
+const itemNames = [
+  "Big Mac",
+  "Quarter Pounder with Cheese",
+  "Double Quarter Pounder with Cheese",
+  "Filet-O-Fish",
+  "2 Cheeseburgers",
+  "Southern Style Chicken",
+  "Bacon Clubhouse Burger",
+  "Chicken McNuggets - 20pc",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "Buffalo Ranch McChicken",
+  "Quarter Pounder with Cheese",
+  "Double Quarter Pounder with Cheese",
+  "Filet-O-Fish",
+  "2 Cheeseburgers",
+  "Southern Style Chicken",
+  "Bacon Clubhouse Burger",
+  "Chicken McNuggets - 20pc",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "Buffalo Ranch McChicken",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "Buffalo Ranch McChicken",
+  "Quarter Pounder with Cheese",
+  "Double Quarter Pounder with Cheese",
+  "Filet-O-Fish",
+  "2 Cheeseburgers",
+  "Southern Style Chicken",
+  "Bacon Clubhouse Burger",
+  "Chicken McNuggets - 20pc",
+  "Small French Fry",
+  "Medium French Fry",
+  "McDouble",
+  "END",
+];
 
 //this function is what creates the page that will be loaded by App.js
 export default function Manage() {
@@ -33,16 +86,21 @@ export default function Manage() {
   //This is what will be returned when we call the function in App.js
   return (
     <div className={classes.background}>
-      <Typography
-        variant="h6"
-        color="textSecondary"
-        component="h2"
-        gutterBottom
-      >
-        Manage
-      </Typography>
-      <div>sean d</div>
-      <LoginCard />
+      <div className={classes.title}> 
+      <Typography variant= "h2" color="textPrimary"> Manage </Typography>
+      </div>
+      {/*BOTTOM PAGE */}
+      <div className={classes.background}>
+        {/* LIST DRAWER */}
+        <Grid container>
+          <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
+            <MyDrawer itemNames={itemNames} />
+          </Grid>
+          {/* CHART */}
+          <Grid className={classes.grid} item xs={12} md={9} lg={10}>
+          </Grid>
+        </Grid>
+      </div>
     </div>
   );
 }
