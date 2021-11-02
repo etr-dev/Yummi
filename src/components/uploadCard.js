@@ -17,7 +17,7 @@ import svgUpload from "../images/backgrounds/upload_675x900.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getAllUsers } from "../data/database";
 import { parseFileAndUpload } from "../data/parse";
-import { uploadFile } from "../data/database";
+import { uploadFile, findUser, createUser, initializeUser } from "../data/database";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => {
@@ -73,14 +73,15 @@ export default function LoginCard(props) {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const { user } = useAuth0();
-
+  const [ checked, setChecked ] = React.useState(false);
+  
+  if (!checked) {
+    initializeUser(user.email); //creates DB account if not existing
+    setChecked(true)
+  }
   //this is what is executed when a file is uploaded
-  //check here that it is .csv and send to database
-
   const files = acceptedFiles.map((file) => {
-    //currently it is logging the file object and name of user
-    //console.log(process.env.REACT_APP_API_URL +'/users/addFile'+user.email)
-    return file;
+     return file;
   });
 
   React.useEffect(() => {
@@ -89,6 +90,8 @@ export default function LoginCard(props) {
       console.log(parseFileAndUpload(file, user.email));
     }
   }, [files.length]);
+
+
 
   return (
     <Box borderRadius="5%" className={classes.card}>
