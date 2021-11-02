@@ -7,6 +7,7 @@ import {
   ArgumentAxis,
   ValueAxis,
 } from "@devexpress/dx-react-chart-material-ui";
+import { Typography, Button } from "@material-ui/core/";
 import { Animation } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 
@@ -27,9 +28,26 @@ const useStyles = makeStyles((theme) => {
 export default function GraphCard(props) {
   const chartData = props.data;
   const classes = useStyles();
-  return (
+  return (                                                              //todo: create clickevents for d/m/y buttons
     <Card elevation={0} className={classes.card}>
       <CardContent>
+              <div>
+              <Button size="large" className={classes.button}>
+                <Typography variant="h2" color="textSecondary">
+                  Day
+                </Typography>
+              </Button>
+              <Button size="large" className={classes.button}> 
+                <Typography variant="h2" color="textSecondary">
+                  Month
+                </Typography>
+              </Button>
+              <Button size="large" className={classes.button}>
+                <Typography variant="h2" color="textSecondary">
+                  Year
+                </Typography>
+              </Button>
+            </div>
         <Chart
           data={chartData}
           className={classes.chart}
@@ -39,7 +57,7 @@ export default function GraphCard(props) {
           <ValueAxis max={7} showGrid={false} />
 
           <BarSeries valueField="population" argumentField="year" />
-          <Title text="Yummi Demo Graph" />
+          
           <Animation />
         </Chart>
       </CardContent>
