@@ -35,7 +35,7 @@ export function getAllUsers() {
 export function createUser(email) {
   return {
     method: "post",
-    url: process.env.REACT_APP_API_URL + "/users/User",
+    url: process.env.REACT_APP_API_URL + "/users/User/",
     headers: { secret: "i<3Yummi" },
     data: { email: email },
   };
@@ -44,16 +44,16 @@ export function createUser(email) {
 export function deleteUser(email) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/FindUser" + email,
+    url: process.env.REACT_APP_API_URL + "/users/FindUser/" + email,
     headers: { secret: "i<3Yummi" },
   };
 }
 
 export function findUser(email) {
-  console.log(process.env.REACT_APP_API_URL + "/users/FindUser" + email)
+  console.log(process.env.REACT_APP_API_URL + "/users/FindUser/" + email)
   return {
     method: "get",
-    url: process.env.REACT_APP_API_URL + "/users/FindUser" + email,
+    url: process.env.REACT_APP_API_URL + "/users/FindUser/" + email,
     headers: { secret: "i<3Yummi" },
   };
 }
@@ -79,7 +79,7 @@ export function uploadFile(email, file, parsed) {
 export function deleteFile(email, filename) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/file" + email,
+    url: process.env.REACT_APP_API_URL + "/users/file/" + email,
     headers: { secret: "i<3Yummi" },
     data: {
       filename: filename,
@@ -91,7 +91,7 @@ export function setActive(email, filename) {
   console.log("uploading file...");
   return {
     method: "post",
-    url: process.env.REACT_APP_API_URL + "/users/ActiveFile" + email,
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/" + email,
     headers: { secret: "i<3Yummi" },
     data: {
       filename: filename,
@@ -102,7 +102,7 @@ export function setActive(email, filename) {
 export function deleteActive(email, filename) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/ActiveFile" + email,
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/" + email,
     headers: { secret: "i<3Yummi" },
     data: {
       filename: filename,
