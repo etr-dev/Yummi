@@ -3,7 +3,7 @@ import { parseFile } from "../data/parse";
 
 export function initializeUser(email) {
   axios(findUser(email))
-      .then((response) => {
+    .then((response) => {
       if (response.data.length == 0) {
         //if account does not exist
         console.log("creating account");
@@ -49,7 +49,6 @@ export function findUser(email) {
 }
 
 export function uploadFile(email, file, parsed) {
-  console.log("uploading file...");
   return {
     method: "post",
     url: process.env.REACT_APP_API_URL + "/users/file" + email,
@@ -61,7 +60,7 @@ export function uploadFile(email, file, parsed) {
           filename: file.name,
           mimetype: file.type,
         },
-        parsedDate: parsed,
+        parsedData: parsed,
       },
     },
   };
@@ -71,6 +70,29 @@ export function deleteFile(email, filename) {
   return {
     method: "delete",
     url: process.env.REACT_APP_API_URL + "/users/file" + email,
+    headers: { secret: "i<3Yummi" },
+    data: {
+      filename: filename,
+    },
+  };
+}
+
+export function setActive(email, filename) {
+  console.log("uploading file...");
+  return {
+    method: "post",
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile" + email,
+    headers: { secret: "i<3Yummi" },
+    data: {
+      filename: filename,
+    },
+  };
+}
+
+export function deleteActive(email, filename) {
+  return {
+    method: "delete",
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile" + email,
     headers: { secret: "i<3Yummi" },
     data: {
       filename: filename,
