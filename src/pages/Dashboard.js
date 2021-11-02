@@ -15,7 +15,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
 import svgGraph2 from "../images/undraw/graph2.svg";
-import { findUser } from "../data/database";
+import { findUser, findActiveFile } from "../data/database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -83,34 +83,30 @@ const data = [
 export default function Create() {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [activeData, setActiveData] = useState(null);
+  const [activeData, setActiveData] = useState({});
 
   useEffect(() => {
-    axios(findUser(user.email)).then((res) => {
-      const dbUser = res.data[0];
-      if (dbUser.activeFile != undefined) {
-        //find parsed file data here
-      } else if (dbUser.files.length > 0) {
-        setActiveData(dbUser.files[0].parsedData); //if no activedata set then default to first file
-      } else {
-        setActiveData({});
-      }
-    }).catch((error) => {
-      console.error("Error: ", error);
-    });
+    axios(findUser(user.email))
+      .then((res) => {
+        const dbUser = res.data[0];
+        if (dbUser.activeFile != undefined) {
+          setActiveData(dbUser.files[findActiveFile(dbUser)].parsedData);
+        } else if (dbUser.files.length > 0) {
+          setActiveData(dbUser.files[0].parsedData); //if no activedata set then default to first file
+        } else {
+          setActiveData({}); //if user has no files do not display data
+        }
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   }, []);
 
   if (activeData != null && activeData != undefined) {
-    itemNames = Object.keys(activeData)
+    itemNames = Object.keys(activeData);
+  } else {
+    itemNames = [];
   }
-  else {
-    itemNames = []
-  }
-
-
-
-
-
 
   return (
     <>

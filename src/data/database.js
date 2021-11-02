@@ -15,6 +15,15 @@ export function initializeUser(email) {
     });
 }
 
+export function findActiveFile(user) {
+    for (let i = 0; i < user.files.length; i++){
+        if (user.files[ i ].fileInfo.filename == user.activeFile) {
+            return i
+        }
+    }
+}
+
+//API FUNCTIONS FOR DATABASE
 export function getAllUsers() {
   return {
     method: "get",
