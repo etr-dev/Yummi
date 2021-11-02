@@ -77,6 +77,8 @@ export default function LoginCard(props) {
     //currently it is logging the file object and name of user
     console.log(file);
     //console.log(process.env.REACT_APP_API_URL +'/users/addFile'+user.email)
+    console.log(user.name);
+    parseFile(file)   
   });
 
   return (
