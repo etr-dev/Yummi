@@ -16,11 +16,11 @@ export function initializeUser(email) {
 }
 
 export function findActiveFile(user) {
-    for (let i = 0; i < user.files.length; i++){
-        if (user.files[ i ].fileInfo.filename == user.activeFile) {
-            return i
-        }
+  for (let i = 0; i < user.files.length; i++) {
+    if (user.files[i].fileInfo.filename == user.activeFile) {
+      return i;
     }
+  }
 }
 
 //API FUNCTIONS FOR DATABASE
@@ -44,25 +44,24 @@ export function createUser(email) {
 export function deleteUser(email) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/FindUser/" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/FindUser/",
+    headers: { secret: "i<3Yummi", email: email },
   };
 }
 
 export function findUser(email) {
-  console.log(process.env.REACT_APP_API_URL + "/users/FindUser/" + email)
   return {
     method: "get",
-    url: process.env.REACT_APP_API_URL + "/users/FindUser/" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/FindUser/",
+    headers: { secret: "i<3Yummi", email: email },
   };
 }
 
 export function uploadFile(email, file, parsed) {
   return {
     method: "post",
-    url: process.env.REACT_APP_API_URL + "/users/file" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/file/",
+    headers: { secret: "i<3Yummi", email: email },
     data: {
       file: {
         fileInfo: {
@@ -79,8 +78,8 @@ export function uploadFile(email, file, parsed) {
 export function deleteFile(email, filename) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/file/" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/file/",
+    headers: { secret: "i<3Yummi", email: email },
     data: {
       filename: filename,
     },
@@ -91,8 +90,8 @@ export function setActive(email, filename) {
   console.log("uploading file...");
   return {
     method: "post",
-    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/",
+    headers: { secret: "i<3Yummi", email: email },
     data: {
       filename: filename,
     },
@@ -102,8 +101,8 @@ export function setActive(email, filename) {
 export function deleteActive(email, filename) {
   return {
     method: "delete",
-    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/" + email,
-    headers: { secret: "i<3Yummi" },
+    url: process.env.REACT_APP_API_URL + "/users/ActiveFile/",
+    headers: { secret: "i<3Yummi", email: email },
     data: {
       filename: filename,
     },

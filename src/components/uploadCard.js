@@ -88,6 +88,7 @@ export default function LoginCard(props) {
     if (files.length > 0) {
       const file = files[files.length - 1]; //gets last added file
       console.log(parseFileAndUpload(file, user.email));
+      console.log('version 1.0.0')
     }
   }, [files.length]);
 
