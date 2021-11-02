@@ -50,6 +50,7 @@ export function deleteUser(email) {
 }
 
 export function findUser(email) {
+  console.log(process.env.REACT_APP_API_URL + "/users/FindUser" + email)
   return {
     method: "get",
     url: process.env.REACT_APP_API_URL + "/users/FindUser" + email,
