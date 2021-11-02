@@ -33,7 +33,15 @@ import Papa from 'papaparse'
 //in here we can begin parsing the data
 //results.data returns a huge array of all of the data (check the console on browser after uploading to see)  https://prnt.sc/1xv1she   <---image example
 function parseData(data) {
-    console.log(data)
+    console.log(data);
+    let parsedData = {};
+    for (let i = 0; i < data.length; i++){
+        let element = data[i];
+
+        if (i(element.ItemName in parseData))
+        parsedData[elment.ItemName] = {Price: element.Price, Tax: element.Tax};
+    }
+    console.log(parsedData);
 }
 
 export const parseFile = file => {
