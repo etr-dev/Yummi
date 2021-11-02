@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   makeStyles,
   Grid,
@@ -15,6 +15,10 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
 import svgGraph2 from "../images/undraw/graph2.svg";
+import { findUser } from "../data/database";
+import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
 const useStyles = makeStyles((theme) => {
@@ -64,46 +68,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const itemNames = [
-  "Big Mac",
-  "Quarter Pounder with Cheese",
-  "Double Quarter Pounder with Cheese",
-  "Filet-O-Fish",
-  "2 Cheeseburgers",
-  "Southern Style Chicken",
-  "Bacon Clubhouse Burger",
-  "Chicken McNuggets - 20pc",
-  "Small French Fry",
-  "Medium French Fry",
-  "McDouble",
-  "Buffalo Ranch McChicken",
-  "Quarter Pounder with Cheese",
-  "Double Quarter Pounder with Cheese",
-  "Filet-O-Fish",
-  "2 Cheeseburgers",
-  "Southern Style Chicken",
-  "Bacon Clubhouse Burger",
-  "Chicken McNuggets - 20pc",
-  "Small French Fry",
-  "Medium French Fry",
-  "McDouble",
-  "Buffalo Ranch McChicken",
-  "Small French Fry",
-  "Medium French Fry",
-  "McDouble",
-  "Buffalo Ranch McChicken",
-  "Quarter Pounder with Cheese",
-  "Double Quarter Pounder with Cheese",
-  "Filet-O-Fish",
-  "2 Cheeseburgers",
-  "Southern Style Chicken",
-  "Bacon Clubhouse Burger",
-  "Chicken McNuggets - 20pc",
-  "Small French Fry",
-  "Medium French Fry",
-  "McDouble",
-  "END",
-];
+let itemNames = [];
 
 const data = [
   { year: "1950", population: 2.525 },
@@ -117,6 +82,36 @@ const data = [
 
 export default function Create() {
   const classes = useStyles();
+  const { user } = useAuth0();
+  const [activeData, setActiveData] = useState(null);
+
+  useEffect(() => {
+    axios(findUser(user.email)).then((res) => {
+      const dbUser = res.data[0];
+      if (dbUser.activeFile != undefined) {
+        //find parsed file data here
+      } else if (dbUser.files.length > 0) {
+        setActiveData(dbUser.files[0].parsedData); //if no activedata set then default to first file
+      } else {
+        setActiveData({});
+      }
+    }).catch((error) => {
+      console.error("Error: ", error);
+    });
+  }, []);
+
+  if (activeData != null && activeData != undefined) {
+    itemNames = Object.keys(activeData)
+  }
+  else {
+    itemNames = []
+  }
+
+
+
+
+
+
   return (
     <>
       {/*TOP PAGE */}
