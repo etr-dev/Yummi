@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Card, CardContent } from "@material-ui/core/";
+import { Card, CardContent, TextField } from "@material-ui/core/";
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab/";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+
 import {
   Chart,
   BarSeries,
@@ -22,32 +25,50 @@ const useStyles = makeStyles((theme) => {
     chart: {
       color: theme.palette.text.primary,
     },
+    dateSelectorDiv: {
+      display: "flex",
+      justifyContent: "space-evenly",
+    },
+    datepickerTextboxPalette: {
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.secondary.main,
+      padding: '20px',
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
   };
 });
 
 export default function GraphCard(props) {
   const chartData = props.data;
   const classes = useStyles();
-  return (                                                              //todo: create clickevents for d/m/y buttons
+  return (
+    //todo: create clickevents for d/m/y buttons
     <Card elevation={0} className={classes.card}>
       <CardContent>
-              <div>
-              <Button size="large" className={classes.button}>
-                <Typography variant="h2" color="textSecondary">
-                  Day
-                </Typography>
-              </Button>
-              <Button size="large" className={classes.button}> 
-                <Typography variant="h2" color="textSecondary">
-                  Month
-                </Typography>
-              </Button>
-              <Button size="large" className={classes.button}>
-                <Typography variant="h2" color="textSecondary">
-                  Year
-                </Typography>
-              </Button>
-            </div>
+        <div className={classes.dateSelectorDiv}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDatePicker
+              label="Start Date"
+              //value={value}
+              onChange={(newValue) => {
+                console.log(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+              InputProps={{ className: classes.datepickerTextboxPalette }}
+            />
+            <DesktopDatePicker
+              label="End Date"
+              color="secondary"
+              //value={value}
+              onChange={(newValue) => {
+                console.log(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+              InputProps={{ className: classes.datepickerTextboxPalette }}
+            />
+          </LocalizationProvider>
+        </div>
         <Chart
           data={chartData}
           className={classes.chart}
@@ -57,7 +78,7 @@ export default function GraphCard(props) {
           <ValueAxis max={7} showGrid={false} />
 
           <BarSeries valueField="population" argumentField="year" />
-          
+
           <Animation />
         </Chart>
       </CardContent>
