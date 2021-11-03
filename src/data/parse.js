@@ -8,28 +8,38 @@ import axios from "axios";
 //Format should be something like:
 //parsedData['DoubleCheeseburger']['10-23-2021'].count      ------>     28
 /*
-Double Cheeseburger:
-    Price: '2.59'       <---Price of the item
-    Tax: '.18'          <---Tax of the item
+
+UPDATED FORMAT ----- as of 11/3/2021
+parsedDate:
+  items:
+    Double Cheeseburger:
+        Price: '2.59'       <---Price of the item
+        Tax: '.18'          <---Tax of the item
+        10-22-2021:
+            Day: Friday                                 <---What Day of the week 10-22-2021
+            Time: ['12:34', '12:50', '1:20',...]        <---All the times that double cheeseburgers sold on 10-22-2021
+            Count: 34                                   <---Number of items sold on 10-22-2021
+        10-23-2021:
+            Day: Saturday                                   <---What Day of the week 10-23-2021
+            Time: ['12:34', '12:50', '1:20',...]            <---All the times that double cheeseburgers sold on 10-23-2021
+            Count: 28                                       <---Number of items sold on 10-23-2021    
+  Dates:
+    10-21-2021:
+      Day: Thursday
+      ItemsSold: 602
+      Revenue:  7549.68     <---- total money made that day (you will have to convert the item's Price to float, it is currently a string)
     10-22-2021:
-        Day: Friday                                 <---What Day of the week 10-22-2021
-        Time: ['12:34', '12:50', '1:20',...]        <---All the times that double cheeseburgers sold on 10-22-2021
-        Count: 34                                   <---Number of items sold on 10-22-2021
+      Day: Friday
+      ItemsSold: 708
+      Revenue:  9659.41
     10-23-2021:
-        Day: Saturday                                   <---What Day of the week 10-23-2021
-        Time: ['12:34', '12:50', '1:20',...]            <---All the times that double cheeseburgers sold on 10-23-2021
-        Count: 28                                       <---Number of items sold on 10-23-2021
-Snack Wrap:
-    Price: '2.59'       <---Price of the item
-    Tax: '.18'          <---Tax of the item
-    10-22-2021:
-        Day: Friday                                
-        Time: ['12:34', '12:50', '1:20',...]        
-        Count: 34                                   
-    10-23-2021:
-        Day: Saturday                                   
-        Time: ['12:34', '12:50', '1:20',...]            
-        Count: 28                                       
+      Day: Saturday
+      ItemsSold: 501
+      Revenue:  5549.68
+  Categories:
+    Breakfast:[Pancakes,Hashbrown,Bacon Egg and Cheese Biscuit]   <--- list of all items that are in that category (make sure to get the keys dynamically do not hard code 'Breakfast' do element.Category or something)
+    Value Meal: [Double CheeseBurger, Big Mac]
+    Lunch: [Chicken Sandwhich]
 */
 
 //in here we can begin parsing the data
