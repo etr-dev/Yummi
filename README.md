@@ -90,7 +90,7 @@ What is special about this project?
 - [Material-ui](https://mui.com/)
 - [Redux](https://redux.js.org/)
 - [DevExpress](https://devexpress.github.io/)
-- [FireBase](https://firebase.google.com/)
+- [MongoDB](https://www.mongodb.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -135,8 +135,8 @@ This webservice will be used for restaurant owners or managers to look into thei
 ## Roadmap
 
 - [x] Build out front-end
-- [] OAuth2 Login
-- [] Allow users to upload and store data
+- [x] OAuth2 Login
+- [x] Allow users to upload and store data
 - [] Dynamically graph data
 - [] Editable raw data on manage page
 - [] Sales prediction
