@@ -63,13 +63,17 @@ export default function GraphCard(props) {
     <Card elevation={0} className={classes.card}>
       <CardContent>
         <div className={classes.dateSelectorDiv}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={ AdapterDateFns }>
+            
+            {/*START DATE CALENDAR */}
             <DesktopDatePicker
               label="Start Date"
               value={start}
               onChange={(newValue) => {
                 setStart(newValue);
               }}
+              renderInput={(params) => <TextField {...params} />}
+              InputProps={ { className: classes.datepickerTextboxPalette } }
               renderDay={(day, selected, DayProps) => {
                 //https://stackoverflow.com/questions/61502954/highlighting-weekend-days-sat-and-sun-in-material-ui-date-picker
                 
@@ -103,10 +107,9 @@ export default function GraphCard(props) {
                 }
                 return <PickersDay {...DayProps} />;
               }}
-              renderInput={(params) => <TextField {...params} />}
-              InputProps={{ className: classes.datepickerTextboxPalette }}
             />
-
+            
+            {/*END DATE CALENDAR */}
             <DesktopDatePicker
               label="End Date"
               color="secondary"
@@ -115,6 +118,8 @@ export default function GraphCard(props) {
               onChange={(newValue) => {
                 setEnd(newValue);
               }}
+              renderInput={(params) => <TextField {...params} />}
+              InputProps={ { className: classes.datepickerTextboxPalette } }
               renderDay={(day, selected, DayProps) => {
                 //https://stackoverflow.com/questions/61502954/highlighting-weekend-days-sat-and-sun-in-material-ui-date-picker
                 
@@ -147,9 +152,8 @@ export default function GraphCard(props) {
                 }
                 return <PickersDay {...DayProps} />;
               }}
-              renderInput={(params) => <TextField {...params} />}
-              InputProps={{ className: classes.datepickerTextboxPalette }}
             />
+
           </LocalizationProvider>
         </div>
         <Chart
