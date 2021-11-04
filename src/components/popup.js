@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { makeStyles, Card, IconButton } from "@material-ui/core";
+import { makeStyles, Card, IconButton, Tooltip } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -50,9 +50,10 @@ export default function AnimatedModal(props) {
   }
 
   return (
-    <>
+    <> 
+    <Tooltip title = 'Upload'>
       {customButton}
-
+      </Tooltip>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
