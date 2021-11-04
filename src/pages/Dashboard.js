@@ -18,6 +18,8 @@ import svgGraph2 from "../images/undraw/graph2.svg";
 import { findUser, findActiveFile } from "../data/database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
+import { drawerSelection } from "../data/Redux/Actions/index";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
@@ -84,14 +86,15 @@ export default function Create() {
   const classes = useStyles();
   const { user } = useAuth0();
   const [activeData, setActiveData] = useState({});
-
-
+  const drawerSelection = useSelector((state) => state.drawer);
+  const dateSelection = useSelector((state) => state.date);
   //this is ran on page load, it finds which csv file to display for the user
   useEffect(() => {
     axios(findUser(user.email))
       .then((res) => {
-        const dbUser = res.data[0];//get the user object from the Database
-        if (dbUser.activeFile != undefined) { //if active file is set then use that file
+        const dbUser = res.data[0]; //get the user object from the Database
+        if (dbUser.activeFile != undefined) {
+          //if active file is set then use that file
           setActiveData(dbUser.files[findActiveFile(dbUser)].parsedData);
         } else if (dbUser.files.length > 0) {
           setActiveData(dbUser.files[0].parsedData); //if no activedata set then default to first file
@@ -104,7 +107,8 @@ export default function Create() {
       });
   }, []);
 
-  if (activeData != null && activeData != undefined) {  //if the active data has been set then set item names
+  if (activeData != null && activeData != undefined) {
+    //if the active data has been set then set item names
     itemNames = Object.keys(activeData);
   } else {
     itemNames = [];
@@ -142,7 +146,11 @@ export default function Create() {
         {/* LIST DRAWER */}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemNames={itemNames /*Send our active data menu items to MyDrawer component*/} />
+            <MyDrawer
+              itemNames={
+                itemNames /*Send our active data menu items to MyDrawer component*/
+              }
+            />
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>

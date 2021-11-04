@@ -15,6 +15,8 @@ import {
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { minWidth } from "@mui/system";
+import { useDispatch } from "react-redux";
+import { drawerAction } from "../data/Redux/Actions";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 const headerHeight = 100;
@@ -68,9 +70,11 @@ export default function MyDrawer(props) {
   const classes = useStyles();
   const itemNames = props.itemNames;
   const dataCategories = props.dataCategories; //this is currently not passed
-  const [selection, setSelection] = React.useState(undefined);
+  const [selection, setSelection] = React.useState(null);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    console.log(selection);
+    dispatch(drawerAction(selection));
   }, [selection]);
 
   return (

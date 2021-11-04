@@ -13,6 +13,8 @@ import {
 import { Typography, Button } from "@material-ui/core/";
 import { Animation } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { dateAction } from "../data/Redux/Actions/index";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -57,7 +59,13 @@ export default function GraphCard(props) {
   const classes = useStyles();
   const [start, setStart] = React.useState(new Date());
   const [end, setEnd] = React.useState(new Date());
+  const dispatch = useDispatch();
 
+  React.useEffect(() => {
+    if (start <= end) //send to redux if start comes before end
+      dispatch(dateAction({start: start,end: end}));
+  }, [ start, end ]);
+  
   return (
     //todo: create clickevents for d/m/y buttons
     <Card elevation={0} className={classes.card}>
