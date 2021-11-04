@@ -48,6 +48,10 @@ const useStyles = makeStyles((theme) => {
     },
     title: {
       color: theme.palette.text.secondary
+    },
+    logoutButton:  {
+      margin: '30px'
+
     }
   };
 });
@@ -84,7 +88,14 @@ export default function Account() {
         Account Status: </Typography>
         <Typography color='TextPrimary' variant = 'h5'>Verified</Typography>
         </div>
+        <Button className= {classes.logoutButton}
+        onClick = {()=>logout()}
+        >
+        <Typography color='TextPrimary' variant = 'h4'>Logout</Typography>
+
+        </Button> 
       </Card>
+      
       </div>
     </div>
   );
