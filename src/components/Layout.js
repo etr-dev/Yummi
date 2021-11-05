@@ -9,7 +9,8 @@ import {
   Toolbar,
   Avatar,
   Slide,
-  Fade
+  Fade,
+  Tooltip,
 } from "@material-ui/core";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import UploadRoundedIcon from "@mui/icons-material/UploadRounded";
@@ -142,6 +143,7 @@ export default function Layout({ children }) {
       >
         <Toolbar className={classes.toolbarHeight}>
           {/*CONTAINS LOGO & TEXT*/}
+          
           <div className={classes.logoContainer}>
             <img
               src="Yummi.svg"
@@ -149,7 +151,9 @@ export default function Layout({ children }) {
               onClick={(event) => (window.location.href = "/")}
               className={classes.logo}
             />
+            <Tooltip title = 'Home Page'>
             <Typography
+            
               onClick={(event) => (window.location.href = "/")}
               className={classes.title}
               variant="h4"
@@ -157,7 +161,9 @@ export default function Layout({ children }) {
             >
               Yummi
             </Typography>
+            </Tooltip>
           </div>
+          
           {/*if logged in show account else show login option*/}
           {isAuthenticated ? (
             <>
@@ -169,6 +175,7 @@ export default function Layout({ children }) {
                 mountOnEnter
                 unmountOnExit
               >
+                <Tooltip title = 'Account'>
                 <div
                   onClick={() => logout()}
                   //onClick={(event) => (window.location.href = "/account")}
@@ -180,6 +187,7 @@ export default function Layout({ children }) {
                     variant="rounded"
                     className={classes.profilePicture}
                   />
+
                   <div className={classes.accountText}>
                     <Typography
                       variant="h4"
@@ -197,6 +205,7 @@ export default function Layout({ children }) {
                     </Typography>
                   </div>
                 </div>
+                </Tooltip>
               </Slide>
               
               <Fade 
@@ -205,6 +214,7 @@ export default function Layout({ children }) {
               >
                 <div>
               {/* DASHBOARD BUTTON */ }
+              <Tooltip title = 'Dashboard'>
               
                 <IconButton
                   onClick={(event) => (window.location.href = "/dashboard")}
@@ -212,8 +222,10 @@ export default function Layout({ children }) {
                 >
                   <TimelineIcon className={classes.icon} />
                 </IconButton>
+              </Tooltip>
                 
               {/* UPLOAD BUTTON */ }
+              
                 <Popup
                   button={{
                     color: "primary",
@@ -221,16 +233,20 @@ export default function Layout({ children }) {
                   }}
                   popupCard={<UploadCard />}
               />
+              
                 {/* MANAGE BUTTON */}
+                <Tooltip title = 'Manage'>
                 <IconButton
                   onClick={(event) => (window.location.href = "/manage")}
                   className={classes.navText}
                 >
                   <SettingsIcon className={classes.icon} />
                 </IconButton>
+                </Tooltip>
                 </div>
               </Fade >
             </>
+
           ) : (
             <Typography
               variant="h4"
