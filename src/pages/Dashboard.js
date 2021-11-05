@@ -18,6 +18,9 @@ import svgGraph2 from "../images/undraw/graph2.svg";
 import { findUser, findActiveFile } from "../data/database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useSelector } from "react-redux";
+import { drawerSelection } from "../data/Redux/Actions/index";
+import { inDateRange } from "../data/helpers";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
@@ -70,28 +73,25 @@ const useStyles = makeStyles((theme) => {
 
 let itemNames = [];
 
-const data = [
-  { year: "1950", population: 2.525 },
-  { year: "1960", population: 3.018 },
-  { year: "1970", population: 3.682 },
-  { year: "1980", population: 4.44 },
-  { year: "1990", population: 5.31 },
-  { year: "2000", population: 6.127 },
-  { year: "2010", population: 6.93 },
-];
+let chartData = [];
 
 export default function Create() {
   const classes = useStyles();
   const { user } = useAuth0();
   const [activeData, setActiveData] = useState({});
-
+  const drawerSelection = useSelector((state) => state.drawer);
+  const dateSelection = useSelector((state) => state.date);
+  //to get start date do dateSelection.start
+  //to get start date do dateSelection.end
+  //to get selectedItem do drawerSelection
 
   //this is ran on page load, it finds which csv file to display for the user
   useEffect(() => {
     axios(findUser(user.email))
       .then((res) => {
-        const dbUser = res.data[0];//get the user object from the Database
-        if (dbUser.activeFile != undefined) { //if active file is set then use that file
+        const dbUser = res.data[0]; //get the user object from the Database
+        if (dbUser.activeFile != undefined) {
+          //if active file is set then use that file
           setActiveData(dbUser.files[findActiveFile(dbUser)].parsedData);
         } else if (dbUser.files.length > 0) {
           setActiveData(dbUser.files[0].parsedData); //if no activedata set then default to first file
@@ -104,7 +104,34 @@ export default function Create() {
       });
   }, []);
 
-  if (activeData != null && activeData != undefined) {  //if the active data has been set then set item names
+
+  /*UPDATE CHART DATA:
+    This runs everytime the variable dateSelection, drawerSelection, or activeData change
+    This fills chart data for all of the user selected dates
+    creates a list of objects in the format {date, count } EXAMPLE: https://prnt.sc/1yh0439
+  */
+  React.useEffect(() => {
+    //RIGHT NOW THE EDGE CASES WOULD BE LEFT OUT start/end
+    if (dateSelection && drawerSelection && activeData) {             //if none of the data is empty
+      chartData = [];                                                 //clear data
+      let keys = Object.keys(activeData[drawerSelection]);            //get all of the dates from the Active data where the selected item was sold
+      for (let i = 0; i < keys.length; i++) {                         //loop through all of the dates where items sold
+        const day = new Date(keys[i]);                                //parse date string to a Date object
+        if (
+          inDateRange(day, dateSelection.start, dateSelection.end) && //if the date is in range of the start and end dates the user selected and not null push object to chartData
+          !isNaN(day.getTime())
+        ) {
+          chartData.push({                                            //push object onto chart data
+            date: keys[i],
+            count: activeData[drawerSelection][keys[i]].Count,
+          });
+        }
+      }
+    }
+  }, [dateSelection, drawerSelection, activeData]);                    // the variables inside of [] trigger useEffect when one of them changes
+
+  if (activeData != null && activeData != undefined) {
+    //if the active data has been set then set item names
     itemNames = Object.keys(activeData);
   } else {
     itemNames = [];
@@ -142,11 +169,16 @@ export default function Create() {
         {/* LIST DRAWER */}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemNames={itemNames /*Send our active data menu items to MyDrawer component*/} />
+            <MyDrawer
+              itemNames={
+                itemNames /*Send our active data menu items to MyDrawer component*/
+              }
+            />
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>
-            <GraphCard data={data} />
+            {console.log(chartData)}
+            <GraphCard data={chartData} />
           </Grid>
         </Grid>
       </div>

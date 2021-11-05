@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Drawer,
   List,
@@ -10,10 +10,13 @@ import {
   Grid,
   Box,
   useMediaQuery,
+  MenuItem,
 } from "@material-ui/core/";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { minWidth } from "@mui/system";
+import { useDispatch } from "react-redux";
+import { drawerAction } from "../data/Redux/Actions";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 const headerHeight = 100;
@@ -56,6 +59,10 @@ const useStyles = makeStyles((theme) => {
       minWidth: "100%",
       height: "100vh",
     },
+    selected: {
+      backgroundColor: theme.palette.info.main,
+      color: theme.palette.info.main,
+    },
   };
 });
 
@@ -63,6 +70,13 @@ export default function MyDrawer(props) {
   const classes = useStyles();
   const itemNames = props.itemNames;
   const dataCategories = props.dataCategories; //this is currently not passed
+  const [selection, setSelection] = React.useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(drawerAction(selection));
+  }, [selection]);
+
   return (
     <div className={classes.bigGrid}>
       {/* HEADER FOR LIST*/}
@@ -85,9 +99,17 @@ export default function MyDrawer(props) {
           <Card elevation={8} className={classes.card}>
             <List>
               {itemNames.map((entry) => (
-                <ListItem button={true} divider={true}>
-                  <Typography variant="h5">{entry}</Typography>
-                </ListItem>
+                <MenuItem
+                  button
+                  onClick={() => setSelection(entry)}
+                  selected={entry === selection}
+                  divider
+                  classes={{ selected: classes.selected }}
+                >
+                  <ListItem>
+                    <Typography variant="h5">{entry}</Typography>
+                  </ListItem>
+                </MenuItem>
               ))}
             </List>
           </Card>
