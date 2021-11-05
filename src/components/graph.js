@@ -68,7 +68,7 @@ export default function GraphCard(props) {
   
   return (
     //todo: create clickevents for d/m/y buttons
-    <Card elevation={0} className={classes.card}>
+    <Card elevation={ 0 } className={ classes.card }>
       <CardContent>
         <div className={classes.dateSelectorDiv}>
           <LocalizationProvider dateAdapter={ AdapterDateFns }>
@@ -172,7 +172,7 @@ export default function GraphCard(props) {
           <ArgumentAxis showGrid={false} showTicks={false} />
           <ValueAxis max={7} showGrid={false} />
 
-          <BarSeries valueField="population" argumentField="year" />
+          <BarSeries valueField="count" argumentField="date" />
 
           <Animation />
         </Chart>
