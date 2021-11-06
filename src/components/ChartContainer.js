@@ -15,11 +15,13 @@ import { Animation } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { dateAction } from "../data/Redux/Actions/index";
+import BarChart from "./BarChart.js";
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
       display: "flex",
+      height: "100vh",
     },
     card: {
       backgroundColor: "transparent",
@@ -51,10 +53,13 @@ const useStyles = makeStyles((theme) => {
       color: `${theme.palette.primary.main} !important`,
       backgroundColor: `red !important`,
     },
+    graphContainer: {
+      height: "100vh",
+    },
   };
 });
 
-export default function GraphCard(props) {
+export default function ChartContainer(props) {
   const chartData = props.data;
   const classes = useStyles();
   const [start, setStart] = React.useState(new Date());
@@ -62,17 +67,18 @@ export default function GraphCard(props) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (start <= end) //send to redux if start comes before end
-      dispatch(dateAction({start: start,end: end}));
-  }, [ start, end ]);
-  
+    if (start <= end)
+      //send to redux if start comes before end
+      dispatch(dateAction({ start: start, end: end }));
+  }, [start, end]);
+
   return (
     //todo: create clickevents for d/m/y buttons
-    <Card elevation={ 0 } className={ classes.card }>
+    <Card elevation={0} className={classes.card}>
       <CardContent>
+        {/*TOP PART (ABOVE GRAPH) */}
         <div className={classes.dateSelectorDiv}>
-          <LocalizationProvider dateAdapter={ AdapterDateFns }>
-            
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             {/*START DATE CALENDAR */}
             <DesktopDatePicker
               label="Start Date"
@@ -81,11 +87,10 @@ export default function GraphCard(props) {
                 setStart(newValue);
               }}
               renderInput={(params) => <TextField {...params} />}
-              InputProps={ { className: classes.datepickerTextboxPalette } }
+              InputProps={{ className: classes.datepickerTextboxPalette }}
               renderDay={(day, selected, DayProps) => {
                 //https://stackoverflow.com/questions/61502954/highlighting-weekend-days-sat-and-sun-in-material-ui-date-picker
-                
-                
+
                 //highlight the start and end specially
                 if (
                   datesAreOnSameDay(day, start) ||
@@ -116,7 +121,7 @@ export default function GraphCard(props) {
                 return <PickersDay {...DayProps} />;
               }}
             />
-            
+
             {/*END DATE CALENDAR */}
             <DesktopDatePicker
               label="End Date"
@@ -127,10 +132,10 @@ export default function GraphCard(props) {
                 setEnd(newValue);
               }}
               renderInput={(params) => <TextField {...params} />}
-              InputProps={ { className: classes.datepickerTextboxPalette } }
+              InputProps={{ className: classes.datepickerTextboxPalette }}
               renderDay={(day, selected, DayProps) => {
                 //https://stackoverflow.com/questions/61502954/highlighting-weekend-days-sat-and-sun-in-material-ui-date-picker
-                
+
                 //highlight the start and end specially
                 if (
                   datesAreOnSameDay(day, start) ||
@@ -161,21 +166,14 @@ export default function GraphCard(props) {
                 return <PickersDay {...DayProps} />;
               }}
             />
-
           </LocalizationProvider>
         </div>
-        <Chart
-          data={chartData}
-          className={classes.chart}
-          height={window.innerHeight * 0.9}
-        >
-          <ArgumentAxis showGrid={false} showTicks={false} />
-          <ValueAxis max={7} showGrid={false} />
 
-          <BarSeries valueField="count" argumentField="date" />
-
-          <Animation />
-        </Chart>
+        {/*CHARTS*/}
+        <BarChart
+          activeData={props.activeData}
+          className={classes.graphContainer}
+        />
       </CardContent>
     </Card>
   );
