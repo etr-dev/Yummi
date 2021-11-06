@@ -6,8 +6,9 @@ import {
   Title,
   ArgumentAxis,
   ValueAxis,
+  Tooltip,
 } from "@devexpress/dx-react-chart-material-ui";
-import { Animation } from "@devexpress/dx-react-chart";
+import { Animation, EventTracker } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { drawerSelection } from "../data/Redux/Actions/index";
@@ -15,13 +16,15 @@ import { inDateRange } from "../data/helpers";
 
 const useStyles = makeStyles((theme) => {
   return {
-    container: {
-    },
+    container: {},
     card: {
       backgroundColor: "transparent",
     },
     chart: {
       color: theme.palette.text.primary,
+    },
+    tooltip: {
+      color: theme.palette.primary.main,
     },
   };
 });
@@ -33,6 +36,19 @@ export default function BarChart(props) {
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
   const dateSelection = useSelector((state) => state.date);
+  let titleText = "Select an Item";
+  if (dateSelection && drawerSelection && activeData) {
+    titleText =
+      drawerSelection +
+      "s sold between " +
+      (parseInt(dateSelection.start.getMonth()) + 1) +
+      "/" +
+      dateSelection.start.getDay() +
+      " and " +
+      (parseInt(dateSelection.end.getMonth()) + 1) +
+      "/" +
+      dateSelection.end.getDay();
+  }
 
   //SETUP DATA TO BE PASSED TO THE CHART IF ALL VARIABLES HAVE BEEN SET
   if (dateSelection && drawerSelection && activeData) {
@@ -57,18 +73,18 @@ export default function BarChart(props) {
 
   return (
     <div className={classes.container}>
-          <Chart
-            data={chartData}
-            className={classes.chart}
-            height={window.innerHeight * 0.9}
-          >
-            <ArgumentAxis showGrid={false} showTicks={false} />
-            <ValueAxis max={7} showGrid={false} />
+      <Chart
+        data={chartData}
+        className={classes.chart}
+        height={window.innerHeight * 0.9}
+      >
+        <Title text={titleText} />
+        <ArgumentAxis showGrid={false} showTicks={false} />
+        <ValueAxis max={7} showGrid={false} />
 
-            <BarSeries valueField="count" argumentField="date" />
-
-            <Animation />
-          </Chart>
+        <BarSeries valueField="count" argumentField="date" />
+        <Animation />
+      </Chart>
     </div>
   );
 }
