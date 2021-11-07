@@ -80,7 +80,7 @@ export default function BarChart(props) {
       >
         <Title text={titleText} />
         <ArgumentAxis showGrid={false} showTicks={false} />
-        <ValueAxis max={7} showGrid={false} />
+              <ValueAxis showGrid={ false }/>
 
         <BarSeries valueField="count" argumentField="date" />
         <Animation />
