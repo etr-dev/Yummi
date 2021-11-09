@@ -40,14 +40,14 @@ export default function BarChart(props) {
   if (dateSelection && drawerSelection && activeData) {
     titleText =
       drawerSelection +
-      "s sold between " +
+      " sold between " +
       (parseInt(dateSelection.start.getMonth()) + 1) +
       "/" +
-      dateSelection.start.getDay() +
+      dateSelection.start.getDate() +
       " and " +
       (parseInt(dateSelection.end.getMonth()) + 1) +
       "/" +
-      dateSelection.end.getDay();
+      dateSelection.end.getDate();
   }
 
   //SETUP DATA TO BE PASSED TO THE CHART IF ALL VARIABLES HAVE BEEN SET
