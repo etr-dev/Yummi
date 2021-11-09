@@ -8,3 +8,18 @@ export const datesAreOnSameDay = (first, second) =>
   first.getFullYear() === second.getFullYear() &&
   first.getMonth() === second.getMonth() &&
   first.getDate() === second.getDate();
+
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+export function getDates(start, end) {
+  var dateArray = new Array();
+  var currentDate = start;
+  while (currentDate <= end) {
+      dateArray.push(new Date (currentDate));
+      currentDate = currentDate.addDays(1);
+  }
+  return dateArray;
+}
