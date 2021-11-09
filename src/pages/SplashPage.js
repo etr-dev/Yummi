@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Card, CardContent } from "@material-ui/core/";
 import {
   makeStyles,
   Typography,
@@ -8,15 +7,9 @@ import {
   Box,
   Slide,
 } from "@material-ui/core";
-import { display, flexbox } from "@mui/system";
-import LoginRoundedIcon from "@mui/icons-material/LoginRounded";
 import svgBlobs from "../images/backgrounds/blob.svg";
 import svgGraph from "../images/undraw/graph.svg";
-import GraphCard from "../components/graph.js";
-import { TablePagination } from "@mui/material";
-import Popup from "../components/popup";
-import LoginCard from "../components/loginCard";
-import { useAuth0, isAuthenticated, isLoading } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const pageHeight = "calc(100vh - 70px)";
 /*

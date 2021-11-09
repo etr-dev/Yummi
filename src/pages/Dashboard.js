@@ -9,7 +9,7 @@ import {
   Box,
   Button,
 } from "@material-ui/core";
-import GraphCard from "../components/graph.js";
+import ChartContainer from "../components/ChartContainer.js";
 import MyDrawer from "../components/drawer";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => {
       alignItems: "flex-end",
     },
     drawer: {
-      maxHeight: "100vh",
+      height: "100vh",
     },
     grid: {
-      maxHeight: "100vh",
+      height: "100vh",
     },
     topPage: {
       backgroundColor: theme.palette.primary.main,
@@ -177,8 +177,7 @@ export default function Create() {
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>
-            {console.log(chartData)}
-            <GraphCard data={chartData} />
+            <ChartContainer activeData={activeData} />
           </Grid>
         </Grid>
       </div>
