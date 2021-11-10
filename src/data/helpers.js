@@ -14,6 +14,14 @@ Date.prototype.addDays = function(days) {
   date.setDate(date.getDate() + days);
   return date;
 }
+
+export function getDateString(date) {
+  const MM = date.getMonth() + 1
+  const DD = date.getDate()
+  const YYYY = date.getFullYear()
+  return MM + '-' + DD + '-' + YYYY
+}
+
 export function getDates(start, end) {
   var dateArray = new Array();
   var currentDate = start;
