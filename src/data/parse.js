@@ -73,7 +73,9 @@ export const parseFileAndUpload = (file, email) => {
     complete: (results) => {
       //Goals here: Parse data, send parsed data to DB
       const parsed = parseData(results.data);
-      axios(uploadFile(email, file, parsed))
+      const partialRaw = results.data.slice(0, 50) //SAVE THE FIRST 50 ROWS OF DATA TO DATABASE
+      console.log(partialRaw)
+      axios(uploadFile(email, file, parsed, partialRaw))
         .then((response) => {
           console.log(response);
         })

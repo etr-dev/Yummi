@@ -57,7 +57,7 @@ export function findUser(email) {
   };
 }
 
-export function uploadFile(email, file, parsed) {
+export function uploadFile(email, file, parsed, raw) {
   return {
     method: "post",
     url: process.env.REACT_APP_API_URL + "/users/file/",
@@ -70,6 +70,7 @@ export function uploadFile(email, file, parsed) {
           mimetype: file.type,
         },
         parsedData: parsed,
+        rawData: raw
       },
     },
   };
