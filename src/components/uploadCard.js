@@ -74,6 +74,7 @@ export default function LoginCard(props) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
   const { user } = useAuth0();
   const [ checked, setChecked ] = React.useState(false);
+  const [ errorMessage, seterrorMessage ] = React.useState(".csv .xlx");
   
   if (!checked) {
     initializeUser(user.email); //creates DB account if not existing
@@ -84,11 +85,22 @@ export default function LoginCard(props) {
      return file;
   });
 
+
   React.useEffect(() => {
     if (files.length > 0) {
       const file = files[files.length - 1]; //gets last added file
-      console.log(parseFileAndUpload(file, user.email));
+      //add if for check files using mime.type
+      console.log(file.name)
+      if(file.name.endsWith(".csv")){
+        console.log(parseFileAndUpload(file, user.email));
       console.log('version 1.0.0')
+      window.location.reload(true)
+      }
+      
+      else{
+        seterrorMessage("not acceptable file type, please upload .CSV ")
+        console.error("not acceptable file type")
+      }
     }
   }, [files.length]);
 
@@ -106,7 +118,7 @@ export default function LoginCard(props) {
       </div>
 
       <Typography variant="h6" color="textPrimary" align="center">
-        accepted file types: <br /> .csv .xlx
+      accepted file types: <br /> {errorMessage}
       </Typography>
 
       {/* UPLOAD AREA */}
