@@ -23,6 +23,14 @@ export function findActiveFile(user) {
   }
 }
 
+export function findFileByFilename(user, filename) {
+  for (let i = 0; i < user.files.length; i++) {
+    if (user.files[i].fileInfo.filename == filename) {
+      return i;
+    }
+  }
+}
+
 //API FUNCTIONS FOR DATABASE
 export function getAllUsers() {
   return {
