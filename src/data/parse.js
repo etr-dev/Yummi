@@ -45,25 +45,51 @@ parsedDate:
 //in here we can begin parsing the data
 //results.data returns a huge array of all of the data (check the console on browser after uploading to see)  https://prnt.sc/1xv1she   <---image example
 function parseData(data) {
-  let parsedData = {};
+  let parsedData = { items: {}, categories: {}, dates: {}};
   for (let i = 0; i < data.length; i++) {
-    let element = data[i];
-
-    if (!(element.ItemName in parsedData))
-      parsedData[element.ItemName] = { Price: element.Price, Tax: element.Tax };
-
-    if (!(element.Date in parsedData[element.ItemName])) {
-      parsedData[element.ItemName][element.Date] = {
+    let element = data[ i ];
+    if (element.ItemName == undefined)  //if undefined then skip
+      continue;
+    
+    //if a catergory has not been created then create it with an empty list
+    if (!(element.Category in parsedData.categories))
+      parsedData.categories[ element.Category ] = [];
+    
+    //if the itemname is not in parsed data yet then initialize it
+    if (!(element.ItemName in parsedData.items)) {
+      parsedData.items[ element.ItemName ] = { Price: element.Price, Tax: element.Tax, Category: element.Category };  //initialize item
+      parsedData.categories[ element.Category ].push(element.ItemName)  //push the item name into it's specific category this will only happen once per itemname
+    }
+    
+    //if the date is not in parsed data Item yet then initialize it
+    if (!(element.Date in parsedData.items[element.ItemName])) {
+      parsedData.items[element.ItemName][element.Date] = {
         Day: element.Day,
         Time: [],
         Count: 0,
       };
     }
 
-    parsedData[element.ItemName][element.Date].Time.push(element.Time);
-    parsedData[element.ItemName][element.Date].Count++;
+    //initialize empty date
+    if (!(element.Date in parsedData.dates)) {
+      parsedData.dates[element.Date] = {
+        revenue: 0,
+        //Time: [],
+        Count: 0,
+      };
+    }
+
+    parsedData.dates[ element.Date ].revenue += Number(element.Price) //add item price to revenue for that day.. convert to number with 2 decimal points
+    parsedData.dates[ element.Date ].Count++  //increment date count
+
+    parsedData.items[element.ItemName][element.Date].Time.push(element.Time);
+    parsedData.items[element.ItemName][element.Date].Count++;
   }
-  //console.log(parsedData);
+  const dateKeys = Object.keys(parsedData.dates)
+  for (let i = 0; i < dateKeys.length; i++){
+    parsedData.dates[dateKeys[i]].revenue = parsedData.dates[dateKeys[i]].revenue.toFixed(2)
+  }
+  console.log(parsedData);
   return parsedData;
 }
 
