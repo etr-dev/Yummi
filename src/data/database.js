@@ -96,7 +96,6 @@ export function deleteFile(email, filename) {
 }
 
 export function setActive(email, filename) {
-  console.log("uploading file...");
   return {
     method: "post",
     url: process.env.REACT_APP_API_URL + "/users/ActiveFile/",

@@ -4,7 +4,7 @@ import Popup from "../components/popup";
 import LoginCard from "../components/loginCard";
 import MyDrawer from "../components/drawer";
 import axios from "axios";
-import { findFileByFilename, findUser } from "../data/database";
+import { findFileByFilename, findUser, setActive } from "../data/database";
 import { useAuth0 } from "@auth0/auth0-react";
 import { drawerSelection } from "../data/Redux/Actions/index";
 import { useSelector } from "react-redux";
@@ -76,9 +76,18 @@ export default function Manage() {
   React.useEffect(() => {
     if (dbUser != undefined) {
       const index = findFileByFilename(dbUser, drawerSelection);
-      setActiveFile(dbUser.files[index]);
+      setActiveFile(dbUser.files[ index ]);
     }
+
+    axios(setActive(user.email, drawerSelection))
+      .then((res) => {
+        console.log('Set Active: ' + drawerSelection)
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   }, [drawerSelection]);
+
 
   //The return statement returns JSX code (it is just HTML in javascript basically)
   //This is what will be returned when we call the function in App.js

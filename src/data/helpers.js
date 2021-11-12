@@ -16,9 +16,13 @@ Date.prototype.addDays = function(days) {
 }
 
 export function getDateString(date) {
-  const MM = date.getMonth() + 1
-  const DD = date.getDate()
+  let MM = date.getMonth() + 1
+  let DD = date.getDate()
   const YYYY = date.getFullYear()
+
+  if (DD < 10) DD = '0' + DD;
+  if (MM < 10) MM = '0' + MM;
+
   return MM + '-' + DD + '-' + YYYY
 }
 
