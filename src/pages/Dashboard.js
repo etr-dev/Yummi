@@ -19,7 +19,7 @@ import { findUser, findActiveFile } from "../data/database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
-import { drawerSelection } from "../data/Redux/Actions/index";
+import { drawerSelection, categorySelection } from "../data/Redux/Actions/index";
 import { inDateRange } from "../data/helpers";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
@@ -72,13 +72,17 @@ const useStyles = makeStyles((theme) => {
 });
 
 let itemNames = [];
-
+let dataCategories = ['items']
 let chartData = [];
+//let itemList = []
+
 
 export default function Create() {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [activeData, setActiveData] = useState({});
+  const [ activeData, setActiveData ] = useState({});
+  const [ itemList, setItemList ] = useState([]);
+  const categorySelection = useSelector((state) => state.category);
   const drawerSelection = useSelector((state) => state.drawer);
   const dateSelection = useSelector((state) => state.date);
   //to get start date do dateSelection.start
@@ -110,31 +114,16 @@ export default function Create() {
     This fills chart data for all of the user selected dates
     creates a list of objects in the format {date, count } EXAMPLE: https://prnt.sc/1yh0439
   */
-  React.useEffect(() => {
-    //RIGHT NOW THE EDGE CASES WOULD BE LEFT OUT start/end
-    if (dateSelection && drawerSelection && activeData) {             //if none of the data is empty
-      chartData = [];                                                 //clear data
-      let keys = Object.keys(activeData[drawerSelection]);            //get all of the dates from the Active data where the selected item was sold
-      for (let i = 0; i < keys.length; i++) {                         //loop through all of the dates where items sold
-        const day = new Date(keys[i]);                                //parse date string to a Date object
-        if (
-          inDateRange(day, dateSelection.start, dateSelection.end) && //if the date is in range of the start and end dates the user selected and not null push object to chartData
-          !isNaN(day.getTime())
-        ) {
-          chartData.push({                                            //push object onto chart data
-            date: keys[i],
-            count: activeData[drawerSelection][keys[i]].Count,
-          });
-        }
-      }
-    }
-  }, [dateSelection, drawerSelection, activeData]);                    // the variables inside of [] trigger useEffect when one of them changes
-
-  if (activeData != null && activeData != undefined) {
+  if (activeData != null && activeData != undefined && Object.keys(activeData).length > 0) {
     //if the active data has been set then set item names
     itemNames = Object.keys(activeData);
+    dataCategories = Object.keys(activeData.categories)
+    if (itemList !== activeData.categories[ categorySelection ]) {
+      setItemList(activeData.categories[ categorySelection ])
+    }
   } else {
     itemNames = [];
+    dataCategories = [ 'items' ]
   }
 
   return (
@@ -170,10 +159,10 @@ export default function Create() {
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
             <MyDrawer
-              itemNames={
-                itemNames /*Send our active data menu items to MyDrawer component*/
-              }
+              itemList={ itemList }
+              dataCategories={ dataCategories }
             />
+            {console.log(categorySelection)}
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>

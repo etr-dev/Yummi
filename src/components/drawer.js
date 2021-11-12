@@ -16,7 +16,8 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded"
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { minWidth } from "@mui/system";
 import { useDispatch } from "react-redux";
-import { drawerAction } from "../data/Redux/Actions";
+import { drawerAction, categoryAction } from "../data/Redux/Actions";
+import { IconButton } from "@mui/material";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 const headerHeight = 100;
@@ -68,29 +69,77 @@ const useStyles = makeStyles((theme) => {
 
 export default function MyDrawer(props) {
   const classes = useStyles();
-  const itemNames = props.itemNames;
-  const dataCategories = props.dataCategories; //this is currently not passed
-  const [selection, setSelection] = React.useState(null);
+  let itemList = props.itemList
+  if (itemList == undefined) itemList = []  //if no itemlist is passed in then default to empty
+  const dataCategories = props.dataCategories;
+  const [index, setIndex] = React.useState(0);
+  const [disableRight, setDisableRight] = React.useState(false);
+  const [disableLeft, setDisableLeft] = React.useState(false);
+  const [drawerSelection, setDrawerSelection] = React.useState(null);
+  const [categorySelection, setCategorySelection] = React.useState(
+    props.dataCategories[0]
+  );
   const dispatch = useDispatch();
 
+
+  //this sets global state of drawer
   useEffect(() => {
-    dispatch(drawerAction(selection));
-  }, [selection]);
+    dispatch(drawerAction(drawerSelection));
+  }, [drawerSelection]);
+
+  //this sets global use state of category
+  useEffect(() => {
+    dispatch(categoryAction(categorySelection));
+  }, [categorySelection]);
+
+
+  //This use effect keeps the index in bounds
+  useEffect(() => {
+    if (index == dataCategories.length - 1) {
+      setDisableRight(true);
+    } else {
+      setDisableRight(false);
+    }
+    if (index == 0) {
+      setDisableLeft(true);
+    } else {
+      setDisableLeft(false);
+    }
+  }, [index, dataCategories]);
 
   return (
     <div className={classes.bigGrid}>
       {/* HEADER FOR LIST*/}
       <Grid className={classes.header}>
-        <KeyboardArrowLeftIcon className={classes.icons} fontSize={"large"} />
+        <IconButton
+          onClick={() => {
+            setCategorySelection(dataCategories[index - 1]);
+            setIndex(index - 1);
+          }}
+          disabled={disableLeft}
+        >
+          <KeyboardArrowLeftIcon className={classes.icons} fontSize={"large"} />
+        </IconButton>
         <Typography
           variant="h4"
           color="textSecondary"
           component="h2"
           gutterBottom
         >
-          Menu Items
+          {dataCategories[index]}
         </Typography>
-        <KeyboardArrowRightIcon className={classes.icons} fontSize={"large"} />
+        <IconButton
+          onClick={() => {
+            setCategorySelection(dataCategories[index + 1]);
+            setIndex(index + 1);
+          }}
+          disabled={disableRight}
+        >
+          <KeyboardArrowRightIcon
+            className={classes.icons}
+            fontSize={"large"}
+          />
+        </IconButton>
       </Grid>
 
       {/* LIST DRAWER */}
@@ -98,11 +147,11 @@ export default function MyDrawer(props) {
         <Grid className={classes.drawer}>
           <Card elevation={8} className={classes.card}>
             <List>
-              {itemNames.map((entry) => (
+              {props.itemList.map((entry) => (
                 <MenuItem
                   button
-                  onClick={() => setSelection(entry)}
-                  selected={entry === selection}
+                  onClick={() => setDrawerSelection(entry)}
+                  selected={entry === drawerSelection}
                   divider
                   classes={{ selected: classes.selected }}
                 >

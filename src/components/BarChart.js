@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => {
 export default function BarChart(props) {
   let chartData = [];
   let chart = <></>;
-  const activeData = props.activeData;
+  const activeData = props.activeData.items;
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
   const dateSelection = useSelector((state) => state.date);
@@ -51,8 +51,8 @@ export default function BarChart(props) {
   }
 
   //SETUP DATA TO BE PASSED TO THE CHART IF ALL VARIABLES HAVE BEEN SET
-  if (dateSelection && drawerSelection && activeData) {
-    //if none of the data is empty
+  if (dateSelection && drawerSelection && activeData != undefined) {
+    //if none of the data is empty   
     chartData = []; //clear data
     let keys = Object.keys(activeData[drawerSelection]); //get all of the dates from the Active data where the selected item was sold
     for (let i = 0; i < keys.length; i++) {

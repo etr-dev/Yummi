@@ -5,6 +5,13 @@ export const drawerAction = (selection) => {
     }
 }
 
+export const categoryAction = (selection) => {
+    return {
+        type: 'SET_CATEGORY',
+        selection: selection
+    }
+}
+
 export const dateAction = (selection) => {
     return {
         type: 'SET_DATE',
