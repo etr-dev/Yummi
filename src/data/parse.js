@@ -45,7 +45,7 @@ parsedDate:
 //in here we can begin parsing the data
 //results.data returns a huge array of all of the data (check the console on browser after uploading to see)  https://prnt.sc/1xv1she   <---image example
 function parseData(data) {
-  let parsedData = { items: {}, categories: {}, dates: {}};
+  let parsedData = { items: {}, categories: {items:[]}, dates: {}};
   for (let i = 0; i < data.length; i++) {
     let element = data[ i ];
     if (element.ItemName == undefined)  //if undefined then skip
@@ -59,6 +59,7 @@ function parseData(data) {
     if (!(element.ItemName in parsedData.items)) {
       parsedData.items[ element.ItemName ] = { Price: element.Price, Tax: element.Tax, Category: element.Category };  //initialize item
       parsedData.categories[ element.Category ].push(element.ItemName)  //push the item name into it's specific category this will only happen once per itemname
+      parsedData.categories.items.push(element.ItemName)
     }
     
     //if the date is not in parsed data Item yet then initialize it
@@ -104,6 +105,7 @@ export const parseFileAndUpload = (file, email) => {
       axios(uploadFile(email, file, parsed, partialRaw))
         .then((response) => {
           console.log(response);
+          window.location.reload(true)
         })
         .catch((error) => {
           console.error("Error: ", error);

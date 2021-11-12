@@ -90,13 +90,11 @@ export default function LoginCard(props) {
     if (files.length > 0) {
       const file = files[files.length - 1]; //gets last added file
       //add if for check files using mime.type
-      console.log(file.name)
-      if(file.name.endsWith(".csv")){
+      if (file.name.endsWith(".csv")) {
+        console.log('pog')
         console.log(parseFileAndUpload(file, user.email));
-      console.log('version 1.0.0')
-      window.location.reload(true)
+        console.log('version 1.0.0')
       }
-      
       else{
         seterrorMessage("not acceptable file type, please upload .CSV ")
         console.error("not acceptable file type")
