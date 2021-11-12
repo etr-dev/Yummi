@@ -95,7 +95,7 @@ export default function Manage() {
         {/* LIST DRAWER */}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemNames={filelist} />
+            <MyDrawer itemList={filelist} />
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>

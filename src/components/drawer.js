@@ -71,13 +71,14 @@ export default function MyDrawer(props) {
   const classes = useStyles();
   let itemList = props.itemList
   if (itemList == undefined) itemList = []  //if no itemlist is passed in then default to empty
-  const dataCategories = props.dataCategories;
+  let dataCategories = props.dataCategories;
+  if (dataCategories == undefined) dataCategories = ['ITEMS']
   const [index, setIndex] = React.useState(0);
   const [disableRight, setDisableRight] = React.useState(false);
   const [disableLeft, setDisableLeft] = React.useState(false);
   const [drawerSelection, setDrawerSelection] = React.useState(null);
   const [categorySelection, setCategorySelection] = React.useState(
-    props.dataCategories[0]
+    dataCategories[0]
   );
   const dispatch = useDispatch();
 
