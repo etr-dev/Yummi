@@ -1,5 +1,5 @@
 import axios from "axios";
-import { deleteFile } from "../data/database";
+import { deleteFile, findFileByFilename, findUser } from "../data/database";
 
 export function inDateRange(day, start, end) {
   if (datesAreOnSameDay(day, start) || datesAreOnSameDay(day, end)) return true;
@@ -19,9 +19,20 @@ export function menuFunction(choice, entry, email) {
     case "COPY":
       navigator.clipboard.writeText(entry);
       break;
+    
+    
+    
     case "LOG DATA":
-      console.log("LOG DATA here");
+      axios(findUser(email)).then((res) => {
+        console.log(res.data[0].files[findFileByFilename(res.data[0], entry)].parsedData)
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
       break;
+    
+    
+    
     case "DELETE":
       axios(deleteFile(email, entry))
         .then((res) => {
@@ -32,6 +43,9 @@ export function menuFunction(choice, entry, email) {
           console.error("Error: ", error);
         });
       break;
+    
+    
+    
     default:
       console.log('default switch statement')
   }
