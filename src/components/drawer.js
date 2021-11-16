@@ -111,6 +111,8 @@ export default function MyDrawer(props) {
   if (itemList == undefined) itemList = []; //if no itemlist is passed in then default to empty
   let dataCategories = props.dataCategories;
   if (dataCategories == undefined) dataCategories = [ "ITEMS" ];
+  let menuOptions = props.menuOptions;
+  if (menuOptions == undefined) menuOptions = []; //if no itemlist is passed in then default to empty
   
   //Use State variables
   const [index, setIndex] = React.useState(0);
@@ -224,7 +226,7 @@ export default function MyDrawer(props) {
                   >
                     <Typography variant="h5">{entry}</Typography>
                     <Menu
-                      open={contextMenu !== null && props.menuOptions.length > 0} //if menu is not currently up AND the menu was enabled by the rightClickMenu prop being true
+                      open={contextMenu !== null && menuOptions.length > 0} //if menu is not currently up AND the menu was enabled by the rightClickMenu prop being true
                       onClose={handleClose}
                       anchorReference="anchorPosition"
                       anchorPosition={
@@ -236,7 +238,7 @@ export default function MyDrawer(props) {
                           : undefined
                       }
                     >
-                      { props.menuOptions.map((option) => (   //LOOP THROUGH ALL OF THE RIGHT CLICK MENU OPTIONS PASSED INTO PROPS
+                      { menuOptions.map((option) => (   //LOOP THROUGH ALL OF THE RIGHT CLICK MENU OPTIONS PASSED INTO PROPS
                         <MenuItem
                           className={ classes.rightClickMenu }
                           onClick={ () => handleClose(option, entry) }

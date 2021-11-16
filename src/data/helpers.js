@@ -13,7 +13,8 @@ export const datesAreOnSameDay = (first, second) =>
   first.getDate() === second.getDate();
 
 export function menuFunction(choice, entry, email) {
-  choice = choice.toUpperCase()
+  if (typeof (choice) === 'string')
+    choice = choice.toUpperCase();
   switch (choice) {
     case "COPY":
       navigator.clipboard.writeText(entry);
