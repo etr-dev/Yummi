@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => {
     },
     dataText: {
       margin: '20px'
+    },
+    rawDataContainer: {
+      height: '100vh',
+      overflowY: 'auto'
     }
   };
 });
@@ -104,7 +108,7 @@ export default function Manage() {
             <MyDrawer itemList={ filelist } dataCategories={ [ 'files' ] } rightClickMenu={ true } menuOptions={ [ 'Copy', 'Log Data', 'Delete' ] } />
           </Grid>
           {/* RAW DATA      - displays a preview of the rawdata for the selected file */}
-          <Grid className={classes.grid} item xs={12} md={9} lg={10}>
+          <Grid className={classes.rawDataContainer} item xs={12} md={9} lg={10}>
             {
               activeFile != undefined ? (
                 activeFile.rawData.map(
