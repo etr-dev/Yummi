@@ -19,13 +19,20 @@ import { minWidth } from "@mui/system";
 import { useDispatch } from "react-redux";
 import { drawerAction, categoryAction } from "../data/Redux/Actions";
 import { IconButton } from "@mui/material";
-import axios from "axios";
-import { deleteFile } from "../data/database";
 import { useAuth0 } from "@auth0/auth0-react";
+import { menuFunction } from "../data/helpers";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 const headerHeight = 100;
 
+
+/*
+*
+*       STYLING:
+*       This is where the css styles are created.
+*
+*
+*/
 const useStyles = makeStyles((theme) => {
   return {
     background: {
@@ -77,24 +84,43 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+
+/*
+*
+*       MAIN FUNCTION:
+*       The main function executes here and can take in various props
+*       
+*       PROP LIST:
+*        itemList: An array of strings with all the items to be displayed in the drawer, if not passed into props it is set to [] an empty array that displays nothing
+*        dataCategories: An array of string categories passed in that you can switch between at the top of the drawer, if nothing is passed in then it will be set to ["ITEMS"]
+*        menuOptions: An array of strings to be displayed when rightClicked, once clicked they are called in the menuFunction in helpers.js ... If none are passed in then the menu cannot be opened.
+*                     Make sure when passing in menu options the string you pass in has a matching switch statement call in menuFunction
+*/
 export default function MyDrawer(props) {
+  /*
+  *       VARIABLES:
+  *       This is where all of the variables are created and initialized
+  */
+  //import variables
   const classes = useStyles();
+  const { user } = useAuth0();
+  const dispatch = useDispatch();
+
+  //Prop initialization
   let itemList = props.itemList;
   if (itemList == undefined) itemList = []; //if no itemlist is passed in then default to empty
   let dataCategories = props.dataCategories;
-  if (dataCategories == undefined) dataCategories = ["ITEMS"];
+  if (dataCategories == undefined) dataCategories = [ "ITEMS" ];
+  
+  //Use State variables
   const [index, setIndex] = React.useState(0);
   const [disableRight, setDisableRight] = React.useState(false);
   const [disableLeft, setDisableLeft] = React.useState(false);
   const [drawerSelection, setDrawerSelection] = React.useState(null);
-  const [categorySelection, setCategorySelection] = React.useState(
-    dataCategories[0]
-  );
-  const { user } = useAuth0();
-  const dispatch = useDispatch();
-  //testing
+  const [categorySelection, setCategorySelection] = React.useState(dataCategories[0]);
   const [contextMenu, setContextMenu] = React.useState(null);
 
+  //Right Click menu functions
   const handleContextMenu = (event) => {
     event.preventDefault();
     setContextMenu(
@@ -109,43 +135,22 @@ export default function MyDrawer(props) {
           null
     );
   };
-  //testing
-
   const handleClose = (choice, entry) => {
     console.log(choice, entry);
-    switch (choice) {
-      case "COPY":
-        navigator.clipboard.writeText(entry);
-        break;
-      case "LOG_DATA":
-        console.log("LOG_DATA here");
-        break;
-      case "DELETE":
-        axios(deleteFile(user.email, entry))
-          .then((res) => {
-            console.log(res);
-            window.location.reload(true)
-          })
-          .catch((error) => {
-            console.error("Error: ", error);
-          });
-        break;
-    }
+    menuFunction(choice, entry, user.email);
     setContextMenu(null);
   };
 
-  //this sets global state of drawer
-  useEffect(() => {
+  //Use Effect functions
+  useEffect(() => { //sets the drawer selection globally
     dispatch(drawerAction(drawerSelection));
   }, [drawerSelection]);
 
-  //this sets global use state of category
-  useEffect(() => {
+  useEffect(() => {  //this sets global use state of category
     dispatch(categoryAction(categorySelection));
   }, [categorySelection]);
 
-  //This use effect keeps the index in bounds
-  useEffect(() => {
+  useEffect(() => { //This use effect keeps the index in bounds
     if (index == dataCategories.length - 1) {
       setDisableRight(true);
     } else {
@@ -158,9 +163,16 @@ export default function MyDrawer(props) {
     }
   }, [index, dataCategories]);
 
+
+  /*
+   * 
+   *      RETURN FUNCTION:
+   *      This is what renders the drawer component
+   * 
+   */
   return (
     <div className={classes.bigGrid}>
-      {/* HEADER FOR LIST*/}
+      {/* CATEGORY FOR LIST*/}
       <Grid className={classes.header}>
         <IconButton
           onClick={() => {
@@ -198,8 +210,8 @@ export default function MyDrawer(props) {
         <Grid className={classes.drawer}>
           <Card elevation={8} className={classes.card}>
             <List>
-              {props.itemList.map((entry) => (
-                <MenuItem
+              {props.itemList.map((entry) => (  //FOR LOOP THAT LISTS ALL OF THE ITEMS entry IS THE NAME OF THE ITEM FROM ITEMLIST
+                <MenuItem //make the list item a menuitem so it can be clicked and selected
                   button
                   onClick={() => setDrawerSelection(entry)}
                   selected={entry === drawerSelection}
@@ -212,7 +224,7 @@ export default function MyDrawer(props) {
                   >
                     <Typography variant="h5">{entry}</Typography>
                     <Menu
-                      open={contextMenu !== null && props.rightClickMenu} //if menu is not currently up AND the menu was enabled by the rightClickMenu prop being true
+                      open={contextMenu !== null && props.menuOptions.length > 0} //if menu is not currently up AND the menu was enabled by the rightClickMenu prop being true
                       onClose={handleClose}
                       anchorReference="anchorPosition"
                       anchorPosition={
@@ -224,24 +236,14 @@ export default function MyDrawer(props) {
                           : undefined
                       }
                     >
-                      <MenuItem
-                        className={classes.rightClickMenu}
-                        onClick={() => handleClose("COPY", entry)}
-                      >
-                        Copy
-                      </MenuItem>
-                      <MenuItem
-                        className={classes.rightClickMenu}
-                        onClick={() => handleClose("LOG_DATA", entry)}
-                      >
-                        Log Data
-                      </MenuItem>
-                      <MenuItem
-                        className={classes.rightClickMenu}
-                        onClick={() => handleClose("DELETE", entry)}
-                      >
-                        Delete
-                      </MenuItem>
+                      { props.menuOptions.map((option) => (   //LOOP THROUGH ALL OF THE RIGHT CLICK MENU OPTIONS PASSED INTO PROPS
+                        <MenuItem
+                          className={ classes.rightClickMenu }
+                          onClick={ () => handleClose(option, entry) }
+                        >
+                          { option }
+                        </MenuItem>
+                      )) }
                     </Menu>
                   </ListItem>
                 </MenuItem>

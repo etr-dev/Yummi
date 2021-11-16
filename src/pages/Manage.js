@@ -101,7 +101,7 @@ export default function Manage() {
         {/* LIST DRAWER     - the drawer on the left that lists all of the file names*/}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemList={ filelist } dataCategories={ [ 'files' ]} rightClickMenu={true} />
+            <MyDrawer itemList={ filelist } dataCategories={ [ 'files' ] } rightClickMenu={ true } menuOptions={ [ 'Copy', 'Log Data', 'Delete' ] } />
           </Grid>
           {/* RAW DATA      - displays a preview of the rawdata for the selected file */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>
