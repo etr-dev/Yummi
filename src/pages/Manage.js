@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => {
       paddingTop: "10vh",
       alignItems: "center",
     },
+    dataColumn: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
     dataRow: {
       display: "flex",
     },
@@ -59,6 +63,7 @@ export default function Manage() {
   const { user } = useAuth0();
   const classes = useStyles();
 
+  //get list of files and set database user
   React.useEffect(() => {
     axios(findUser(user.email))
       .then((res) => {
@@ -73,6 +78,7 @@ export default function Manage() {
       });
   }, []);
 
+  //when drawer selection changes change the active file
   React.useEffect(() => {
     if (dbUser != undefined) {
       const index = findFileByFilename(dbUser, drawerSelection);
@@ -92,12 +98,12 @@ export default function Manage() {
       </div>
       {/*BOTTOM PAGE */}
       <div className={classes.background}>
-        {/* LIST DRAWER */}
+        {/* LIST DRAWER     - the drawer on the left that lists all of the file names*/}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemList={filelist} />
+            <MyDrawer itemList={ filelist } dataCategories={ [ 'files' ]} rightClickMenu={true} />
           </Grid>
-          {/* CHART */}
+          {/* RAW DATA      - displays a preview of the rawdata for the selected file */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>
             {
               activeFile != undefined ? (

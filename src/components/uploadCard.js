@@ -91,7 +91,6 @@ export default function LoginCard(props) {
       const file = files[files.length - 1]; //gets last added file
       //add if for check files using mime.type
       if (file.name.endsWith(".csv")) {
-        console.log('pog')
         console.log(parseFileAndUpload(file, user.email));
         console.log('version 1.0.0')
       }
