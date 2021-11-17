@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Typography, Button, Grid, Card } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import { makeStyles, Typography, Button, Grid, Card, Paper } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
 import Popup from "../components/popup";
 import LoginCard from "../components/loginCard";
 import MyDrawer from "../components/drawer";
@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => {
     cardClass: {
       margin: "10px",
       whiteSpace: "nowrap",
+      borderRadius: "10px"
     },
     rawDataContainer: {
       height: "100vh",
@@ -58,7 +59,11 @@ const useStyles = makeStyles((theme) => {
     },
     columns: {
       display: "flex",
+      justifyContent: "space-around"
     },
+    headers:{
+      margin: "10px"
+    }
   };
 });
 
@@ -133,22 +138,31 @@ export default function Manage() {
                   {Object.keys(activeFile.rawData[0]).map((column) => (
                     <div>
                       {column == "" ? (
-                        <Typography>id</Typography>
+                        <Typography
+                        color="textSecondary"
+                        variant="h3"
+                        className = {classes.headers}
+                        >id</Typography>
                       ) : (
-                        <Typography>{column}</Typography>
+                        <Typography
+                        color="textSecondary"
+                        variant="h3"
+                        className = {classes.headers}
+                        >{column}</Typography>
                       )}
                       {activeFile.rawData.map((row) => (
                         /* TODO: Render row data to the screen in between in loop */
                         <div className={classes.dataRow}>
-                          <Card className={classes.cardClass}>
+                          <Paper elevation={12} className={classes.cardClass}>
                             <Typography
                               color="Primary"
                               variant="h6"
+
                               className={classes.dataText}
                             >
                               {row[column]}
                             </Typography>
-                          </Card>
+                          </Paper>
                         </div>
                         /*END RENDER METHOD */
                       ))}
