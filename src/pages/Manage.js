@@ -39,19 +39,26 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
     },
     dataColumn: {
-      display: 'flex',
-      flexDirection: 'column',
+      display: "flex",
+      flexDirection: "column",
     },
     dataRow: {
       display: "flex",
     },
     dataText: {
-      margin: '20px'
+      margin: "10px",
+    },
+    cardClass: {
+      margin: "10px",
+      whiteSpace: "nowrap",
     },
     rawDataContainer: {
-      height: '100vh',
-      overflowY: 'auto'
-    }
+      height: "100vh",
+      overflowY: "auto",
+    },
+    columns: {
+      display: "flex",
+    },
   };
 });
 
@@ -105,28 +112,49 @@ export default function Manage() {
         {/* LIST DRAWER     - the drawer on the left that lists all of the file names*/}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemList={ filelist } dataCategories={ [ 'files' ] } rightClickMenu={ true } menuOptions={ [ 'Copy', 'Log Data', 'Delete' ] } />
+            <MyDrawer
+              itemList={filelist}
+              dataCategories={["files"]}
+              rightClickMenu={true}
+              menuOptions={["Copy", "Log Data", "Delete"]}
+            />
           </Grid>
           {/* RAW DATA      - displays a preview of the rawdata for the selected file */}
-          <Grid className={classes.rawDataContainer} item xs={12} md={9} lg={10}>
+          <Grid
+            className={classes.rawDataContainer}
+            item
+            xs={12}
+            md={9}
+            lg={10}
+          >
             {
               activeFile != undefined ? (
-                activeFile.rawData.map(
-                  (
-                    row //this is what a row looks like https://prnt.sc/1z7h606
-                  ) => (
-                    /* TODO: Render row data to the screen in between in loop */
-                    <div className={classes.dataRow}>
-                      <Typography variant="h6" className={classes.dataText}>
-                        {row[""]}
-                      </Typography>
-                      <Typography variant="h6" className={classes.dataText}>
-                        {row.ItemName}
-                      </Typography>
+                <div className={classes.columns}>
+                  {Object.keys(activeFile.rawData[0]).map((column) => (
+                    <div>
+                      {column == "" ? (
+                        <Typography>id</Typography>
+                      ) : (
+                        <Typography>{column}</Typography>
+                      )}
+                      {activeFile.rawData.map((row) => (
+                        /* TODO: Render row data to the screen in between in loop */
+                        <div className={classes.dataRow}>
+                          <Card className={classes.cardClass}>
+                            <Typography
+                              color="Primary"
+                              variant="h6"
+                              className={classes.dataText}
+                            >
+                              {row[column]}
+                            </Typography>
+                          </Card>
+                        </div>
+                        /*END RENDER METHOD */
+                      ))}
                     </div>
-                    /*END RENDER METHOD */
-                  )
-                )
+                  ))}
+                </div>
               ) : (
                 <></>
               ) //dont print anything if active file is undefined (item not clicked yet)
