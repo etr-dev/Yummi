@@ -150,7 +150,7 @@ export default function LineChartWavy(props) {
         <ArgumentAxis showGrid={false} showTicks={false} />
         <ValueAxis showGrid={false} />
 
-        <LineSeries valueField='data' argumentField='date'/>
+        <LineSeries valueField='date' argumentField='data'/>
         <Animation />
         <EventTracker />
         <HoverState/>
