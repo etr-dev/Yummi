@@ -35,3 +35,7 @@ export function getDates(start, end) {
   }
   return dateArray;
 }
+
+export function getSelectedData(choice) {
+  //temp
+}

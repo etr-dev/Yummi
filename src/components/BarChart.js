@@ -68,12 +68,12 @@ export default function BarChart(props) {
         chartData.push({
           //push object onto chart data
           date: str,
-          count: activeData[drawerSelection][str].Count,
+          data: getSelectedData(props.dataChoice)//activeData[drawerSelection][str].Count,
         });
       } else {
         chartData.push({
           date: str,
-          count: 0,
+          data: 0,
         });
         missingData = true;
       }
@@ -95,7 +95,7 @@ export default function BarChart(props) {
         <ArgumentAxis showGrid={false} showTicks={false} />
         <ValueAxis showGrid={false} />
 
-        <BarSeries valueField="count" argumentField="date" />
+        <BarSeries valueField="data" argumentField="date" />
         <Animation />
       </Chart>
     </div>

@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import ChartContainer from "../components/ChartContainer.js";
 import MyDrawer from "../components/drawer";
+import BarChart from "../components/BarChart.js";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
@@ -153,7 +154,7 @@ export default function Create() {
             </div>
           </Grid>
           <Grid item xs={12} s={6} md={6} lg={6} className={classes.right}>
-            <img src={svgGraph2} alt="graph" />
+            <BarChart activeData={activeData} />
           </Grid>
         </Grid>
       </div>
