@@ -138,3 +138,61 @@ export function getSelectedData(choice, activeData, dateString, drawerSelection)
   
   return data
 }
+
+export function getTopSellingItem(activeData) {
+  if (activeData.items === undefined)
+    return 'loading...'
+  
+  let topSelling = 0
+  const keys = Object.keys(activeData.items)
+  for (let i = 0; i < keys.length; i++){
+    if (activeData.items[ keys[ i ] ].Count * Number(activeData.items[ keys[ i ] ].Price) > activeData.items[ keys[ topSelling ] ].Count * Number(activeData.items[ keys[ topSelling ] ].Price)) {
+      topSelling = i
+    }
+  }
+
+  return {
+    name: keys[ topSelling ],
+    count: activeData.items[ keys[ topSelling ] ].Count,
+    price: activeData.items[ keys[ topSelling ] ].Price,
+    revenue: Number(Number(activeData.items[ keys[ topSelling ] ].Price) * activeData.items[ keys[ topSelling ] ].Count).toFixed(2)
+  }
+}
+
+function getTopEarningDate(dateObj) {
+  const keys = Object.keys(dateObj)
+  let topSelling = 0
+  for (let i = 0; i < keys.length; i++){
+    if (dateObj[ keys[ i ] ].revenue > dateObj[ keys[ topSelling ] ].revenue) {
+      topSelling = i
+    }
+  }
+
+  return { date: keys[ topSelling ], revenue: dateObj[ keys[ topSelling ] ].revenue }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+export function getToolTip(activeData, tipChoice = 0, random = false) {
+  const cases = 2;
+  if (activeData.dates === undefined)
+    return 'Thinking of a tip to give you...'
+  if (random)
+    tipChoice = getRandomInt(cases)
+  
+  console.log(tipChoice)
+  let temp = undefined
+  switch (tipChoice) {
+    case 0:
+      temp = getTopEarningDate(activeData.dates)
+      return `You're highest revenue earned was $${temp.revenue} on ${temp.date}!`
+      break;
+    case 1:
+      temp = getTopSellingItem(activeData)
+      return `You're top selling item was the ${temp.name}  with a gross revenue of $${temp.revenue}!`
+      break;
+  }
+  
+}

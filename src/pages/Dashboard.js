@@ -24,7 +24,7 @@ import {
   drawerSelection,
   categorySelection,
 } from "../data/Redux/Actions/index";
-import { getMinMaxDate, inDateRange } from "../data/helpers";
+import { getMinMaxDate, inDateRange, getTopSellingItem, getToolTip } from "../data/helpers";
 import LineChartWavy from "../components/LineChartWavy.js";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
@@ -144,7 +144,7 @@ export default function Create() {
       <Grid container className={classes.topPage}>
         <Grid item xs={12} s={12} md={6} lg={6} className={classes.left}>
           <Typography variant="h2" color="textPrimary">
-            Your overall sales at McDonalds are up 20% since last month!
+            { getToolTip(activeData,0,true) }
           </Typography>
 
           <div>
@@ -153,7 +153,7 @@ export default function Create() {
             </Typography>
             <Button size="large" className={classes.button}>
               <Typography variant="h4" color="textPrimary">
-                Product Name Here
+                { getTopSellingItem(activeData).name }
               </Typography>
             </Button>
           </div>
