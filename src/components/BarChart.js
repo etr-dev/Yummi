@@ -17,6 +17,7 @@ import {
   getDates,
   datesAreOnSameDay,
   getDateString,
+  getSelectedData
 } from "../data/helpers";
 
 const useStyles = makeStyles((theme) => {
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => {
 export default function BarChart(props) {
   let chartData = [];
   let chart = <></>;
-  const activeData = props.activeData.items;
+  const activeData = props.activeData;
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
   const dateSelection = props.dates;
@@ -63,16 +64,16 @@ export default function BarChart(props) {
     chartData = []; //clear data
     const dates = getDates(dateSelection.start, dateSelection.end);
     for (let i = 0; i < dates.length; i++) {
-      const str = getDateString(dates[i]);
-      if (str in activeData[drawerSelection]) {
+      const dateString = getDateString(dates[i]);
+      if (dateString in activeData.dates) { //if the date is in the data
         chartData.push({
           //push object onto chart data
-          date: str,
-          data: getSelectedData(props.dataChoice)//activeData[drawerSelection][str].Count,
+          date: dateString,
+          data: getSelectedData(props.dataChoice, activeData, dateString, drawerSelection)//activeData[drawerSelection][str].Count,
         });
       } else {
         chartData.push({
-          date: str,
+          date: dateString,
           data: 0,
         });
         missingData = true;

@@ -169,9 +169,10 @@ export default function ChartContainer(props) {
 
         {/*CHARTS*/}
         <BarChart
-          activeData={props.activeData}
+          activeData={ props.activeData }
           className={ classes.graphContainer }
-          dates = {{start: start, end: end}}
+          dates={ { start: start, end: end } }
+          dataChoice={ props.dataChoice }
         />
       </CardContent>
     </Card>

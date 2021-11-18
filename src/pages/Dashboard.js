@@ -171,7 +171,7 @@ export default function Create() {
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>
-            <ChartContainer activeData={activeData} />
+            <ChartContainer activeData={activeData} dataChoice='ITEM_COUNT'/>
           </Grid>
         </Grid>
       </div>

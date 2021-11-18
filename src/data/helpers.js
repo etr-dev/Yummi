@@ -78,6 +78,30 @@ export function menuFunction(choice, entry, email) {
   }
 }
 
-export function getSelectedData(choice) {
+export function getSelectedData(choice, activeData, dateString, drawerSelection) {
   //temp
+  let data = undefined
+
+  //Any switch case that isn't activeData.dates must have a check to see if dateString exists like ----> if (dateString in activeData[ 'items' ][ drawerSelection ])
+  switch (choice) {
+    case 'ITEM_COUNT':
+      if (dateString in activeData[ 'items' ][ drawerSelection ])
+        data = activeData[ 'items' ][ drawerSelection ][ dateString ].Count;
+      break;
+    case 'ITEM_REVENUE':
+      break;
+    case 'DATE_COUNT':
+      data = activeData[ 'dates' ][ dateString ].Count;
+      break;
+    case 'DATE_REVENUE':
+      data = activeData[ 'dates' ][ dateString ].revenue;
+      break;
+    default:
+      break;
+  }
+  
+  if (data === undefined)
+    return 0
+  
+  return data
 }
