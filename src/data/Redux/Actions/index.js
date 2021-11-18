@@ -11,10 +11,3 @@ export const categoryAction = (selection) => {
         selection: selection
     }
 }
-
-export const dateAction = (selection) => {
-    return {
-        type: 'SET_DATE',
-        selection: selection
-    }
-}

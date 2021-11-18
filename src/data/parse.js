@@ -57,7 +57,7 @@ function parseData(data) {
     
     //if the itemname is not in parsed data yet then initialize it
     if (!(element.ItemName in parsedData.items)) {
-      parsedData.items[ element.ItemName ] = { Price: element.Price, Tax: element.Tax, Category: element.Category };  //initialize item
+      parsedData.items[ element.ItemName ] = { Price: element.Price, Tax: element.Tax, Category: element.Category, Count: 0};  //initialize item
       parsedData.categories[ element.Category ].push(element.ItemName)  //push the item name into it's specific category this will only happen once per itemname
       parsedData.categories.items.push(element.ItemName)
     }
@@ -83,6 +83,7 @@ function parseData(data) {
     parsedData.dates[ element.Date ].revenue += Number(element.Price) //add item price to revenue for that day.. convert to number with 2 decimal points
     parsedData.dates[ element.Date ].Count++  //increment date count
 
+    parsedData.items[element.ItemName].Count++
     parsedData.items[element.ItemName][element.Date].Time.push(element.Time);
     parsedData.items[element.ItemName][element.Date].Count++;
   }

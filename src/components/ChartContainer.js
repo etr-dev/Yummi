@@ -14,7 +14,6 @@ import { Typography, Button } from "@material-ui/core/";
 import { Animation } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { dateAction } from "../data/Redux/Actions/index";
 import BarChart from "./BarChart.js";
 
 const useStyles = makeStyles((theme) => {
@@ -60,17 +59,16 @@ const useStyles = makeStyles((theme) => {
 });
 
 export default function ChartContainer(props) {
+  //setup props
   const chartData = props.data;
+
+  //library variables
   const classes = useStyles();
+  const dispatch = useDispatch();
+  
+  //state variables
   const [start, setStart] = React.useState(new Date());
   const [end, setEnd] = React.useState(new Date());
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if (start <= end)
-      //send to redux if start comes before end
-      dispatch(dateAction({ start: start, end: end }));
-  }, [start, end]);
 
   return (
     //todo: create clickevents for d/m/y buttons
@@ -171,8 +169,11 @@ export default function ChartContainer(props) {
 
         {/*CHARTS*/}
         <BarChart
-          activeData={props.activeData}
-          className={classes.graphContainer}
+          activeData={ props.activeData }
+          className={ classes.graphContainer }
+          dates={ { start: start, end: end } }
+          dataChoice={ props.dataChoice }
+          requireDrawerSelection = {true}
         />
       </CardContent>
     </Card>

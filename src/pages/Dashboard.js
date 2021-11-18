@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import ChartContainer from "../components/ChartContainer.js";
 import MyDrawer from "../components/drawer";
+import BarChart from "../components/BarChart.js";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeftRounded";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import { formHelperTextClasses } from "@mui/material";
@@ -19,8 +20,12 @@ import { findUser, findActiveFile } from "../data/database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
-import { drawerSelection, categorySelection } from "../data/Redux/Actions/index";
-import { inDateRange } from "../data/helpers";
+import {
+  drawerSelection,
+  categorySelection,
+} from "../data/Redux/Actions/index";
+import { getMinMaxDate, inDateRange, getTopSellingItem, getToolTip } from "../data/helpers";
+import LineChartWavy from "../components/LineChartWavy.js";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
@@ -39,7 +44,6 @@ const useStyles = makeStyles((theme) => {
     },
     topPage: {
       backgroundColor: theme.palette.primary.main,
-      height: "100vh",
     },
     left: {
       paddingLeft: "15vh",
@@ -52,7 +56,8 @@ const useStyles = makeStyles((theme) => {
     },
     right: {
       width: "100%",
-      height: "100vh",
+      height: "95vh",
+      marginTop: "5vh",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -72,19 +77,17 @@ const useStyles = makeStyles((theme) => {
 });
 
 let itemNames = [];
-let dataCategories = ['items']
+let dataCategories = ["items"];
 let chartData = [];
 //let itemList = []
-
 
 export default function Create() {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [ activeData, setActiveData ] = useState({});
-  const [ itemList, setItemList ] = useState([]);
+  const [activeData, setActiveData] = useState({});
+  const [itemList, setItemList] = useState([]);
+  const [dates, setDates] = useState([{ start: new Date(), end: new Date() }]);
   const categorySelection = useSelector((state) => state.category);
-  const drawerSelection = useSelector((state) => state.drawer);
-  const dateSelection = useSelector((state) => state.date);
   //to get start date do dateSelection.start
   //to get start date do dateSelection.end
   //to get selectedItem do drawerSelection
@@ -108,68 +111,70 @@ export default function Create() {
       });
   }, []);
 
+  useEffect(() => {
+    if (Object.keys(activeData).length > 0) {
+      setDates(getMinMaxDate(Object.keys(activeData.dates)));
+    }
+  }, [activeData]);
 
   /*UPDATE CHART DATA:
     This runs everytime the variable dateSelection, drawerSelection, or activeData change
     This fills chart data for all of the user selected dates
     creates a list of objects in the format {date, count } EXAMPLE: https://prnt.sc/1yh0439
   */
-  if (activeData != null && activeData != undefined && Object.keys(activeData).length > 0) {
+  if (
+    activeData != null &&
+    activeData != undefined &&
+    Object.keys(activeData).length > 0
+  ) {
     //if the active data has been set then set item names
     itemNames = Object.keys(activeData);
-    dataCategories = Object.keys(activeData.categories)
-    if (itemList !== activeData.categories[ categorySelection ]) {
-      setItemList(activeData.categories[ categorySelection ])
+    dataCategories = Object.keys(activeData.categories);
+    if (itemList !== activeData.categories[categorySelection]) {
+      setItemList(activeData.categories[categorySelection]);
     }
   } else {
     itemNames = [];
-    dataCategories = [ 'items' ]
+    dataCategories = ["items"];
   }
 
   return (
     <>
       {/*TOP PAGE */}
-      <div className={classes.topPage}>
-        <Grid container>
-          <Grid item xs={12} s={6} md={6} lg={6} className={classes.left}>
-            <Typography variant="h2" color="textPrimary">
-              Your overall sales at McDonalds are up 20% since last month!
+      <Grid container className={classes.topPage}>
+        <Grid item xs={12} s={12} md={6} lg={6} className={classes.left}>
+          <Typography variant="h2" color="textPrimary">
+            { getToolTip(activeData,0,true) }
+          </Typography>
+
+          <div>
+            <Typography variant="h5" color="textPrimary">
+              Top selling product
             </Typography>
-
-            <div>
-              <Typography variant="h5" color="textPrimary">
-                Top selling product
+            <Button size="large" className={classes.button}>
+              <Typography variant="h4" color="textPrimary">
+                { getTopSellingItem(activeData).name }
               </Typography>
-              <Button size="large" className={classes.button}>
-                <Typography variant="h4" color="textPrimary">
-                  Product Name Here
-                </Typography>
-              </Button>
-            </div>
-          </Grid>
-          <Grid item xs={12} s={6} md={6} lg={6} className={classes.right}>
-            <img src={svgGraph2} alt="graph" />
-          </Grid>
+            </Button>
+          </div>
         </Grid>
-      </div>
-
-      {/*BOTTOM PAGE */}
-      <div className={classes.background}>
-        {/* LIST DRAWER */}
-        <Grid container>
-          <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer
-              itemList={ itemList }
-              dataCategories={ dataCategories }
-            />
-            {console.log(categorySelection)}
-          </Grid>
-          {/* CHART */}
-          <Grid className={classes.grid} item xs={12} md={9} lg={10}>
-            <ChartContainer activeData={activeData} />
-          </Grid>
+        <Grid item xs={12} s={12} md={6} lg={6} className={classes.right}>
+          <LineChartWavy
+            activeData={activeData}
+            dataChoice="DATE_REVENUE"
+            dates={dates}
+            titleText="Revenue by date"
+          />
         </Grid>
-      </div>
+        {/*BOTTOM PAGE */}
+        <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
+          <MyDrawer itemList={itemList} dataCategories={dataCategories} />
+        </Grid>
+        {/* CHART */}
+        <Grid className={classes.grid} item xs={12} md={9} lg={10}>
+          <ChartContainer activeData={activeData} dataChoice="ITEM_COUNT" />
+        </Grid>
+      </Grid>
     </>
   );
 }

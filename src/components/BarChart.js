@@ -7,6 +7,7 @@ import {
   ArgumentAxis,
   ValueAxis,
   Tooltip,
+  Legend
 } from "@devexpress/dx-react-chart-material-ui";
 import { Animation, EventTracker } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
@@ -17,11 +18,14 @@ import {
   getDates,
   datesAreOnSameDay,
   getDateString,
+  getSelectedData,
 } from "../data/helpers";
 
 const useStyles = makeStyles((theme) => {
   return {
-    container: {},
+    container: {
+      width: "100%",
+    },
     card: {
       backgroundColor: "transparent",
     },
@@ -37,13 +41,20 @@ const useStyles = makeStyles((theme) => {
 export default function BarChart(props) {
   let chartData = [];
   let chart = <></>;
-  const activeData = props.activeData.items;
+  const activeData = props.activeData;
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
-  const dateSelection = useSelector((state) => state.date);
+  const dateSelection = props.dates;
+
   let titleText = "Select an Item";
+  if (props.titleText) titleText = props.titleText;
   let missingData = false;
-  if (dateSelection && drawerSelection && activeData) {
+  if (
+    dateSelection &&
+    drawerSelection &&
+    activeData &&
+    props.requireDrawerSelection
+  ) {
     titleText =
       drawerSelection +
       " sold between " +
@@ -57,44 +68,57 @@ export default function BarChart(props) {
   }
 
   //SETUP DATA TO BE PASSED TO THE CHART IF ALL VARIABLES HAVE BEEN SET
-  if (dateSelection && drawerSelection && activeData != undefined) {
-    //if none of the data is empty   
-    chartData = []; //clear data
-    const dates = getDates(dateSelection.start, dateSelection.end);
-    for (let i = 0; i < dates.length; i++) {
-      const str = getDateString(dates[i]);
-      if (str in activeData[drawerSelection]) {
-        chartData.push({
-          //push object onto chart data
-          date: str,
-          count: activeData[drawerSelection][str].Count,
-        });
-      } else {
-        chartData.push({
-          date: str,
-          count: 0,
-        });
-        missingData = true;
+  if (dateSelection && activeData.dates != undefined) {
+    //if none of the data is empty
+    if (props.requireDrawerSelection && !drawerSelection) {
+      console.log("no drawer selection");
+    } else {
+      console.log(activeData);
+      chartData = []; //clear data
+      const dates = getDates(dateSelection.start, dateSelection.end);
+      for (let i = 0; i < dates.length; i++) {
+        const dateString = getDateString(dates[i]);
+        if (dateString in activeData.dates) {
+          //if the date is in the data
+          chartData.push({
+            //push object onto chart data
+            date: dateString,
+            data: getSelectedData(
+              props.dataChoice,
+              activeData,
+              dateString,
+              drawerSelection
+            ), //activeData[drawerSelection][str].Count,
+          });
+        } else {
+          chartData.push({
+            date: dateString,
+            data: 0,
+          });
+          missingData = true;
+        }
       }
-    }
 
-    if (missingData) {
-      titleText = titleText + "\t (missing data)";
+      if (missingData) {
+        titleText = titleText + "\t (missing data)";
+      }
     }
   }
 
+  console.log(chartData);
   return (
     <div className={classes.container}>
       <Chart
-        data={chartData}
-        className={classes.chart}
-        height={window.innerHeight * 0.9}
+        data={ chartData }
+        className={ classes.chart }
+        height={ window.innerHeight * 0.9 }
+        rotated={ props.rotated }
       >
         <Title text={titleText} />
         <ArgumentAxis showGrid={false} showTicks={false} />
         <ValueAxis showGrid={false} />
 
-        <BarSeries valueField="count" argumentField="date" />
+        <BarSeries valueField="data" argumentField="date" />
         <Animation />
       </Chart>
     </div>
