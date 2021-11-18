@@ -108,6 +108,11 @@ export default function Create() {
       });
   }, []);
 
+  useEffect(() => {
+    if (Object.keys(activeData).length > 0) {
+      console.log(activeData)
+    }
+  }, [activeData]);
 
   /*UPDATE CHART DATA:
     This runs everytime the variable dateSelection, drawerSelection, or activeData change
@@ -162,7 +167,6 @@ export default function Create() {
               itemList={ itemList }
               dataCategories={ dataCategories }
             />
-            {console.log(categorySelection)}
           </Grid>
           {/* CHART */}
           <Grid className={classes.grid} item xs={12} md={9} lg={10}>

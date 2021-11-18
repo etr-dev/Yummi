@@ -40,7 +40,8 @@ export default function BarChart(props) {
   const activeData = props.activeData.items;
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
-  const dateSelection = useSelector((state) => state.date);
+  const dateSelection = props.dates;
+  
   let titleText = "Select an Item";
   let missingData = false;
   if (dateSelection && drawerSelection && activeData) {
