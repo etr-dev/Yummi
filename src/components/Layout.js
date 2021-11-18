@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
       marginRight: spacing,
       marginLeft: spacing,
+      cursor: "pointer",
     },
     profilePicture: {
       minWidth: "60px",
