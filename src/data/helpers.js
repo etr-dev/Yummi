@@ -39,6 +39,19 @@ export function getDates(start, end) {
   return dateArray;
 }
 
+export function getMinMaxDate(dates) {
+  if (typeof (dates[ 0 ]) == 'string') {
+    for (let i = 0; i < dates.length; i++){
+      dates[i] = new Date(dates[i])
+    }
+  }
+
+  const maxDate = new Date(Math.max.apply(null, dates));
+  const minDate = new Date(Math.min.apply(null, dates));
+  
+  return { start: minDate, end: maxDate }
+}
+
 export function menuFunction(choice, entry, email) {
   if (typeof (choice) === 'string')
     choice = choice.toUpperCase();
@@ -85,8 +98,10 @@ export function getSelectedData(choice, activeData, dateString, drawerSelection)
   //Any switch case that isn't activeData.dates must have a check to see if dateString exists like ----> if (dateString in activeData[ 'items' ][ drawerSelection ])
   switch (choice) {
     case 'ITEM_COUNT':
-      if (dateString in activeData[ 'items' ][ drawerSelection ])
-        data = activeData[ 'items' ][ drawerSelection ][ dateString ].Count;
+      if (drawerSelection) {
+        if (dateString in activeData[ 'items' ][ drawerSelection ])
+          data = activeData[ 'items' ][ drawerSelection ][ dateString ].Count;
+      }
       break;
     case 'ITEM_REVENUE':
       break;
@@ -94,7 +109,7 @@ export function getSelectedData(choice, activeData, dateString, drawerSelection)
       data = activeData[ 'dates' ][ dateString ].Count;
       break;
     case 'DATE_REVENUE':
-      data = activeData[ 'dates' ][ dateString ].revenue;
+      data = parseInt(activeData[ 'dates' ][ dateString ].revenue);
       break;
     default:
       break;

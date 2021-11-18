@@ -173,6 +173,7 @@ export default function ChartContainer(props) {
           className={ classes.graphContainer }
           dates={ { start: start, end: end } }
           dataChoice={ props.dataChoice }
+          requireDrawerSelection = {true}
         />
       </CardContent>
     </Card>

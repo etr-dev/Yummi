@@ -58,9 +58,14 @@ export default function BarChart(props) {
       dateSelection.end.getDate();
   }
 
+
   //SETUP DATA TO BE PASSED TO THE CHART IF ALL VARIABLES HAVE BEEN SET
-  if (dateSelection && drawerSelection && activeData != undefined) {
-    //if none of the data is empty   
+  if (dateSelection && activeData.dates != undefined) {
+    //if none of the data is empty
+    if (props.requireDrawerSelection && !drawerSelection) {
+      console.log('no drawer selection')
+    } else {
+    console.log(activeData)
     chartData = []; //clear data
     const dates = getDates(dateSelection.start, dateSelection.end);
     for (let i = 0; i < dates.length; i++) {
@@ -82,9 +87,11 @@ export default function BarChart(props) {
 
     if (missingData) {
       titleText = titleText + "\t (missing data)";
+      }
     }
   }
 
+  console.log(chartData)
   return (
     <div className={classes.container}>
       <Chart
