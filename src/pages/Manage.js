@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles, Typography, Button, Grid, Card } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
+import { makeStyles, Typography, Button, Grid, Card, Paper } from "@material-ui/core"; //put anything you want to import from material-ui in between the brackets i.e. {makeStyles, Typography, Grid}
 import Popup from "../components/popup";
 import LoginCard from "../components/loginCard";
 import MyDrawer from "../components/drawer";
@@ -38,11 +38,31 @@ const useStyles = makeStyles((theme) => {
       paddingTop: "10vh",
       alignItems: "center",
     },
+    dataColumn: {
+      display: "flex",
+      flexDirection: "column",
+    },
     dataRow: {
       display: "flex",
     },
     dataText: {
-      margin: '20px'
+      margin: "10px",
+    },
+    cardClass: {
+      margin: "10px",
+      whiteSpace: "nowrap",
+      borderRadius: "10px"
+    },
+    rawDataContainer: {
+      height: "100vh",
+      overflowY: "auto",
+    },
+    columns: {
+      display: "flex",
+      justifyContent: "space-around"
+    },
+    headers:{
+      margin: "10px"
     }
   };
 });
@@ -59,6 +79,7 @@ export default function Manage() {
   const { user } = useAuth0();
   const classes = useStyles();
 
+  //get list of files and set database user
   React.useEffect(() => {
     axios(findUser(user.email))
       .then((res) => {
@@ -73,6 +94,7 @@ export default function Manage() {
       });
   }, []);
 
+  //when drawer selection changes change the active file
   React.useEffect(() => {
     if (dbUser != undefined) {
       const index = findFileByFilename(dbUser, drawerSelection);
@@ -101,31 +123,61 @@ export default function Manage() {
       </div>
       {/*BOTTOM PAGE */}
       <div className={classes.background}>
-        {/* LIST DRAWER */}
+        {/* LIST DRAWER     - the drawer on the left that lists all of the file names*/}
         <Grid container>
           <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
-            <MyDrawer itemList={filelist} />
+            <MyDrawer
+              itemList={filelist}
+              dataCategories={["files"]}
+              rightClickMenu={true}
+              menuOptions={["Copy", "Log Data", "Delete"]}
+            />
           </Grid>
-          {/* CHART */}
-          <Grid className={classes.grid} item xs={12} md={9} lg={10}>
+          {/* RAW DATA      - displays a preview of the rawdata for the selected file */}
+          <Grid
+            className={classes.rawDataContainer}
+            item
+            xs={12}
+            md={9}
+            lg={10}
+          >
             {
               activeFile != undefined ? (
-                activeFile.rawData.map(
-                  (
-                    row //this is what a row looks like https://prnt.sc/1z7h606
-                  ) => (
-                    /* TODO: Render row data to the screen in between in loop */
-                    <div className={classes.dataRow}>
-                      <Typography variant="h6" className={classes.dataText}>
-                        {row[""]}
-                      </Typography>
-                      <Typography variant="h6" className={classes.dataText}>
-                        {row.ItemName}
-                      </Typography>
+                <div className={classes.columns}>
+                  {Object.keys(activeFile.rawData[0]).map((column) => (
+                    <div>
+                      {column == "" ? (
+                        <Typography
+                        color="textSecondary"
+                        variant="h3"
+                        className = {classes.headers}
+                        >id</Typography>
+                      ) : (
+                        <Typography
+                        color="textSecondary"
+                        variant="h3"
+                        className = {classes.headers}
+                        >{column}</Typography>
+                      )}
+                      {activeFile.rawData.map((row) => (
+                        /* TODO: Render row data to the screen in between in loop */
+                        <div className={classes.dataRow}>
+                          <Paper elevation={12} className={classes.cardClass}>
+                            <Typography
+                              color="Primary"
+                              variant="h6"
+
+                              className={classes.dataText}
+                            >
+                              {row[column]}
+                            </Typography>
+                          </Paper>
+                        </div>
+                        /*END RENDER METHOD */
+                      ))}
                     </div>
-                    /*END RENDER METHOD */
-                  )
-                )
+                  ))}
+                </div>
               ) : (
                 <></>
               ) //dont print anything if active file is undefined (item not clicked yet)
