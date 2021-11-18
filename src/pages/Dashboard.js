@@ -25,6 +25,7 @@ import {
   categorySelection,
 } from "../data/Redux/Actions/index";
 import { getMinMaxDate, inDateRange } from "../data/helpers";
+import LineChartWavy from "../components/LineChartWavy.js";
 
 const graphMaxHeight = window.innerHeight / 2 + 20;
 
@@ -157,10 +158,12 @@ export default function Create() {
           </div>
         </Grid>
         <Grid item xs={12} s={12} md={6} lg={6} className={classes.right}>
-          <BarChart
+          <LineChartWavy
             activeData={activeData}
             dataChoice="DATE_REVENUE"
             dates={dates}
+            titleText="Revenue by date"
+            rotated
           />
         </Grid>
         {/*BOTTOM PAGE */}

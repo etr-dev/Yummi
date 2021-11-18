@@ -3,13 +3,18 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core/";
 import {
   Chart,
   BarSeries,
+  LineSeries,
   Title,
   ArgumentAxis,
   ValueAxis,
   Tooltip,
   Legend
 } from "@devexpress/dx-react-chart-material-ui";
-import { Animation, EventTracker } from "@devexpress/dx-react-chart";
+import {
+  curveCatmullRom,
+  line,
+} from 'd3-shape';
+import { Animation, EventTracker, HoverState } from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { drawerSelection } from "../data/Redux/Actions/index";
@@ -31,14 +36,29 @@ const useStyles = makeStyles((theme) => {
     },
     chart: {
       color: theme.palette.text.primary,
+      cursor: 'pointer'
     },
     tooltip: {
       color: theme.palette.primary.main,
     },
+    arrow: {
+      "&::after": {
+        background: theme.palette.secondary.main,
+        cursor: 'pointer'
+      }
+    },
+    sheet: {
+      background: theme.palette.secondary.main,
+      cursor: 'pointer'
+    },
+    line: {
+      cursor: 'pointer'
+    }
+
   };
 });
 
-export default function BarChart(props) {
+export default function LineChartWavy(props) {
   let chartData = [];
   let chart = <></>;
   const activeData = props.activeData;
@@ -105,7 +125,19 @@ export default function BarChart(props) {
     }
   }
 
-  console.log(chartData);
+  const Arrow = props => {
+    const classes = useStyles();
+    return <Tooltip.Arrow {...props} placement='right' className={classes.arrow} />;
+  };
+  const Sheet = props => {
+    const classes = useStyles();
+    return <Tooltip.Sheet {...props} className={classes.sheet} />;
+  };
+  const Content = props => {
+    const classes = useStyles();
+    return <Tooltip.Content { ...props } text={`$${props.text} earned on ${chartData[props.targetItem.point].date}`} />;
+  };
+
   return (
     <div className={classes.container}>
       <Chart
@@ -118,8 +150,13 @@ export default function BarChart(props) {
         <ArgumentAxis showGrid={false} showTicks={false} />
         <ValueAxis showGrid={false} />
 
-        <BarSeries valueField="data" argumentField="date" />
+        <LineSeries valueField='data' argumentField='date'/>
         <Animation />
+        <EventTracker />
+        <HoverState/>
+        <Tooltip
+          sheetComponent={Sheet} arrowComponent={Arrow} contentComponent={Content}
+        />
       </Chart>
     </div>
   );
