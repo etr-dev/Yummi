@@ -56,7 +56,8 @@ const useStyles = makeStyles((theme) => {
     },
     right: {
       width: "100%",
-      height: "100vh",
+      height: "95vh",
+      marginTop: "5vh",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -163,7 +164,6 @@ export default function Create() {
             dataChoice="DATE_REVENUE"
             dates={dates}
             titleText="Revenue by date"
-            rotated
           />
         </Grid>
         {/*BOTTOM PAGE */}

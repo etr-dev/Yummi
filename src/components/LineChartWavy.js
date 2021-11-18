@@ -1,5 +1,15 @@
 import * as React from "react";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core/";
+import {
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  FormControlLabel,
+  Switch,
+  FormControl,
+  FormLabel,
+  FormControlGroup,
+} from "@material-ui/core/";
 import {
   Chart,
   BarSeries,
@@ -8,13 +18,14 @@ import {
   ArgumentAxis,
   ValueAxis,
   Tooltip,
-  Legend
+  Legend,
 } from "@devexpress/dx-react-chart-material-ui";
+import { curveCatmullRom, line } from "d3-shape";
 import {
-  curveCatmullRom,
-  line,
-} from 'd3-shape';
-import { Animation, EventTracker, HoverState } from "@devexpress/dx-react-chart";
+  Animation,
+  EventTracker,
+  HoverState,
+} from "@devexpress/dx-react-chart";
 import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { drawerSelection } from "../data/Redux/Actions/index";
@@ -24,19 +35,21 @@ import {
   datesAreOnSameDay,
   getDateString,
   getSelectedData,
+  dayOfWeek,
 } from "../data/helpers";
 
 const useStyles = makeStyles((theme) => {
   return {
     container: {
       width: "100%",
+      height: '100'
     },
     card: {
       backgroundColor: "transparent",
     },
     chart: {
       color: theme.palette.text.primary,
-      cursor: 'pointer'
+      cursor: "pointer",
     },
     tooltip: {
       color: theme.palette.primary.main,
@@ -44,17 +57,24 @@ const useStyles = makeStyles((theme) => {
     arrow: {
       "&::after": {
         background: theme.palette.secondary.main,
-        cursor: 'pointer'
-      }
+        cursor: "pointer",
+      },
     },
     sheet: {
       background: theme.palette.secondary.main,
-      cursor: 'pointer'
+      cursor: "pointer",
     },
     line: {
-      cursor: 'pointer'
+      cursor: "pointer",
+    },
+    switchLabel: {
+      color: theme.palette.text.primary,
+    },
+    formControl: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-around'
     }
-
   };
 });
 
@@ -65,6 +85,8 @@ export default function LineChartWavy(props) {
   const classes = useStyles();
   const drawerSelection = useSelector((state) => state.drawer);
   const dateSelection = props.dates;
+  const [ dateFormat, setDateFormat ] = React.useState("Date");
+  const [ rotated, setRotated] = React.useState(props.rotated);
 
   let titleText = "Select an Item";
   if (props.titleText) titleText = props.titleText;
@@ -125,39 +147,100 @@ export default function LineChartWavy(props) {
     }
   }
 
-  const Arrow = props => {
+  const Arrow = (props) => {
     const classes = useStyles();
-    return <Tooltip.Arrow {...props} placement='right' className={classes.arrow} />;
+    return (
+      <Tooltip.Arrow {...props} placement="right" className={classes.arrow} />
+    );
   };
-  const Sheet = props => {
+  const Sheet = (props) => {
     const classes = useStyles();
     return <Tooltip.Sheet {...props} className={classes.sheet} />;
   };
-  const Content = props => {
+  const Content = (props) => {
     const classes = useStyles();
-    return <Tooltip.Content { ...props } text={`$${props.text} earned on ${chartData[props.targetItem.point].date}`} />;
+    return (
+      <Tooltip.Content
+        {...props}
+        text={`$${props.text} earned on ${
+          chartData[props.targetItem.point].date
+        }`}
+      />
+    );
+  };
+  const Label = (props) => {
+    const classes = useStyles();
+    if (dateFormat == "Date") {
+      return <ArgumentAxis.Label {...props} text={`${props.text}`} />;
+    } else {
+      return (
+        <ArgumentAxis.Label {...props} text={`${dayOfWeek(props.text)}`} />
+      );
+    }
   };
 
   return (
     <div className={classes.container}>
       <Chart
-        data={ chartData }
-        className={ classes.chart }
-        height={ window.innerHeight * 0.9 }
-        rotated={ props.rotated }
+        data={chartData}
+        className={classes.chart}
+        height={window.innerHeight * 0.9}
+        rotated={rotated}
       >
         <Title text={titleText} />
-        <ArgumentAxis showGrid={false} showTicks={false} />
+        <ArgumentAxis
+          showGrid={false}
+          showTicks={false}
+          labelComponent={Label}
+        />
         <ValueAxis showGrid={false} />
 
-        <LineSeries valueField='date' argumentField='data'/>
+        <LineSeries valueField="data" argumentField="date" />
         <Animation />
         <EventTracker />
-        <HoverState/>
+        <HoverState />
         <Tooltip
-          sheetComponent={Sheet} arrowComponent={Arrow} contentComponent={Content}
+          sheetComponent={Sheet}
+          arrowComponent={Arrow}
+          contentComponent={Content}
         />
       </Chart>
+      <FormControl className={classes.formControl}>
+        <FormControlLabel
+          control={
+            <Switch
+              color="TextSecondary"
+              color="info"
+              onChange={(event) => {
+                if (event.target.checked) {
+                  setDateFormat("Day");
+                } else {
+                  setDateFormat("Date");
+                }
+              }}
+            />
+          }
+          label={<Typography variant="h6">{dateFormat}</Typography>}
+          className={classes.switchLabel}
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              color="TextSecondary"
+              color="info"
+              onChange={(event) => {
+                if (event.target.checked) {
+                  setRotated(true);
+                } else {
+                  setRotated(false);
+                }
+              }}
+            />
+          }
+          label={<Typography variant="h6">Rotate</Typography>}
+          className={classes.switchLabel}
+        />
+      </FormControl>
     </div>
   );
 }
