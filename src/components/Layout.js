@@ -177,8 +177,8 @@ export default function Layout({ children }) {
               >
                 <Tooltip title = 'Account'>
                 <div
-                  onClick={() => logout()}
-                  //onClick={(event) => (window.location.href = "/account")}
+                  //onClick={() => logout()}
+                  onClick={(event) => (window.location.href = "/account")}
                   className={classes.account}
                 >
                   <Avatar
