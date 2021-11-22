@@ -62,7 +62,8 @@ const useStyles = makeStyles((theme) => {
       justifyContent: "space-around"
     },
     headers:{
-      margin: "10px"
+      margin: "10px",
+      flexWrap: "nowrap",
     }
   };
 });
@@ -149,13 +150,13 @@ export default function Manage() {
                       {column == "" ? (
                         <Typography
                         color="textSecondary"
-                        variant="h3"
+                        variant="h4"
                         className = {classes.headers}
                         >id</Typography>
                       ) : (
                         <Typography
                         color="textSecondary"
-                        variant="h3"
+                        variant="h4"
                         className = {classes.headers}
                         >{column}</Typography>
                       )}
@@ -169,7 +170,7 @@ export default function Manage() {
 
                               className={classes.dataText}
                             >
-                              {row[column]}
+                              {row[column] == "" ? ('-') : (row[column])}
                             </Typography>
                           </Paper>
                         </div>
