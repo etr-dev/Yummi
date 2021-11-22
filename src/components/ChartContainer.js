@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card, CardContent, TextField } from "@material-ui/core/";
 import { LocalizationProvider, DesktopDatePicker, PickersDay } from "@mui/lab/";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import { datesAreOnSameDay, inDateRange } from "../data/helpers";
+import { datesAreOnSameDay, inDateRange, getMinMaxDate } from "../data/helpers";
 import {
   Chart,
   BarSeries,
@@ -68,7 +68,16 @@ export default function ChartContainer(props) {
   
   //state variables
   const [start, setStart] = React.useState(new Date());
-  const [end, setEnd] = React.useState(new Date());
+  const [ end, setEnd ] = React.useState(new Date());
+  
+  //set state variables
+  React.useEffect(() => {
+    if (props.activeData.dates != undefined) {
+      const minMaxDate = getMinMaxDate(Object.keys(props.activeData.dates))
+      setStart(minMaxDate.start);
+      setEnd(minMaxDate.end);
+    }
+  },[props.activeData])
 
   return (
     //todo: create clickevents for d/m/y buttons
