@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => {
     },
     headers:{
       margin: "10px",
-      flexWrap: "nowrap",
     }
   };
 });
@@ -157,6 +156,7 @@ export default function Manage() {
                         <Typography
                         color="textSecondary"
                         variant="h4"
+                        noWrap
                         className = {classes.headers}
                         >{column}</Typography>
                       )}
