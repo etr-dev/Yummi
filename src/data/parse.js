@@ -103,17 +103,12 @@ function oldParser(data) {
 
 function newParser(data) {
   let parsedData = { items: {}, categories: { items: [] }, dates: {} };
-  console.log(data);
 
   for (let i = 0; i < data.length; i++) {
     let element = data[i];
     if (!element.ItemName) {
       //if undefined then skip or blank
       continue;
-    }
-
-    if (element.Category == "") {
-      console.log(i);
     }
 
     //if a catergory has not been created then create it with an empty list
