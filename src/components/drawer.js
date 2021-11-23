@@ -130,6 +130,7 @@ export default function MyDrawer(props) {
         ? {
             mouseX: event.clientX - 2,
             mouseY: event.clientY - 4,
+            target: event.target
           }
         : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
           // Other native context menus might behave different.
@@ -138,8 +139,10 @@ export default function MyDrawer(props) {
     );
   };
   const handleClose = (choice, entry) => {
-    console.log(choice, entry);
-    menuFunction(choice, entry, user.email);
+    if (contextMenu.target) {
+      console.log(choice, contextMenu.target.innerText);
+      menuFunction(choice, contextMenu.target.innerText, user.email);
+    }
     setContextMenu(null);
   };
 
@@ -215,7 +218,7 @@ export default function MyDrawer(props) {
               {props.itemList.map((entry) => (  //FOR LOOP THAT LISTS ALL OF THE ITEMS entry IS THE NAME OF THE ITEM FROM ITEMLIST
                 <MenuItem //make the list item a menuitem so it can be clicked and selected
                   button
-                  onClick={() => setDrawerSelection(entry)}
+                  onClick={ () => { if(contextMenu===null)setDrawerSelection(entry) }}
                   selected={entry === drawerSelection}
                   divider
                   classes={{ selected: classes.selected }}
