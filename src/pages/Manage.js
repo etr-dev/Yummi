@@ -56,8 +56,6 @@ const useStyles = makeStyles((theme) => {
     rawDataContainer: {
       height: "100vh",
       overflowY: "auto",
-    },
-    columns: {
       display: "flex",
       justifyContent: "space-around"
     },
@@ -125,7 +123,7 @@ export default function Manage() {
       <div className={classes.background}>
         {/* LIST DRAWER     - the drawer on the left that lists all of the file names*/}
         <Grid container>
-          <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
+          <Grid className={ classes.drawer } item xs={ 12 } s={ 12 } md={3} lg={2}>
             <MyDrawer
               itemList={filelist}
               dataCategories={["files"]}
@@ -137,14 +135,14 @@ export default function Manage() {
           <Grid
             className={classes.rawDataContainer}
             item
-            xs={12}
+            xs={ 12 }
+            s={ 12 }
             md={9}
             lg={10}
           >
             {
               activeFile != undefined ? (
-                <div className={classes.columns}>
-                  {Object.keys(activeFile.rawData[0]).map((column) => (
+                Object.keys(activeFile.rawData[0]).map((column) => (
                     <div>
                       {column == "" ? (
                         <Typography
@@ -177,8 +175,7 @@ export default function Manage() {
                         /*END RENDER METHOD */
                       ))}
                     </div>
-                  ))}
-                </div>
+                  ))
               ) : (
                 <></>
               ) //dont print anything if active file is undefined (item not clicked yet)
