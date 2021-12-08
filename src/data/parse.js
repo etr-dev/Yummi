@@ -64,8 +64,8 @@ function oldParser(data) {
         Category: element.Category,
         Count: 0,
       }; //initialize item
-      parsedData.categories[element.Category].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
-      parsedData.categories.items.push(element.ItemName);
+        parsedData.categories[element.Category].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
+        parsedData.categories.items.push(element.ItemName);
     }
 
     //if the date is not in parsed data Item yet then initialize it
@@ -102,7 +102,7 @@ function oldParser(data) {
 }
 
 function newParser(data) {
-  let parsedData = { items: {}, categories: { items: [] }, dates: {} };
+  let parsedData = { items: {}, categories: {items: [], Daily: [], Categories: []}, dates: {} };
 
   for (let i = 0; i < data.length; i++) {
     let element = data[i];
@@ -114,7 +114,8 @@ function newParser(data) {
     //if a catergory has not been created then create it with an empty list
     if (
       !(element.Category in parsedData.categories) &&
-      (element.Category != undefined || element.Category != "")
+      (element.Category != undefined || element.Category != "") &&
+      element.Category != "MISCELLANEOUS"
     )
       parsedData.categories[element.Category] = [];
 
@@ -125,8 +126,14 @@ function newParser(data) {
         TotalRevenue: 0,
         Count: 0,
       }; //initialize item
-      parsedData.categories[element.Category].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
-      parsedData.categories.items.push(element.ItemName);
+      if (element.ItemName == element.Category) {
+        parsedData.categories['Categories'].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
+      } else if (element.Category == 'MISCELLANEOUS') {
+        parsedData.categories['Daily'].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
+      } else {
+        parsedData.categories[element.Category].push(element.ItemName); //push the item name into it's specific category this will only happen once per itemname
+        parsedData.categories.items.push(element.ItemName);
+      }
     }
 
     //if the date is not in parsed data Item yet then initialize it
@@ -154,9 +161,9 @@ function newParser(data) {
       parsedData.dates[element.Date].Count = Number(element.Count); //The date's items sold count is equal to the grand total for that day
     } else if (element.ItemName == "Guest Count") {
       parsedData.dates[element.Date].GuestCount = Number(element.Count); //add item price to revenue for that day.. convert to number with 2 decimal points
-    } //Setup item stuff
+    }//Setup item stuff
     else {
-      parsedData.items[element.ItemName][element.Date] = {
+        parsedData.items[element.ItemName][element.Date] = {
         revenue: Number(element["Net Sales"]), //Net Sales (money that this item has made per day)
         PercentOfRevenue: Number(element["% of Net Sales"]), //What percentage of total money made that day does this account for
         PercentOfCategory: Number(element["% of Category Qty Sold"]), //Percent of items sold to account for total category quantity
