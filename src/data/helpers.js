@@ -112,6 +112,8 @@ export function menuFunction(choice, entry, email) {
 export function getSelectedData(choice, activeData, dateString, drawerSelection) {
   //temp
   let data = undefined
+  if (choice == 'Revenue') choice = 'ITEM_REVENUE';
+  if (choice == 'Count') choice = 'ITEM_COUNT';
 
   //Any switch case that isn't activeData.dates must have a check to see if dateString exists like ----> if (dateString in activeData[ 'items' ][ drawerSelection ])
   switch (choice) {
@@ -122,6 +124,27 @@ export function getSelectedData(choice, activeData, dateString, drawerSelection)
       }
       break;
     case 'ITEM_REVENUE':
+      if (drawerSelection) {
+        if (dateString in activeData[ 'items' ][ drawerSelection ])
+          data = activeData[ 'items' ][ drawerSelection ][ dateString ].revenue;
+      }
+      break;
+    case 'PieChart':
+      if (drawerSelection) {
+        if (dateString in activeData[ 'items' ][ drawerSelection ]) {
+          let Category = activeData[ 'items' ][ drawerSelection ][ dateString ].PercentOfCategory
+          let Revenue = activeData[ 'items' ][ drawerSelection ][ dateString ].PercentOfRevenue
+          let Guests = activeData[ 'items' ][ drawerSelection ][ dateString ].GuestOrderPercent
+          if (Category === undefined) Category = 0;
+          if (Revenue === undefined) Revenue = 0;
+          if (Guests === undefined) Guests = 0;
+          data = {
+            Category: Category,
+            Revenue: Revenue,
+            Guests: Guests,
+          }
+        }
+      }
       break;
     case 'DATE_COUNT':
       data = activeData[ 'dates' ][ dateString ].Count;
@@ -139,23 +162,33 @@ export function getSelectedData(choice, activeData, dateString, drawerSelection)
   return data
 }
 
-export function getTopSellingItem(activeData) {
-  if (activeData.items === undefined)
+export function getTopSellingItem(activeData, choice) {
+  if (!activeData.items)
     return 'loading...'
   
   let topSelling = 0
   const keys = Object.keys(activeData.items)
+  
+
   for (let i = 0; i < keys.length; i++){
-    if (activeData.items[ keys[ i ] ].Count * Number(activeData.items[ keys[ i ] ].Price) > activeData.items[ keys[ topSelling ] ].Count * Number(activeData.items[ keys[ topSelling ] ].Price)) {
+
+    //while the top selling item doesn't have a total revenue increment it (this can happen when the top selling is initialized to guest count)
+    while (
+      !Object.keys(activeData.items[ keys[ topSelling ] ]).includes("TotalRevenue")
+    ) {
+      topSelling++
+    }
+    
+    if (activeData.items[ keys[ i ] ] != undefined &&
+      activeData.items[ keys[ i ] ].TotalRevenue > activeData.items[ keys[ topSelling ] ].TotalRevenue &&
+      activeData.items[ keys[ i ] ].Category != keys[i]) {
       topSelling = i
     }
   }
-
   return {
     name: keys[ topSelling ],
     count: activeData.items[ keys[ topSelling ] ].Count,
-    price: activeData.items[ keys[ topSelling ] ].Price,
-    revenue: Number(Number(activeData.items[ keys[ topSelling ] ].Price) * activeData.items[ keys[ topSelling ] ].Count).toFixed(2)
+    revenue: activeData.items[ keys[ topSelling ] ].TotalRevenue
   }
 }
 
@@ -181,13 +214,11 @@ export function getToolTip(activeData, tipChoice = 0, random = false) {
     return 'Thinking of a tip to give you...'
   if (random)
     tipChoice = getRandomInt(cases)
-  
-  console.log(tipChoice)
   let temp = undefined
   switch (tipChoice) {
     case 0:
       temp = getTopEarningDate(activeData.dates)
-      return `You're highest revenue earned was $${temp.revenue} on ${temp.date}!`
+      return `You're highest daily net sales earned was $${temp.revenue} on ${temp.date}!`
       break;
     case 1:
       temp = getTopSellingItem(activeData)

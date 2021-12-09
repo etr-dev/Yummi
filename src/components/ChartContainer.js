@@ -1,5 +1,19 @@
 import * as React from "react";
-import { Card, CardContent, TextField } from "@material-ui/core/";
+import {
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  Button,
+  makeStyles,
+  FormControl,
+  FormHelperText,
+  MenuItem,
+  InputLabel,
+  Select,
+  Switch,
+  FormControlLabel,
+} from "@material-ui/core/";
 import { LocalizationProvider, DesktopDatePicker, PickersDay } from "@mui/lab/";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import { datesAreOnSameDay, inDateRange, getMinMaxDate } from "../data/helpers";
@@ -10,11 +24,11 @@ import {
   ArgumentAxis,
   ValueAxis,
 } from "@devexpress/dx-react-chart-material-ui";
-import { Typography, Button } from "@material-ui/core/";
 import { Animation } from "@devexpress/dx-react-chart";
-import { makeStyles } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import BarChart from "./BarChart.js";
+import LineChart from "./LineChart";
+import PieChart from "./PieChart";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -27,10 +41,6 @@ const useStyles = makeStyles((theme) => {
     },
     chart: {
       color: theme.palette.text.primary,
-    },
-    dateSelectorDiv: {
-      display: "flex",
-      justifyContent: "space-evenly",
     },
     datepickerTextboxPalette: {
       color: theme.palette.text.primary,
@@ -55,6 +65,26 @@ const useStyles = makeStyles((theme) => {
     graphContainer: {
       height: "100vh",
     },
+    optionContainer: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+    },
+    switches: {
+      display: "flex",
+      flexDirection: "column",
+      minWidth: 160,
+    },
+    Select: {
+      backgroundColor: theme.palette.secondary.main,
+      borderRadius: "5px",
+    },
+    selectText: {
+      padding: "5px",
+    },
+    dropdown: {
+      minWidth: 160,
+    },
   };
 });
 
@@ -65,29 +95,45 @@ export default function ChartContainer(props) {
   //library variables
   const classes = useStyles();
   const dispatch = useDispatch();
-  
+
   //state variables
-  const [start, setStart] = React.useState(new Date());
-  const [ end, setEnd ] = React.useState(new Date());
+  const [chartChoice, setChartChoice] = React.useState("Bar");
+  const [dataChoice, setDataChoice] = React.useState("Revenue");
+  const [dateFormat, setDateFormat] = React.useState("Date");
+  const [pieSelection, setPieSelection] = React.useState("Category");
   
+  const [start, setStart] = React.useState(new Date());
+  const [end, setEnd] = React.useState(new Date());
+
+  const handleChange = (event) => {
+    setChartChoice(event.target.value);
+  };
+
+  const handleChangePie = (event) => {
+    setPieSelection(event.target.value);
+  };
+
   //set state variables
   React.useEffect(() => {
     if (props.activeData.dates != undefined) {
-      const minMaxDate = getMinMaxDate(Object.keys(props.activeData.dates))
+      const minMaxDate = getMinMaxDate(Object.keys(props.activeData.dates));
       setStart(minMaxDate.start);
       setEnd(minMaxDate.end);
     }
-  },[props.activeData])
+  }, [props.activeData]);
 
+  console.log(chartChoice)
   return (
     //todo: create clickevents for d/m/y buttons
     <Card elevation={0} className={classes.card}>
       <CardContent>
         {/*TOP PART (ABOVE GRAPH) */}
-        <div className={classes.dateSelectorDiv}>
+        <div className={classes.optionContainer}>
+          {/*DATE SELECTORS*/}
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             {/*START DATE CALENDAR */}
             <DesktopDatePicker
+              className={classes.datePickers}
               label="Start Date"
               value={start}
               onChange={(newValue) => {
@@ -131,6 +177,7 @@ export default function ChartContainer(props) {
 
             {/*END DATE CALENDAR */}
             <DesktopDatePicker
+              className={classes.datePickers}
               label="End Date"
               color="secondary"
               disableCloseOnSelect={false}
@@ -174,16 +221,165 @@ export default function ChartContainer(props) {
               }}
             />
           </LocalizationProvider>
+
+          {/*DROP DOWN BOX*/}
+          <div className={classes.dropdown}>
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel>Chart Type</InputLabel>
+              <Select
+                value={chartChoice}
+                label="Chart Type"
+                onChange={handleChange}
+                displayEmpty
+                className={classes.Select}
+              >
+                <MenuItem value="Bar">
+                  <Typography
+                    variant="h6"
+                    color="TextSecondary"
+                    className={classes.selectText}
+                  >
+                    Bar Chart
+                  </Typography>
+                </MenuItem>
+                <MenuItem value="Line">
+                  <Typography
+                    variant="h6"
+                    color="TextSecondary"
+                    className={classes.selectText}
+                  >
+                    Line Chart
+                  </Typography>
+                </MenuItem>
+                <MenuItem value="Pie">
+                  <Typography
+                    variant="h6"
+                    color="TextSecondary"
+                    className={classes.selectText}
+                  >
+                    Pie Chart
+                  </Typography>
+                </MenuItem>
+              </Select>
+              <FormHelperText>Select display type</FormHelperText>
+            </FormControl>
+          </div>
+
+          {/*SWITCHES*/}
+          {chartChoice == "Pie" ? (
+            <div className={classes.dropdown}>
+              <FormControl sx={{ m: 1, minWidth: 150 }}>
+                <InputLabel>Chart Type</InputLabel>
+                <Select
+                  value={pieSelection}
+                  label="Data Type"
+                  onChange={handleChangePie}
+                  defaultValue={pieSelection}
+                  displayEmpty
+                  className={classes.Select}
+                >
+                  <MenuItem value="Category">
+                    <Typography
+                      variant="h6"
+                      color="TextSecondary"
+                      className={classes.selectText}
+                    >
+                      % of Category
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem value="Revenue">
+                    <Typography
+                      variant="h6"
+                      color="TextSecondary"
+                      className={classes.selectText}
+                    >
+                      % of Revenue
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem value="Guests">
+                    <Typography
+                      variant="h6"
+                      color="TextSecondary"
+                      className={classes.selectText}
+                    >
+                      % of Guest Orders
+                    </Typography>
+                  </MenuItem>
+                </Select>
+                <FormHelperText>Select display type</FormHelperText>
+              </FormControl>
+            </div>
+          ) : (
+            <div className={classes.switches}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="TextSecondary"
+                    color="info"
+                    onChange={(event) => {
+                      if (event.target.checked) {
+                        setDataChoice("Count");
+                      } else {
+                        setDataChoice("Revenue");
+                      }
+                    }}
+                  />
+                }
+                label={<Typography variant="h6">{dataChoice}</Typography>}
+                className={classes.switchLabel}
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    color="TextSecondary"
+                    color="info"
+                    onChange={(event) => {
+                      if (event.target.checked) {
+                        setDateFormat("Day");
+                      } else {
+                        setDateFormat("Date");
+                      }
+                    }}
+                  />
+                }
+                label={<Typography variant="h6">{dateFormat}</Typography>}
+                className={classes.switchLabel}
+              />
+            </div>
+          )}
         </div>
 
         {/*CHARTS*/}
-        <BarChart
-          activeData={ props.activeData }
-          className={ classes.graphContainer }
-          dates={ { start: start, end: end } }
-          dataChoice={ props.dataChoice }
-          requireDrawerSelection = {true}
-        />
+        {chartChoice == "Bar" ? (
+          <BarChart
+            activeData={props.activeData}
+            className={classes.graphContainer}
+            dates={{ start: start, end: end }}
+            dataChoice={dataChoice}
+            requireDrawerSelection={true}
+            dateFormat={dateFormat}
+          />
+        ) : chartChoice == "Line" ? (
+          <LineChart
+            activeData={props.activeData}
+            className={classes.graphContainer}
+            dates={{ start: start, end: end }}
+            dataChoice={dataChoice}
+            requireDrawerSelection={true}
+            dateFormat={dateFormat}
+          />
+        ) : chartChoice == "Pie" ? (
+          <PieChart
+            activeData={props.activeData}
+            className={classes.graphContainer}
+            dates={{ start: start, end: end }}
+            pieSelection={pieSelection}
+            requireDrawerSelection={true}
+            dateFormat={dateFormat}
+          />
+        ) : (
+          <div></div>
+        )}
       </CardContent>
     </Card>
   );

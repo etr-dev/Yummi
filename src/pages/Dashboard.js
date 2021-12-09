@@ -167,7 +167,7 @@ export default function Create() {
           />
         </Grid>
         {/*BOTTOM PAGE */}
-        <Grid className={classes.drawer} item xs={12} md={3} lg={2}>
+        <Grid className={classes.drawer} item xs={12} md={2} lg={2}>
           <MyDrawer itemList={itemList} dataCategories={dataCategories} />
         </Grid>
         {/* CHART */}
