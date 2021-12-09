@@ -87,10 +87,10 @@ export default function PieChart(props) {
       console.log(activeData);
       chartData = {}; //clear data
       for (let i = 0; i < dates.length; i++) {
-        const dateString = getDateString(dates[i]);
+          const dateString = getDateString(dates[ i ]);
+          chartData[dateString] = [];
         if (dateString in activeData.dates) {
           //if the date is in the data
-          chartData[dateString] = [];
           let tData = getSelectedData(
             "PieChart",
             activeData,
@@ -110,10 +110,14 @@ export default function PieChart(props) {
             data: Number((1 - chartData[dateString][0].data).toFixed(2)), //activeData[drawerSelection][str].Count,
           });
         } else {
-          chartData.push({
-            date: dateString,
-            data: 0,
-          });
+            chartData[dateString].push({
+                date: drawerSelection,
+                data: 0,
+            });
+            chartData[dateString].push({
+                date: 'Remainder',
+                data: 1,
+            });
           missingData = true;
         }
       }
