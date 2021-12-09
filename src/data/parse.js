@@ -137,14 +137,21 @@ function newParser(data) {
     }
 
     //if the date is not in parsed data Item yet then initialize it
-    if (!(element.Date in parsedData.items[element.ItemName])) {
+    if (!(element.Date in parsedData.items[ element.ItemName ])) {
+      if (element.Category != "MISCELLANEOUS") {
+        parsedData.items[element.ItemName][element.Date] = {
+          Count: 0,
+          revenue: 0, //Net Sales (money that this item has made per day)
+          };
+      } else {
       parsedData.items[element.ItemName][element.Date] = {
         Count: 0,
         revenue: 0, //Net Sales (money that this item has made per day)
         PercentOfRevenue: 0, //What percentage of total money made that day does this account for
         PercentOfCategory: 0, //Percent of items sold to account for total category quantity
         GuestOrderPercent: 0, //Percent of guest orders
-      };
+        };
+        }
     }
 
     //initialize empty date
@@ -158,9 +165,17 @@ function newParser(data) {
 
     if (element.ItemName == "Grand Total") {
       parsedData.dates[element.Date].revenue = Number(element["Net Sales"]); //add item price to revenue for that day.. convert to number with 2 decimal points
-      parsedData.dates[element.Date].Count = Number(element.Count); //The date's items sold count is equal to the grand total for that day
+      parsedData.dates[ element.Date ].Count = Number(element.Count); //The date's items sold count is equal to the grand total for that day
+      parsedData.items[element.ItemName][element.Date] = {
+        revenue: Number(element["Net Sales"]), //Net Sales (money that this item has made per day)
+        Count: Number(element["Count"]),
+      };
     } else if (element.ItemName == "Guest Count") {
-      parsedData.dates[element.Date].GuestCount = Number(element.Count); //add item price to revenue for that day.. convert to number with 2 decimal points
+      parsedData.dates[ element.Date ].GuestCount = Number(element.Count); //add item price to revenue for that day.. convert to number with 2 decimal points
+      parsedData.items[element.ItemName][element.Date] = {
+        revenue: Number(element["Net Sales"]), //Net Sales (money that this item has made per day)
+        Count: Number(element["Count"]),
+      };
     }//Setup item stuff
     else {
         parsedData.items[element.ItemName][element.Date] = {
