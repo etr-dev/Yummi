@@ -137,7 +137,7 @@ export default function PieChart(props) {
         Percentage of {props.pieSelection} per day
       </Typography>
       <div className={classes.charts}>
-        {dates.map((date) => (
+        {Object.keys(chartData).length > 0 ? dates.map((date) => (
           <Chart
             data={chartData[getDateString(date)]}
             className={classes.chart}
@@ -148,7 +148,7 @@ export default function PieChart(props) {
             <PieSeries valueField="data" argumentField="date" />
             <Animation />
           </Chart>
-        ))}
+        )) : <></>}
       </div>
 
       {/* <div className={classes.dropdown}>
